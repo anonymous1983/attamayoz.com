@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<partners>
+<partner>
+	<name><![CDATA[eBay]]></name>
+	<module>ebay</module>
+	<checkconfiguration>
+		<key>EBAY_API_TOKEN%</key>
+	</checkconfiguration>
+	<logo><![CDATA[http://api.prestashop.com/partner/premium/images/ebay.jpg]]></logo>
+	<labels>
+		<label iso="en"><![CDATA[Increase your sales and the number of your customers by installing the eBay module!]]></label>
+		<label iso="es"><![CDATA[Aumenta sus ventas y el numero de sus clientes con el modulo eBay]]></label>
+		<label iso="fr"><![CDATA[Augmentez vos ventes et le nombre de vos clients en installant le module eBay !]]></label>
+		<label iso="it"><![CDATA[Installa il modulo eBay e aumenta le tue vendite e i tuoi compratori!]]></label>
+	</labels>
+	<optionals>
+	</optionals>
+	<descriptions>
+	</descriptions>
+</partner><partner>
+	<name><![CDATA[Ogone]]></name>
+	<module>ogone</module>
+	<checkconfiguration>
+		<key>OGONE_PSPID</key>
+		<key>OGONE_SHA_IN</key>
+		<key>OGONE_SHA_OUT</key>
+	</checkconfiguration>
+	<logo><![CDATA[http://api.prestashop.com/partner/premium/images/ogone.png]]></logo>
+	<labels>
+		<label iso="en"><![CDATA[Choose the appropriate payment method for your business]]></label>
+		<label iso="de"><![CDATA[Anpassbare Zalhungslosungen in Abhangigkeit von Ihren Geschaftsaktivitaten]]></label>
+		<label iso="fr"><![CDATA[Choisissez des moyens de paiement adaptes a votre activite]]></label>
+	</labels>
+	<descriptions>
+		<description iso="de"><![CDATA[]]></description>
+	</descriptions>
+</partner>
+
+</partners>
