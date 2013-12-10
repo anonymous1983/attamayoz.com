@@ -37,29 +37,49 @@ class AttamayozModule extends Module {
 
     public function install() {
         if (!parent::install() ||
-                !Db::getInstance()->execute('
-			CREATE TABLE ' . _DB_PREFIX_ . 'tree_type (
-			`id_tree_type` int(11) NOT NULL AUTO_INCREMENT,
-                        `title` varchar(250) NOT NULL,
-                        `cost` float NOT NULL,
-                        `x_axis` int(11) NOT NULL,
-                        `y_axis` int(11) NOT NULL,
-                        `children` int(11) NOT NULL,  
-                        `active` tinyint(4) NOT NULL DEFAULT 1,
-                        `deleted` tinyint(4) NOT NULL DEFAULT 0,
-                        `archive` tinyint(4) NOT NULL DEFAULT 0,
-                        `date_add` datetime NOT NULL,
-                        `date_upd` datetime NOT NULL,
-                        PRIMARY KEY (`id_tree_type`))
-			ENGINE=' . _MYSQL_ENGINE_ . ' default CHARSET=utf8') ||
+                !$this->registerHook('displayProductTab') ||
+                !$this->registerHook('actionProductSave') ||
+                !$this->registerHook('actionUpdateQuantity') ||
+                !$this->registerHook('actionProductListOverride') ||
+                !$this->registerHook('actionProductAttributeUpdate') ||
+                !$this->registerHook('displayAdminProductsExtra') ||
+                //!$this->registerHook('productTab') ||
+                //!$this->registerHook('productTabContent') ||
                 !Configuration::updateValue('ATT_BLOCK_TREE_TYPE_NAME', NULL))
-            return false;
+                return false;
+        // Crreat Table Tree_type
+        $sql = 'CREATE TABLE ' . _DB_PREFIX_ . 'tree_type (
+                `id_tree_type` int(11) NOT NULL AUTO_INCREMENT,
+                `title` varchar(250) NOT NULL,
+                `cost` float NOT NULL,
+                `x_axis` int(11) NOT NULL,
+                `y_axis` int(11) NOT NULL,
+                `children` int(11) NOT NULL,  
+                `active` tinyint(4) NOT NULL DEFAULT 1,
+                `deleted` tinyint(4) NOT NULL DEFAULT 0,
+                `archive` tinyint(4) NOT NULL DEFAULT 0,
+                `date_add` datetime NOT NULL,
+                `date_upd` datetime NOT NULL,
+                PRIMARY KEY (`id_tree_type`))
+                ENGINE=' . _MYSQL_ENGINE_ . ' default CHARSET=utf8';
+        
+        if (!Db::getInstance()->execute($sql))
+                return false;
+        
+        // Update Table Product
+        // Add id_tree_type
+        $sql = 'ALTER TABLE  `' . _DB_PREFIX_ . 'product` ADD  `id_tree_type` INT NOT NULL';
+        
+        if (!Db::getInstance()->execute($sql))
+                return false;
+        
         return true;
     }
 
     public function uninstall() {
         if (!parent::uninstall() ||
                 !Db::getInstance()->execute('DROP TABLE ' . _DB_PREFIX_ . 'tree_type') ||
+                !Db::getInstance()->execute('ALTER TABLE  ' . _DB_PREFIX_ . 'product DROP  id_tree_type') ||
                 !Configuration::deleteByName('ATT_BLOCK_TREE_TYPE_NAME'))
             return false;
         return true;
@@ -255,6 +275,61 @@ class AttamayozModule extends Module {
 		WHERE `deleted` = 0 AND `archive` = 0 ';
         return Db::getInstance()->executeS($sql);
     }
+    
+    public function hookDisplayProductTab($params)
+    {
+       return $this->display(__FILE__, 'tets.tpl'); 
+    }
+    
+    public function hookActionProductSave($params)
+    {
+        //die('hookActionProductSave');
+        return true;
+    }
+    
+    public function hookActionUpdateQuantity($params)
+    {
+        //die('hookActionUpdateQuantity');
+        return true;
+    }
+    
+    public function hookActionProductListOverride($params)
+    {
+        die('hookActionProductListOverride');
+        //return true;
+    }
+    public function hookActionProductAttributeUpdate($params)
+    {
+        die('hookActionProductAttributeUpdate');
+        //return true;
+    }
+    
+    public function hookDisplayAdminProductsExtra($params) {
+        return $this->display(__FILE__, 'tab-body.tpl');
+    }
+    
+    
+    
+    //Method will be called while performing the "ProductTab" hook (tab buttons generation):
+    public function hookProductTab($params)
+    {
+        global $smarty;
+        //Call the template containing the HTML-code ?? our button
+        return $this->display(__FILE__, 'views/admin/productTab.tpl');
+    }
+ 
+    public function hookProductTabContent($params)
+    {
+        global $smarty;
+        //Transfer the new tab content into template via smatry
+        //( it is optional as far as the content can be assigned directly in the template)
+        $contant = 'Content New Tab';
+        $smarty->assign('contant', $contant);
+        // Call the template containing the HTML-code of our new tab content:
+        return $this->display(__FILE__, 'views/admin/productTabContent.tpl');
+    }
+    
+    
 
 }
 
