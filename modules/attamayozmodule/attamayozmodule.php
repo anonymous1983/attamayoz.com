@@ -41,7 +41,7 @@ class AttamayozModule extends Module {
                 !$this->registerHook('actionProductSave') ||
                 !$this->registerHook('actionUpdateQuantity') ||
                 !$this->registerHook('actionProductListOverride') ||
-                !$this->registerHook('actionProductAttributeUpdate') ||
+                //!$this->registerHook('actionProductAttributeUpdate') ||
                 !$this->registerHook('displayAdminProductsExtra') ||
                 //!$this->registerHook('productTab') ||
                 //!$this->registerHook('productTabContent') ||
@@ -295,17 +295,17 @@ class AttamayozModule extends Module {
     
     public function hookActionProductListOverride($params)
     {
-        die('hookActionProductListOverride');
-        //return true;
+        //die('hookActionProductListOverride');
+        return true;
     }
     public function hookActionProductAttributeUpdate($params)
     {
-        die('hookActionProductAttributeUpdate');
-        //return true;
+        //die('hookActionProductAttributeUpdate');
+        return true;
     }
     
     public function hookDisplayAdminProductsExtra($params) {
-        return $this->display(__FILE__, 'tab-body.tpl');
+        return $this->display(__FILE__, 'views/templates/admin/productTabTreeTypeContent.tpl');
     }
     
     
