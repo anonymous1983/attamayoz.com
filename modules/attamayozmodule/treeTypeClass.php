@@ -117,4 +117,49 @@ class treeTypeClass extends ObjectModel
 		endwhile;
 		return $s;
 	}
+        
+        /**
+	* List of Tree Type
+	*
+	* @return list treeType
+	*/
+        public function getList() {
+            $sql = 'SELECT *
+                    FROM `' . _DB_PREFIX_ . 'tree_type`
+                    WHERE `deleted` = 0 AND `archive` = 0 ';
+            return Db::getInstance()->executeS($sql);
+        }
+        
+        
+        
+        /**
+	* List of Tree Type
+	*
+        * @param integer $id_product
+	* @return integer id_tree_type || false
+	*/
+        public function getIdTypeTreeForProduct($id_product) {
+            if($id_product){
+                $sql = 'SELECT id_tree_type
+                        FROM `' . _DB_PREFIX_ . 'product`
+                        WHERE `id_product` = '.$id_product;
+                return Db::getInstance()->executeS($sql);
+            }
+            return false;
+        }
+        
+        /**
+	* List of Tree Type
+	*
+	* @return list treeType
+	*/
+        public function getTypeTreeForProduct($id_product) {
+            if($id_product){
+                $sql = 'SELECT *
+                        FROM `' . _DB_PREFIX_ . 'tree_type`
+                        WHERE `deleted` = 0 AND `archive` = 0 ';
+                return Db::getInstance()->executeS($sql);
+            }
+            return false;
+        }
 }

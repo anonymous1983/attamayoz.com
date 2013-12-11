@@ -133,7 +133,8 @@ class AttamayozModule extends Module {
             Tools::redirectAdmin(AdminController::$currentIndex . '&configure=' . $this->name . '&token=' . Tools::getAdminTokenLite('AdminModules'));
         } else {
             $helper = $this->treeType_initList();
-            return $output . $helper->generateList($this->treeType_getListContent(), $this->fields_list);
+            $tree_type = new treeTypeClass();
+            return $output . $helper->generateList($tree_type->getList(), $this->fields_list);
         }
     }
 
@@ -268,13 +269,6 @@ class AttamayozModule extends Module {
         );
         return $helper;
     }
-
-    protected function treeType_getListContent() {
-        $sql = 'SELECT *
-		FROM `' . _DB_PREFIX_ . 'tree_type`
-		WHERE `deleted` = 0 AND `archive` = 0 ';
-        return Db::getInstance()->executeS($sql);
-    }
     
     public function hookDisplayProductTab($params)
     {
@@ -283,7 +277,17 @@ class AttamayozModule extends Module {
     
     public function hookActionProductSave($params)
     {
-        //die('hookActionProductSave');
+        $id_product = (int)$params['id_product'];
+        $treetype = Tools::getValue("treetype");
+        $tree_type_current_id = Tools::getValue("tree_type_current_id");
+        
+        if ($treetype && ($treetype != $tree_type_current_id)){
+            $sql = '
+                UPDATE `' . _DB_PREFIX_ . 'product` SET `id_tree_type` = '. $treetype .'
+                WHERE `att_db_product`.`id_product` ='.$id_product;
+
+            Db::getInstance()->execute($sql);
+        }
         return true;
     }
     
@@ -305,6 +309,22 @@ class AttamayozModule extends Module {
     }
     
     public function hookDisplayAdminProductsExtra($params) {
+        global $smarty;
+        
+        $context = Context::getContext();
+        $id_product = $context->controller->tpl_form_vars['id_product'];
+        
+        $tree_type = new treeTypeClass();
+        $tree_type_list = $tree_type->getList();
+        $tree_type_current_id = $tree_type->getIdTypeTreeForProduct($id_product);
+        
+        $this->context->smarty->assign(array(
+                        'id_product' => $id_product,
+                        'tree_type_list' => $tree_type_list,
+                        'tree_type_current_id' => $tree_type_current_id[0]['id_tree_type'],
+			'context' => $context
+		));
+        
         return $this->display(__FILE__, 'views/templates/admin/productTabTreeTypeContent.tpl');
     }
     
