@@ -36,7 +36,8 @@ class AttamayozcardModule extends Module {
     }
 
     public function install() {
-        if (!parent::install())
+        if (!parent::install() ||
+            !$this->registerHook('displayCustomerAccount'))
                 return false;
         
         // Crreat Table Recharge_card
@@ -266,7 +267,24 @@ class AttamayozcardModule extends Module {
         return $helper;
     }
     
-    
+    public function hookDisplayCustomerAccount($params)
+    {
+        global $smarty;
+        
+        $context = Context::getContext();
+        $id_customer = $context->cart->id_customer;
+        
+        /*$tree_type = new treeTypeClass();
+        $tree_type_list = $tree_type->getList();
+        $tree_type_current_id = $tree_type->getIdTypeTreeForProduct($id_product);*/
+        
+        $this->context->smarty->assign(array(
+                        'id_customer' => $id_customer
+		));
+        
+        return $this->display(__FILE__, 'views/templates/front/displayCustomerAccount.tpl');
+        return true;
+    }
 
 }
 
