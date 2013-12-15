@@ -48,7 +48,7 @@ class AttamayozModule extends Module {
                 !Configuration::updateValue('ATT_BLOCK_TREE_TYPE_NAME', NULL))
                 return false;
         // Crreat Table Tree_type
-        $sql = 'CREATE TABLE ' . _DB_PREFIX_ . 'tree_type (
+        $sql = 'CREATE TABLE IF NOT EXISTS ' . _DB_PREFIX_ . 'tree_type (
                 `id_tree_type` int(11) NOT NULL AUTO_INCREMENT,
                 `title` varchar(250) NOT NULL,
                 `cost` float NOT NULL,
@@ -66,20 +66,27 @@ class AttamayozModule extends Module {
         if (!Db::getInstance()->execute($sql))
                 return false;
         
-        // Update Table Product
-        // Add id_tree_type
-        $sql = 'ALTER TABLE  `' . _DB_PREFIX_ . 'product` ADD  `id_tree_type` INT NOT NULL';
         
-        if (!Db::getInstance()->execute($sql))
-                return false;
+        
+        if (Db::getInstance()->execute('SHOW COLUMNS FROM `' . _DB_PREFIX_ . 'product` LIKE \'id_tree_type\'')){
+            if(Db::getInstance()->NumRows() == 0){
+                // Update Table Product
+                // Add id_tree_type
+                $sql = 'ALTER TABLE  `' . _DB_PREFIX_ . 'product` ADD  `id_tree_type` INT NOT NULL';
+
+                if (!Db::getInstance()->execute($sql))
+                        return false;
+            }
+        }
+        
         
         return true;
     }
 
     public function uninstall() {
         if (!parent::uninstall() ||
-                !Db::getInstance()->execute('DROP TABLE ' . _DB_PREFIX_ . 'tree_type') ||
-                !Db::getInstance()->execute('ALTER TABLE  ' . _DB_PREFIX_ . 'product DROP  id_tree_type') ||
+                //!Db::getInstance()->execute('DROP TABLE ' . _DB_PREFIX_ . 'tree_type') ||
+                //!Db::getInstance()->execute('ALTER TABLE  ' . _DB_PREFIX_ . 'product DROP  id_tree_type') ||
                 !Configuration::deleteByName('ATT_BLOCK_TREE_TYPE_NAME'))
             return false;
         return true;
@@ -87,8 +94,6 @@ class AttamayozModule extends Module {
 
     public function getContent() {
         $output = null;
-
-
         // Tree Type
         // Get id Tree Type if exist
         $id_tree_type = (int) Tools::getValue('id_tree_type');
@@ -113,11 +118,13 @@ class AttamayozModule extends Module {
             $helper = $this->treeType_initForm($treeType_action);
             if ($id_tree_type = Tools::getValue('id_tree_type')) {
                 $tree_type = new treeTypeClass((int) $id_tree_type);
+                $now = time();
                 $this->fields_form[0]['form']['input'][] = array('type' => 'hidden', 'name' => 'id_tree_type');
                 $helper->fields_value['title'] = $tree_type->title;
                 $helper->fields_value['cost'] = $tree_type->cost;
                 $helper->fields_value['x_axis'] = $tree_type->x_axis;
                 $helper->fields_value['y_axis'] = $tree_type->y_axis;
+                $helper->fields_value['date_upd'] = date('Y-m-d H:i:s', $now);
                 $helper->fields_value['id_tree_type'] = (int) $id_tree_type;
             }
             return $html . $helper->generateForm($this->fields_form);
