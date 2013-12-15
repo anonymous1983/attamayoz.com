@@ -36,7 +36,8 @@ class AttamayozcardModule extends Module {
     }
 
     public function install() {
-        if (!parent::install() ||
+        if (!parent::install() ||    
+            !$this->registerHook('displayHeader') ||
             !$this->registerHook('displayCustomerAccount'))
                 return false;
         
@@ -117,7 +118,11 @@ class AttamayozcardModule extends Module {
         // Update and Add OR Delete OR List Tree Type    
         if (Tools::isSubmit('updateattamayozcardmodule') || Tools::isSubmit('addattamayozcardmodule')) {
             $action = (Tools::isSubmit('updateattamayozcardmodule')) ? 'Edit' : 'Add new';
-            $helper = $this->initForm($action);
+            if ($id_recharge_card = Tools::getValue('id_recharge_card')) {
+                $tree_type = new cardRechargeClass((int) $id_recharge_card);
+                $disabled =  $tree_type->use;
+            }
+            $helper = $this->initForm($action, $disabled);
             if ($id_recharge_card = Tools::getValue('id_recharge_card')) {
                 $tree_type = new cardRechargeClass((int) $id_recharge_card);
                 $now = time();
@@ -206,14 +211,29 @@ class AttamayozcardModule extends Module {
         return $helper;
     }
 
-    protected function initForm($action) {
+    protected function initForm($action, $disabled = 0) {
         $default_lang = (int) Configuration::get('PS_LANG_DEFAULT');
-
-        $this->fields_form[0]['form'] = array(
-            'legend' => array(
-                'title' => $this->l('New Recharge Card.'),
-            ),
-            'input' => array(
+        
+        //die('<pre>'.$this);
+        if($disabled){
+        $input = array(
+                array(
+                    'type' => 'text',
+                    'disabled' =>  'disabled',
+                    'label' => $this->l('Code :'),
+                    'lang' => false,
+                    'name' => 'code'
+                ),
+                array(
+                    'type' => 'text',
+                    'disabled' =>  'disabled',
+                    'label' => $this->l('Cost :'),
+                    'lang' => false,
+                    'name' => 'cost'
+                )
+            );
+        }else{
+           $input = array(
                 array(
                     'type' => 'text',
                     'label' => $this->l('Code :'),
@@ -226,7 +246,14 @@ class AttamayozcardModule extends Module {
                     'lang' => false,
                     'name' => 'cost'
                 )
+            ); 
+        }
+        
+        $this->fields_form[0]['form'] = array(
+            'legend' => array(
+                'title' => $this->l('New Recharge Card'),
             ),
+            'input' => $input,
             'submit' => array(
                 'title' => $this->l('Save'),
                 'class' => 'button'
@@ -269,21 +296,20 @@ class AttamayozcardModule extends Module {
     
     public function hookDisplayCustomerAccount($params)
     {
-        global $smarty;
-        
         $context = Context::getContext();
-        $id_customer = $context->cart->id_customer;
-        
-        /*$tree_type = new treeTypeClass();
-        $tree_type_list = $tree_type->getList();
-        $tree_type_current_id = $tree_type->getIdTypeTreeForProduct($id_product);*/
-        
+        $id_customer = $context->cart->id_customer;       
         $this->context->smarty->assign(array(
-                        'id_customer' => $id_customer
+                        'in_footer'     => false,
+                        'id_customer'   => $id_customer
 		));
-        
-        return $this->display(__FILE__, 'views/templates/front/displayCustomerAccount.tpl');
-        return true;
+	return $this->display(__FILE__, 'my-account.tpl');
+    }
+    
+    public function hookDisplayHeader($params)
+    {
+            $this->context->controller->addCSS($this->_path.'attamayozcardmodule.css', 'all');
+            $this->context->controller->addJS($this->_path.'attamayozcardmodule.js');
+            return $this->display(__FILE__, 'attamayozcardmodule-header.tpl');
     }
 
 }

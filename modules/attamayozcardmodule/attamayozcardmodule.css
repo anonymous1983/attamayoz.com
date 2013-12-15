@@ -1,0 +1,138 @@
+#module-attamayozcardmodule-account #left_column {display:none}
+#module-attamayozcardmodule-account #center_column {width:757px}
+
+
+.form_custom{
+    margin: 0 0 20px 0;
+    overflow: hidden;
+}
+	.form_custom  fieldset {
+		padding:0 0 15px 0;
+		background:#f8f8f8
+	}
+		.form_custom  .form_title {
+			margin:0 0 15px 0;
+			padding:8px;
+			font-size:14px;
+			color:#fff;
+			text-transform:uppercase;
+			background:#e74c3c;
+                        line-height: 42px;
+                        font-weight: normal;
+		}
+		
+		.form_custom p.text label,
+		.form_custom p.select label,
+		.form_custom p.select span,
+		.form_custom p.textarea label {
+			display:inline-block;
+			padding:6px 15px;
+			width:150px;/* 180 */
+			font-size:12px;
+			text-align:right;
+                        line-height:22px; 
+                            
+		}
+		.form_custom p.textarea label {vertical-align:top}
+		.form_custom p.text input.text,
+		.form_custom p.select input.select {
+			padding:5px;
+			height:22px;
+			width:260px;/* 270 */
+			border:1px solid #ccc;
+			font-size: 12px;
+			color:#666
+		}
+		.form_custom p.select select {
+			margin-right:10px;
+			border:1px solid #ccc;
+			font-size: 12px;
+			color:#666
+		}
+		.form_custom p.textarea textarea {
+			height:80px;
+			width:270px;
+			border:1px solid #ccc;
+			font-size: 12px;
+			color:#666
+		}
+		
+                .form_custom .btn,
+                .form_custom p.text .btn,
+                .form_custom p.submit input{
+                    color: #fff;
+                    background: #1abc9c;
+                    font-size: 12px;
+                    padding: 6px 15px;
+                    line-height:22px;
+                    border: 0;
+                    border-bottom: 2px solid #16a085;
+                }
+                .form_custom p.submit input {margin-left:185px;}
+                .form_custom p.text .btn {margin-left:20px;}
+                
+                .btitle{
+                    padding:8px;
+                    font-size:14px;
+                    color:#fff;
+                    text-transform:uppercase;
+                    line-height: 42px;
+                    font-weight: normal;  
+                }
+                .btitle a, .btitle a:active, .btitle a:visited{ color: #fff;}
+                .btitle.ttl{ text-transform: lowercase;}
+                .btitle.m00100{
+                    margin: 0 0 10px 0;
+                }
+                .btbgr0{
+                    background:#e74c3c;
+                }
+                .btbgr1{
+                    background:#c0392b;
+                }
+                .btbgb0{
+                    background:#3498db;
+                }
+                .btbgb1{
+                    background:#2980b9;
+                }
+                .btbgv0{
+                    background:#2ecc71;
+                }
+                .btbgv1{
+                    background:#27ae60;
+                }
+                .btbgvb0{
+                    background:#1abc9c;
+                }
+                .btbgvb1{
+                    background:#16a085;
+                }
+                .btbgj0{
+                    background:#f1c410;
+                }
+                .btbgj1{
+                    background:#f39c12;
+                }
+                .btbgo0{
+                    background:#e67e22;
+                }
+                .btbgo1{
+                    background:#d35400;
+                }
+                .btbgvi0{
+                    background:#9b59b6;
+                }
+                .btbgvi1{
+                    background:#8e44ad;
+                }
+                .row{ width: 100%;}
+                .row .col{ float: left;}
+                .rechargecard.row .col01{ width: 30%; padding-left:2%; padding-right:2%; }
+                .rechargecard.row .col02{ width: 40%; padding-left:2%; padding-right:2%; }
+                .rechargecard.row .col03{ width: 20%; padding-left:1%; padding-right:1%; }
+                
+                .row.rechargecard{ border-top: 1px solid #ccc;}
+                .row.rechargecard:first-child{ border-top: 0;}
+                
+                .row.rechargecard div{ padding-top: 10px; padding-bottom: 10px;}

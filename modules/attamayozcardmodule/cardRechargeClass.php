@@ -8,6 +8,7 @@
  *  International Registered Trademark & Property of karar-consulting SA
  */
 
+include_once _PS_MODULE_DIR_ . 'attamayozcardmodule/cardRechargeClass.php';
 
 class cardRechargeClass extends ObjectModel
 {
@@ -96,18 +97,80 @@ class cardRechargeClass extends ObjectModel
             return Db::getInstance()->executeS($sql);
         }
         
+        /**
+	* is use card
+	*
+	* @return object
+	*/
+        public function isCodeValid($code) {            
+            return $this->isCodeUse($code);
+        }
+        
         
         /**
 	* is use card
 	*
 	* @return object
 	*/
-        public function isUse() {
-            /*$sql = 'SELECT *
-                    FROM `' . _DB_PREFIX_ . 'tree_type`
-                    WHERE `deleted` = 0 AND `archive` = 0 ';
-            return Db::getInstance()->executeS($sql);*/
-            return true;
+        public function isCodeUse($code) {
+            $sql = 'SELECT *
+                    FROM `' . _DB_PREFIX_ . $this->table .'`
+                    WHERE code = \''.$code.'\' AND `deleted` = 0 AND `archive` = 0 ';
+            $result = Db::getInstance()->getRow($sql);
+            $object = new stdClass();
+            $object->numRows = (int)Db::getInstance()->numRows();
+            if($object->numRows){
+                $object->id_recharge_card   = $result['id_recharge_card'];
+                $object->code               = $result['code'];
+                $object->use                = (int)$result['use'];
+                $object->date_use           = $result['date_use'];
+                $object->active             = (int)$result['active'];
+                $object->deleted            = (int)$result['deleted'];
+                $object->archive            = (int)$result['archive'];            
+                $object->date_add           = $result['date_add'];
+                $object->date_upd           = $result['date_upd'];
+            }
+            return $object;
         }
+        
+        /**
+	* set use
+	*
+	* @return object
+	*/
+        public function setUse($id_recharge_card, $id_customer, $use=1) {
+            $now = time();
+            $sql = 'UPDATE `' . _DB_PREFIX_ . $this->table .'` SET 
+                    `use` = '. $use .',
+                    `date_use` = \''. date('Y-m-d H:i:s', $now) .'\'
+                    WHERE `id_recharge_card` ='.$id_recharge_card;
+            $data = array(
+                'id_recharge_card'   => $id_recharge_card,
+                'id_customer' => $id_customer,
+                'date_add' => date('Y-m-d H:i:s', $now),
+                'date_upd' => date('Y-m-d H:i:s', $now)
+            );
+            if(!Db::getInstance()->execute($sql))
+                return 'false 01';
+            if(!Db::getInstance()->insert('history_recharge_card',$data))
+                    return 'false 02';
+            return true;            
+        }
+        
+        
+        
+        /**
+	* is use card
+	*
+	* @return object
+	*/
+        public function getListCardsForCustomer($id_customer, $id_lang)
+	{
+                $sql = 'SELECT *
+                        FROM `' . _DB_PREFIX_ .'history_recharge_card` AS h, `' . _DB_PREFIX_ .'recharge_card` AS c
+                        WHERE h.id_customer = \''.$id_customer.'\'
+                        AND c.id_recharge_card = h.id_recharge_card';
+            return Db::getInstance()->executeS($sql);
+	}
         
 }
