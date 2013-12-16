@@ -38,6 +38,7 @@ class AttamayozcardModule extends Module {
     public function install() {
         if (!parent::install() ||    
             !$this->registerHook('displayHeader') ||
+                !$this->registerHook('displayPaymentTop') ||
             !$this->registerHook('displayCustomerAccount'))
                 return false;
         
@@ -310,6 +311,17 @@ class AttamayozcardModule extends Module {
             $this->context->controller->addCSS($this->_path.'attamayozcardmodule.css', 'all');
             $this->context->controller->addJS($this->_path.'attamayozcardmodule.js');
             return $this->display(__FILE__, 'attamayozcardmodule-header.tpl');
+    }
+    
+    /**
+    * hookPayment($params)
+    * Called in Front Office at Payment Screen - displays user this module as payment option
+    */
+    function hookDisplayPaymentTop($params)
+    {
+        global $smarty;
+
+        return $this->display(__FILE__, 'payment.tpl');
     }
 
 }

@@ -39,7 +39,7 @@ class AttamayozcardmodulePaymentModuleFrontController extends ModuleFrontControl
 		$this->display_column_left = false;
 		parent::initContent();
 
-		/*$cart = $this->context->cart;
+		$cart = $this->context->cart;
 		if (!$this->module->checkCurrency($cart))
 			Tools::redirect('index.php?controller=order');
 
@@ -56,7 +56,7 @@ class AttamayozcardmodulePaymentModuleFrontController extends ModuleFrontControl
 			'this_path_ssl' => Tools::getShopDomainSsl(true, true).__PS_BASE_URI__.'modules/'.$this->module->name.'/'
 		));
 
-		$this->setTemplate('payment_execution.tpl');*/
+		$this->setTemplate('payment_execution.tpl');
                 echo 'x';
 	}
 }

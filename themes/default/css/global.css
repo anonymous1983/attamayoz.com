@@ -547,7 +547,7 @@ div.star_hover a, div.star a:hover { background-position: 0 -32px }
 #header_logo {
 	position: absolute;
 	left:0;
-	top: 30px;
+	top: 8px;
 	z-index: 1;
 }
 
