@@ -50,3 +50,11 @@ $_MODULE['<{attamayozcardmodule}prestashop>recharge_card-account_6f16227b3e63487
 $_MODULE['<{attamayozcardmodule}prestashop>recharge_card-account_d3c79f652317ae080e7b1fd40822b1c6'] = 'Ajouter une carte de recharge';
 // Card code
 $_MODULE['<{attamayozcardmodule}prestashop>recharge_card-account_51763cbc33d12f7cf0b7adfc241de8bd'] = 'Code de la carte';
+// code
+$_MODULE['<{attamayozcardmodule}prestashop>recharge_card-account_c13367945d5d4c91047b3b50234aa7ab'] = 'Code';
+// date use
+$_MODULE['<{attamayozcardmodule}prestashop>recharge_card-account_50633b58f00523059d602854b0ba10c5'] = 'Date d\'utilisation';
+// date of use
+$_MODULE['<{attamayozcardmodule}prestashop>recharge_card-account_bff18673e31c765ee3aff8c05217f192'] = 'date d\'utilisation';
+// cost
+$_MODULE['<{attamayozcardmodule}prestashop>recharge_card-account_4e1566f0798fb3d6f350720cacd74446'] = 'coût';

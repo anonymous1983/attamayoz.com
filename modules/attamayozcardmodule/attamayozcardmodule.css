@@ -132,7 +132,17 @@
                 .rechargecard.row .col02{ width: 40%; padding-left:2%; padding-right:2%; }
                 .rechargecard.row .col03{ width: 20%; padding-left:1%; padding-right:1%; }
                 
+                
                 .row.rechargecard{ border-top: 1px solid #ccc;}
                 .row.rechargecard:first-child{ border-top: 0;}
                 
                 .row.rechargecard div{ padding-top: 10px; padding-bottom: 10px;}
+                
+                .table-header.row{ border: 0; color: #fff; text-transform: uppercase}
+                
+                .total { float: right;}
+                .total .text,
+                .total .chifre{ float: left;}
+                
+                .attamayozcardmodule_block_account .total .text{ width: 100px; text-transform:uppercase;}
+                .attamayozcardmodule_block_account .total .chifre{ width: 160px;}

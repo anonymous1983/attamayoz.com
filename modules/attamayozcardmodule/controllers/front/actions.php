@@ -53,7 +53,10 @@ class AttamayozcardmoduleActionsModuleFrontController extends ModuleFrontControl
                 $cardRecharge = $cardRechargeClass->isCodeUse($this->code);
                 
                 if($cardRecharge->numRows && !$cardRecharge->use){
-                    die($cardRechargeClass->setUse($cardRecharge->id_recharge_card, $this->id_customer));
+                    if($cardRechargeClass->setUse($cardRecharge->id_recharge_card, $this->id_customer))
+                        die(json_encode($cardRecharge));
+                    else
+                        die('0');
                 }
                     die('0');
 	}

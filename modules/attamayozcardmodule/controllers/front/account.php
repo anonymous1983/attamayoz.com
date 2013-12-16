@@ -31,10 +31,13 @@ class AttamayozcardmoduleAccountModuleFrontController extends ModuleFrontControl
 
 		if (Context::getContext()->customer->id)
 		{
-                    $cardRechargeObject = new cardRechargeClass();                    
+                    $cardRechargeObject = new cardRechargeClass();    
+                    $sommecost = $cardRechargeObject->getSumCardsForCustomer((int)Context::getContext()->customer->id);
+                    $sommecost = ($sommecost['sommecost'])? $sommecost['sommecost'] : 0;
                     $this->context->smarty->assign(array(
                         'id_customer' => Context::getContext()->customer->id,
-                        'rechargecards' => $cardRechargeObject->getListCardsForCustomer((int)Context::getContext()->customer->id, (int)Context::getContext()->language->id)
+                        'rechargecards' => $cardRechargeObject->getListCardsForCustomer((int)Context::getContext()->customer->id, (int)Context::getContext()->language->id),
+                        'sum' => $sommecost
                         ));
                     $this->setTemplate('recharge_card-account.tpl');
 		}

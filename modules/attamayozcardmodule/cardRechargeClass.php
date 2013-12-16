@@ -122,6 +122,7 @@ class cardRechargeClass extends ObjectModel
             if($object->numRows){
                 $object->id_recharge_card   = $result['id_recharge_card'];
                 $object->code               = $result['code'];
+                $object->cost               = $result['cost'];                
                 $object->use                = (int)$result['use'];
                 $object->date_use           = $result['date_use'];
                 $object->active             = (int)$result['active'];
@@ -151,10 +152,10 @@ class cardRechargeClass extends ObjectModel
                 'date_upd' => date('Y-m-d H:i:s', $now)
             );
             if(!Db::getInstance()->execute($sql))
-                return 'false 01';
+                return FALSE;
             if(!Db::getInstance()->insert('history_recharge_card',$data))
-                    return 'false 02';
-            return true;            
+                return FALSE;
+            return TRUE;            
         }
         
         
@@ -169,8 +170,24 @@ class cardRechargeClass extends ObjectModel
                 $sql = 'SELECT *
                         FROM `' . _DB_PREFIX_ .'history_recharge_card` AS h, `' . _DB_PREFIX_ .'recharge_card` AS c
                         WHERE h.id_customer = \''.$id_customer.'\'
-                        AND c.id_recharge_card = h.id_recharge_card';
+                        AND c.id_recharge_card = h.id_recharge_card 
+                        ORDER BY c.`date_use` DESC';
             return Db::getInstance()->executeS($sql);
+	}
+        
+        /**
+	* get SUM COST
+	*
+	* @return int
+	*/
+        public function getSumCardsForCustomer($id_customer, $id_lang)
+	{
+                $sql = 'SELECT SUM( cost ) AS sommecost
+                        FROM `' . _DB_PREFIX_ .'history_recharge_card` AS h, `' . _DB_PREFIX_ .'recharge_card` AS c
+                        WHERE h.id_customer = \''.$id_customer.'\'
+                        AND c.id_recharge_card = h.id_recharge_card 
+                        ORDER BY c.`date_use` DESC';
+            return Db::getInstance()->getRow($sql);
 	}
         
 }
