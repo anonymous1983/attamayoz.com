@@ -308,8 +308,7 @@ class AttamayozcardModule extends Module {
     
     public function hookDisplayHeader($params)
     {
-            $this->context->controller->addCSS($this->_path.'attamayozcardmodule.css', 'all');
-            $this->context->controller->addJS($this->_path.'attamayozcardmodule.js');
+            $this->context->controller->addCSS($this->_path.'views/css/attamayozcardmodule.css', 'all');
             return $this->display(__FILE__, 'attamayozcardmodule-header.tpl');
     }
     
