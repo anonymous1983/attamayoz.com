@@ -38,7 +38,8 @@ class AttamayozcardModule extends Module {
     public function install() {
         if (!parent::install() ||    
             !$this->registerHook('displayHeader') ||
-                !$this->registerHook('displayPaymentTop') ||
+            !$this->registerHook('displayPaymentTop') ||
+            !$this->registerHook('paymentReturn') ||
             !$this->registerHook('displayCustomerAccount'))
                 return false;
         
@@ -74,13 +75,35 @@ class AttamayozcardModule extends Module {
                 ENGINE=' . _MYSQL_ENGINE_ . ' default CHARSET=utf8';
         
         if (!Db::getInstance()->execute($sql))
-                return false;
+                return false;       
         
-        if (Db::getInstance()->execute('SHOW COLUMNS FROM `' . _DB_PREFIX_ . 'product` LIKE \'total_balance\'')){
+        if (Db::getInstance()->execute('SHOW COLUMNS FROM `' . _DB_PREFIX_ . 'customer` LIKE \'points\'')){
             if(Db::getInstance()->NumRows() == 0){
                 // Update Table Customer
                 // Add total_balance
-                $sql = 'ALTER TABLE  `' . _DB_PREFIX_ . 'product` ADD  `total_balance` FLOAT NOT NULL DEFAULT 0';
+                $sql = 'ALTER TABLE  `' . _DB_PREFIX_ . 'customer` ADD  `points` FLOAT NOT NULL DEFAULT 0';
+
+                if (!Db::getInstance()->execute($sql))
+                        return false;
+            }
+        }
+        
+        if (Db::getInstance()->execute('SHOW COLUMNS FROM `' . _DB_PREFIX_ . 'customer` LIKE \'bonnus\'')){
+            if(Db::getInstance()->NumRows() == 0){
+                // Update Table Customer
+                // Add total_balance
+                $sql = 'ALTER TABLE  `' . _DB_PREFIX_ . 'customer` ADD  `bonnus` FLOAT NOT NULL DEFAULT 0';
+
+                if (!Db::getInstance()->execute($sql))
+                        return false;
+            }
+        }
+        
+        if (Db::getInstance()->execute('SHOW COLUMNS FROM `' . _DB_PREFIX_ . 'customer` LIKE \'total_balance\'')){
+            if(Db::getInstance()->NumRows() == 0){
+                // Update Table Customer
+                // Add total_balance
+                $sql = 'ALTER TABLE  `' . _DB_PREFIX_ . 'customer` ADD  `total_balance` FLOAT NOT NULL DEFAULT 0';
 
                 if (!Db::getInstance()->execute($sql))
                         return false;
@@ -298,10 +321,12 @@ class AttamayozcardModule extends Module {
     public function hookDisplayCustomerAccount($params)
     {
         $context = Context::getContext();
-        $id_customer = $context->cart->id_customer;       
+        $id_customer = $context->cart->id_customer;   
+        $cardRechargeObject = new cardRechargeClass();
         $this->context->smarty->assign(array(
                         'in_footer'     => false,
-                        'id_customer'   => $id_customer
+                        'id_customer'   => $id_customer,
+                        'total_balance' => $cardRechargeObject->getTotalBalance($id_customer)
 		));
 	return $this->display(__FILE__, 'my-account.tpl');
     }
@@ -322,8 +347,39 @@ class AttamayozcardModule extends Module {
         
         if (!$this->checkCurrency($params['cart']))
             return;
-
+        
+        $context = Context::getContext();
+        $id_customer = $context->cart->id_customer;
+        $cardRechargeObject = new cardRechargeClass();
+        $this->context->smarty->assign(array(
+                        'total_balance' => $cardRechargeObject->getTotalBalance($id_customer)
+		));
         return $this->display(__FILE__, 'payment.tpl');
+    }
+    
+    
+    public function hookPaymentReturn($params)
+    {
+            /*if (!$this->active)
+                    return;
+
+            $state = $params['objOrder']->getCurrentState();
+            if ($state == Configuration::get('PS_OS_BANKWIRE') || $state == Configuration::get('PS_OS_OUTOFSTOCK'))
+            {
+                    $this->smarty->assign(array(
+                            'total_to_pay' => Tools::displayPrice($params['total_to_pay'], $params['currencyObj'], false),
+                            'bankwireDetails' => Tools::nl2br($this->details),
+                            'bankwireAddress' => Tools::nl2br($this->address),
+                            'bankwireOwner' => $this->owner,
+                            'status' => 'ok',
+                            'id_order' => $params['objOrder']->id
+                    ));
+                    if (isset($params['objOrder']->reference) && !empty($params['objOrder']->reference))
+                            $this->smarty->assign('reference', $params['objOrder']->reference);
+            }
+            else
+                    $this->smarty->assign('status', 'failed');*/
+            return $this->display(__FILE__, 'payment_return.tpl');
     }
     
     public function checkCurrency($cart)

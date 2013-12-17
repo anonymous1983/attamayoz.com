@@ -59,7 +59,9 @@ class AttamayozcardmodulePaymentModuleFrontController extends ModuleFrontControl
 		);
                 
 		$this->context->smarty->assign($smarty);
-                echo '<pre>'; print_r($smarty);
+                //echo '<pre>'; print_r($smarty);
+                //$this->context->controller->addCSS($this->_path.'views/css/attamayozcardmodule.css', 'all');
+                $this->setTemplate('payment_execution.tpl');
                 
 	}
 }

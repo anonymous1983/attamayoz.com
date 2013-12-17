@@ -14,3 +14,4 @@
          {l s='My recharge card' mod='attamayozcardmodule'}
      </a>
  </li>
+ <li class="total_balance"> <span class="text_">{l s='Votre Total de Carte de recharge ou Bonnus' mod='attamayozcardmodule'} = </span><span class="total_">{$total_balance} {$currency->suffix}</span></li>

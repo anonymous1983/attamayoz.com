@@ -6,6 +6,7 @@
 *  @copyright  2013-2014 karar-consulting SA
 *  @license    http://karar-consulting.com
 *  International Registered Trademark & Property of karar-consulting SA
+*
 *}
 <script type="text/javascript">
     $('document').ready(function()
@@ -44,13 +45,13 @@
                 });
             });
 </script>
+
 {capture name=path}
     <a href="{$link->getPageLink('my-account', true)|escape:'htmlall':'UTF-8'}">
         {l s='My account' mod='attamayozcardmodule'}</a>
     <span class="navigation-pipe">{$navigationPipe}</span>{l s='My recharge cards' mod='attamayozcardmodule'}
 {/capture}
 {include file="$tpl_dir./breadcrumb.tpl"}
-
 <div id="attamayozcardmodule_block_addRechargeCard">
 
     <form enctype="multipart/form-data" class="attamayozcardmodule_form_addRechargeCard form_custom" name="attamayozcardmodule_form_addRechargeCard"  id="attamayozcardmodule_form_addRechargeCard" method="post" action="/index.php?action=add">

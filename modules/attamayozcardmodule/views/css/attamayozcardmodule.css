@@ -1,6 +1,9 @@
 #module-attamayozcardmodule-account #left_column {display:none}
-#module-attamayozcardmodule-account #center_column {width:757px}
+#module-attamayozcardmodule-account #center_column,
+#module-attamayozcardmodule-payment #center_column{width:757px}
 
+.total_balance{ color: #020202; font-size: 14px; }
+.total_balance .total_{ font-weight: bold; }
 
 .form_custom{
     margin: 0 0 20px 0;

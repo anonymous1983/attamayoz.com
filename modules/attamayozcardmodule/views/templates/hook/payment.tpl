@@ -36,4 +36,5 @@
     <a href="{$link->getModuleLink('attamayozcardmodule', 'account')|escape:'htmlall':'UTF-8'}" title="{l s='Recharge card' mod='attamayozcardmodule'}">
         {l s='Recharger mon compte' mod='attamayozcardmodule'}
     </a>
+        <span class="total_balance"> <span class="text_">{l s='Votre Total de Carte de recharge ou Bonnus' mod='attamayozcardmodule'} = </span><span class="total_">{$total_balance} {$currency->suffix}</span></span>
 </p>

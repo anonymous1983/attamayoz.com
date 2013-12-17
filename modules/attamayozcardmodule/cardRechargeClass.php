@@ -145,18 +145,66 @@ class cardRechargeClass extends ObjectModel
                     `use` = '. $use .',
                     `date_use` = \''. date('Y-m-d H:i:s', $now) .'\'
                     WHERE `id_recharge_card` ='.$id_recharge_card;
+            if(!Db::getInstance()->execute($sql))
+                return FALSE;
+            
             $data = array(
                 'id_recharge_card'   => $id_recharge_card,
                 'id_customer' => $id_customer,
                 'date_add' => date('Y-m-d H:i:s', $now),
                 'date_upd' => date('Y-m-d H:i:s', $now)
             );
-            if(!Db::getInstance()->execute($sql))
-                return FALSE;
             if(!Db::getInstance()->insert('history_recharge_card',$data))
                 return FALSE;
+
             return TRUE;            
         }
+        
+        /**
+	* get Total Balance
+	*
+	* @return float
+	*/
+        public function getTotalBalance($id_customer) {
+            $customer = $this->getCustomer($id_customer);
+            return $customer->total_balance;
+        }
+        
+        /**
+	* get Customer
+	*
+	* @return Object
+	*/
+        public function getCustomer($id_customer) {
+            $object = new stdClass();
+            $customer = Db::getInstance()->getRow('SELECT * FROM `' . _DB_PREFIX_ .'customer` WHERE `id_customer` = '.$id_customer);
+                $object->points = $customer['points'];
+                $object->bonnus = $customer['bonnus'];
+                $object->total_balance = $customer['total_balance'];
+                $object->customer = $customer;
+            return $object;
+        }
+        
+        
+        /**
+	* set use
+	*
+	* @return object
+	*/
+        public function updateCustomerTotalBalance($id_recharge_card, $id_customer, $use=1) {
+            $total_balance = Db::getInstance()->getValue('SELECT `total_balance` FROM `' . _DB_PREFIX_ .'customer` WHERE `id_customer` = '.$id_customer);
+            $cost = Db::getInstance()->getValue('SELECT `cost` FROM `' . _DB_PREFIX_ . $this->table .'` WHERE `id_recharge_card` = '.$id_recharge_card);
+            
+                $data = array('total_balance' => ((float)$total_balance + (float)$cost));
+                $where = 'id_customer = '.$id_customer;
+                if(!Db::getInstance()->update('customer', $data , $where))
+                    return FALSE;
+            
+            $object = new stdClass();
+            $object->total_balance = ((float)$total_balance + (float)$cost);
+            return $object;
+        }
+        
         
         
         

@@ -51,10 +51,12 @@ class AttamayozcardmoduleActionsModuleFrontController extends ModuleFrontControl
 		//$product = new Product($this->id_customer);
                 $cardRechargeClass = new cardRechargeClass();
                 $cardRecharge = $cardRechargeClass->isCodeUse($this->code);
-                
                 if($cardRecharge->numRows && !$cardRecharge->use){
-                    if($cardRechargeClass->setUse($cardRecharge->id_recharge_card, $this->id_customer))
+                    if($cardRechargeClass->setUse($cardRecharge->id_recharge_card, $this->id_customer)){
+                        if($total_balance = $cardRechargeClass->updateCustomerTotalBalance($cardRecharge->id_recharge_card, $this->id_customer))
+                            $cardRecharge->total_balance = $total_balance->total_balance;
                         die(json_encode($cardRecharge));
+                    }
                     else
                         die('0');
                 }
