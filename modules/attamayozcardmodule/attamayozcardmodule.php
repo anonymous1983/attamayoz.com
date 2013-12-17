@@ -319,8 +319,34 @@ class AttamayozcardModule extends Module {
     function hookDisplayPaymentTop($params)
     {
         global $smarty;
+        
+        if (!$this->checkCurrency($params['cart']))
+            return;
 
         return $this->display(__FILE__, 'payment.tpl');
+    }
+    
+    public function checkCurrency($cart)
+    {
+            $currency_order = new Currency($cart->id_currency);
+            $currencies_module = $currency_order->getCurrency($cart->id_currency);
+
+            if (is_array($currencies_module))
+                    foreach ($currencies_module as $currency_module)
+                            if ($currency_order->id == $currency_module['id_currency'])
+                                    return true;
+            return false;
+    }
+        
+    public function getProductTreeType($id_product){
+        
+        if (!Configuration::get('ATT_MOD_INSTALL'))
+            return false;
+        
+        $sql = 'SELECT id_tree_type
+                FROM `' . _DB_PREFIX_ . 'product`
+                WHERE id_product = \''.$id_product.'\'';
+        return Db::getInstance()->getValue($sql);
     }
 
 }

@@ -28,10 +28,12 @@ class AttamayozModule extends Module {
 
         $this->displayName = $this->l('Attamayoz');
         $this->description = $this->l('Management module points for users');
-
         $this->confirmUninstall = $this->l('Are you sure you want to uninstall?');
 
-        if (!Configuration::get('ATT_BLOCK_TREE_TYPE_NAME'))
+        $config = Configuration::getMultiple(array('ATT_MOD_NAME', 'ATT_BLOCK_TREE_TYPE_NAME'));
+        if (isset($config['ATT_MOD_INSTALL']))
+            $this->att_mod_intall = $config['ATT_MOD_INSTALL'];
+        if (!isset($config['ATT_BLOCK_TREE_TYPE_NAME']))
             $this->warning = $this->l('No name provided');
     }
 
@@ -41,12 +43,11 @@ class AttamayozModule extends Module {
                 !$this->registerHook('actionProductSave') ||
                 !$this->registerHook('actionUpdateQuantity') ||
                 !$this->registerHook('actionProductListOverride') ||
-                //!$this->registerHook('actionProductAttributeUpdate') ||
                 !$this->registerHook('displayAdminProductsExtra') ||
-                //!$this->registerHook('productTab') ||
-                //!$this->registerHook('productTabContent') ||
+                !Configuration::updateValue('ATT_MOD_INSTALL', 1) ||
                 !Configuration::updateValue('ATT_BLOCK_TREE_TYPE_NAME', NULL))
-                return false;
+            return false;
+        
         // Crreat Table Tree_type
         $sql = 'CREATE TABLE IF NOT EXISTS ' . _DB_PREFIX_ . 'tree_type (
                 `id_tree_type` int(11) NOT NULL AUTO_INCREMENT,
@@ -62,24 +63,20 @@ class AttamayozModule extends Module {
                 `date_upd` datetime NOT NULL,
                 PRIMARY KEY (`id_tree_type`))
                 ENGINE=' . _MYSQL_ENGINE_ . ' default CHARSET=utf8';
-        
+
         if (!Db::getInstance()->execute($sql))
-                return false;
+            return false;
         
-        
-        
-        if (Db::getInstance()->execute('SHOW COLUMNS FROM `' . _DB_PREFIX_ . 'product` LIKE \'id_tree_type\'')){
-            if(Db::getInstance()->NumRows() == 0){
+        if (Db::getInstance()->execute('SHOW COLUMNS FROM `' . _DB_PREFIX_ . 'product` LIKE \'id_tree_type\'')) {
+            if (Db::getInstance()->NumRows() == 0) {
                 // Update Table Product
                 // Add id_tree_type
                 $sql = 'ALTER TABLE  `' . _DB_PREFIX_ . 'product` ADD  `id_tree_type` INT NOT NULL';
 
                 if (!Db::getInstance()->execute($sql))
-                        return false;
+                    return false;
             }
         }
-        
-        
         return true;
     }
 
@@ -87,6 +84,7 @@ class AttamayozModule extends Module {
         if (!parent::uninstall() ||
                 //!Db::getInstance()->execute('DROP TABLE ' . _DB_PREFIX_ . 'tree_type') ||
                 //!Db::getInstance()->execute('ALTER TABLE  ' . _DB_PREFIX_ . 'product DROP  id_tree_type') ||
+                !Configuration::deleteByName('ATT_MOD_INSTALL') ||
                 !Configuration::deleteByName('ATT_BLOCK_TREE_TYPE_NAME'))
             return false;
         return true;
@@ -276,77 +274,69 @@ class AttamayozModule extends Module {
         );
         return $helper;
     }
-    
-    public function hookDisplayProductTab($params)
-    {
-       return $this->display(__FILE__, 'tets.tpl'); 
+
+    public function hookDisplayProductTab($params) {
+        return $this->display(__FILE__, 'tets.tpl');
     }
-    
-    public function hookActionProductSave($params)
-    {
-        $id_product = (int)$params['id_product'];
+
+    public function hookActionProductSave($params) {
+        $id_product = (int) $params['id_product'];
         $treetype = Tools::getValue("treetype");
         $tree_type_current_id = Tools::getValue("tree_type_current_id");
-        
-        if ($treetype && ($treetype != $tree_type_current_id)){
+
+        if ($treetype != $tree_type_current_id) {
             $sql = '
-                UPDATE `' . _DB_PREFIX_ . 'product` SET `id_tree_type` = '. $treetype .'
-                WHERE `att_db_product`.`id_product` ='.$id_product;
+                UPDATE `' . _DB_PREFIX_ . 'product` SET `id_tree_type` = ' . $treetype . '
+                WHERE `att_db_product`.`id_product` =' . $id_product;
 
             Db::getInstance()->execute($sql);
         }
         return true;
     }
-    
-    public function hookActionUpdateQuantity($params)
-    {
+
+    public function hookActionUpdateQuantity($params) {
         //die('hookActionUpdateQuantity');
         return true;
     }
-    
-    public function hookActionProductListOverride($params)
-    {
+
+    public function hookActionProductListOverride($params) {
         //die('hookActionProductListOverride');
         return true;
     }
-    public function hookActionProductAttributeUpdate($params)
-    {
+
+    public function hookActionProductAttributeUpdate($params) {
         //die('hookActionProductAttributeUpdate');
         return true;
     }
-    
+
     public function hookDisplayAdminProductsExtra($params) {
         global $smarty;
-        
+
         $context = Context::getContext();
         $id_product = $context->controller->tpl_form_vars['id_product'];
-        
+
         $tree_type = new treeTypeClass();
         $tree_type_list = $tree_type->getList();
         $tree_type_current_id = $tree_type->getIdTypeTreeForProduct($id_product);
-        
+
         $this->context->smarty->assign(array(
-                        'id_product' => $id_product,
-                        'tree_type_list' => $tree_type_list,
-                        'tree_type_current_id' => $tree_type_current_id[0]['id_tree_type'],
-			'context' => $context
-		));
-        
+            'id_product' => $id_product,
+            'tree_type_list' => $tree_type_list,
+            'tree_type_current_id' => $tree_type_current_id[0]['id_tree_type'],
+            'context' => $context
+        ));
+
         return $this->display(__FILE__, 'views/templates/admin/productTabTreeTypeContent.tpl');
     }
-    
-    
-    
+
     //Method will be called while performing the "ProductTab" hook (tab buttons generation):
-    public function hookProductTab($params)
-    {
+    public function hookProductTab($params) {
         global $smarty;
         //Call the template containing the HTML-code ?? our button
         return $this->display(__FILE__, 'views/admin/productTab.tpl');
     }
- 
-    public function hookProductTabContent($params)
-    {
+
+    public function hookProductTabContent($params) {
         global $smarty;
         //Transfer the new tab content into template via smatry
         //( it is optional as far as the content can be assigned directly in the template)
@@ -355,8 +345,6 @@ class AttamayozModule extends Module {
         // Call the template containing the HTML-code of our new tab content:
         return $this->display(__FILE__, 'views/admin/productTabContent.tpl');
     }
-    
-    
 
 }
 
