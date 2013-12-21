@@ -27,45 +27,55 @@
 /**
  * @since 1.5.0
  */
-class AttamayozcardmoduleValidationModuleFrontController extends ModuleFrontController
+class CardRechargeBonusValidationModuleFrontController extends ModuleFrontController
 {
-	/**
-	 * @see FrontController::postProcess()
-	 */
 	public function postProcess()
 	{
+            
 		$cart = $this->context->cart;
-                $order = new Order($cart->id_shop);
-                /*print_r($order);
-                print_r($cart);
-                die('<pre>xxxx');*/
-		/*if ($cart->id_customer == 0 || $cart->id_address_delivery == 0 || $cart->id_address_invoice == 0 || !$this->module->active)
+
+		if ($cart->id_customer == 0 || $cart->id_address_delivery == 0 || $cart->id_address_invoice == 0 || !$this->module->active)
 			Tools::redirect('index.php?controller=order&step=1');
 
 		// Check that this payment option is still available in case the customer changed his address just before the end of the checkout process
 		$authorized = false;
 		foreach (Module::getPaymentModules() as $module)
-			if ($module['name'] == 'bankwire')
+			if ($module['name'] == 'cardRechargeBonus')
 			{
 				$authorized = true;
 				break;
 			}
+
 		if (!$authorized)
 			die($this->module->l('This payment method is not available.', 'validation'));
 
 		$customer = new Customer($cart->id_customer);
+
 		if (!Validate::isLoadedObject($customer))
 			Tools::redirect('index.php?controller=order&step=1');
 
 		$currency = $this->context->currency;
 		$total = (float)$cart->getOrderTotal(true, Cart::BOTH);
-		$mailVars = array(
-			'{bankwire_owner}' => Configuration::get('BANK_WIRE_OWNER'),
-			'{bankwire_details}' => nl2br(Configuration::get('BANK_WIRE_DETAILS')),
-			'{bankwire_address}' => nl2br(Configuration::get('BANK_WIRE_ADDRESS'))
-		);
 
-		$this->module->validateOrder($cart->id, Configuration::get('PS_OS_BANKWIRE'), $total, $this->module->displayName, NULL, $mailVars, (int)$currency->id, false, $customer->secure_key);*/
-		Tools::redirect('index.php?controller=order-confirmation&id_cart='.$cart->id.'&id_module='.$this->module->id.'&id_order='.$this->module->currentOrder.'&key='.$customer->secure_key);
+		/*$mailVars =	array(
+			'{cheque_name}' => Configuration::get('CHEQUE_NAME'),
+			'{cheque_address}' => Configuration::get('CHEQUE_ADDRESS'),
+			'{cheque_address_html}' => str_replace("\n", '<br />', Configuration::get('CHEQUE_ADDRESS')));*/
+                
+                //$mailVars =	array();
+        /**
+	* Validate an order in database
+	* Function called from a payment module
+	*
+	* @param integer $id_cart Value
+	* @param integer $id_order_state Value
+	* @param float $amount_paid Amount really paid by customer (in the default currency)
+	* @param string $payment_method Payment method (eg. 'Credit card')
+	* @param string $message Message to attach to order
+	*/
+                die(Configuration::get('PS_OS_CARD_RECHARGE_BONUS'));
+                $this->module->validateOrder((int)$cart->id, Configuration::get('PS_OS_CARD_RECHARGE_BONUS'), $total, $this->module->displayName, NULL, array(), (int)$currency->id, false, $customer->secure_key);
+                die('CardRechargeBonusValidationModuleFrontController');
+		Tools::redirect('index.php?controller=order-confirmation&id_cart='.(int)$cart->id.'&id_module='.(int)$this->module->id.'&id_order='.$this->module->currentOrder.'&key='.$customer->secure_key);
 	}
 }

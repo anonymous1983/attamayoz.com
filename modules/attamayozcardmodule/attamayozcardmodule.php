@@ -38,8 +38,6 @@ class AttamayozcardModule extends Module {
     public function install() {
         if (!parent::install() ||    
             !$this->registerHook('displayHeader') ||
-            !$this->registerHook('displayPaymentTop') ||
-            !$this->registerHook('paymentReturn') ||
             !$this->registerHook('displayCustomerAccount'))
                 return false;
         
@@ -335,63 +333,6 @@ class AttamayozcardModule extends Module {
     {
             $this->context->controller->addCSS($this->_path.'views/css/attamayozcardmodule.css', 'all');
             return $this->display(__FILE__, 'attamayozcardmodule-header.tpl');
-    }
-    
-    /**
-    * hookPayment($params)
-    * Called in Front Office at Payment Screen - displays user this module as payment option
-    */
-    function hookDisplayPaymentTop($params)
-    {
-        global $smarty;
-        
-        if (!$this->checkCurrency($params['cart']))
-            return;
-        
-        $context = Context::getContext();
-        $id_customer = $context->cart->id_customer;
-        $cardRechargeObject = new cardRechargeClass();
-        $this->context->smarty->assign(array(
-                        'total_balance' => $cardRechargeObject->getTotalBalance($id_customer)
-		));
-        return $this->display(__FILE__, 'payment.tpl');
-    }
-    
-    
-    public function hookPaymentReturn($params)
-    {
-            /*if (!$this->active)
-                    return;
-
-            $state = $params['objOrder']->getCurrentState();
-            if ($state == Configuration::get('PS_OS_BANKWIRE') || $state == Configuration::get('PS_OS_OUTOFSTOCK'))
-            {
-                    $this->smarty->assign(array(
-                            'total_to_pay' => Tools::displayPrice($params['total_to_pay'], $params['currencyObj'], false),
-                            'bankwireDetails' => Tools::nl2br($this->details),
-                            'bankwireAddress' => Tools::nl2br($this->address),
-                            'bankwireOwner' => $this->owner,
-                            'status' => 'ok',
-                            'id_order' => $params['objOrder']->id
-                    ));
-                    if (isset($params['objOrder']->reference) && !empty($params['objOrder']->reference))
-                            $this->smarty->assign('reference', $params['objOrder']->reference);
-            }
-            else
-                    $this->smarty->assign('status', 'failed');*/
-            return $this->display(__FILE__, 'payment_return.tpl');
-    }
-    
-    public function checkCurrency($cart)
-    {
-            $currency_order = new Currency($cart->id_currency);
-            $currencies_module = $currency_order->getCurrency($cart->id_currency);
-
-            if (is_array($currencies_module))
-                    foreach ($currencies_module as $currency_module)
-                            if ($currency_order->id == $currency_module['id_currency'])
-                                    return true;
-            return false;
     }
         
     public function getProductTreeType($id_product){
