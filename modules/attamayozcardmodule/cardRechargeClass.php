@@ -211,7 +211,7 @@ class cardRechargeClass extends ObjectModel
         /**
 	* is use card
 	*
-	* @return object
+	* @return object SQL
 	*/
         public function getListCardsForCustomer($id_customer, $id_lang)
 	{
