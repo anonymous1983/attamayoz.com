@@ -1,0 +1,8 @@
+#module-cardrechargebonus-payment #center_column,
+#module-cardRechargeBonus-validation #center_column{width:757px}
+
+.payment_module .total_balance{ display: block; padding-top: 7px;}
+.payment_module.cant_use .total_balance{ padding-top: 20px;}
+.total_balance{ color: #020202; font-size: 14px; }
+.total_balance .total_.error{ color: #990000; border: 0; padding: 0; margin: 0; background: none; font-weight: bold; }
+.payment_module.cant_use a.error{ color: #990000; border: 0; padding: 0; margin: 0; background: none; }

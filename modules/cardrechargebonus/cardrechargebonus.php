@@ -28,19 +28,19 @@ if (!defined('_PS_VERSION_'))
 	exit;
 include_once _PS_OVERRIDE_DIR_ . 'order/OrderState.php';
 
-class CardRechargeBonus extends PaymentModule
+class Cardrechargebonus extends PaymentModule
 {
 	private $_html = '';
 	private $_postErrors = array();
         private $_ps_os_card_recharge_bonus = 1;
 
-        public $cardRechargeBonusName;
+        public $cardrechargebonusName;
 	public $address;
 	public $extra_mail_vars;
 
 	public function __construct()
 	{
-		$this->name = 'cardRechargeBonus';
+		$this->name = 'cardrechargebonus';
 		$this->tab = 'payments_gateways';
 		$this->version = '2.3';
 		$this->author = 'PrestaShop';
@@ -51,7 +51,7 @@ class CardRechargeBonus extends PaymentModule
 
 		$config = Configuration::getMultiple(array('CARTE_BONUS_CHOICE'));
 		if (isset($config['CARTE_BONUS_CHOICE']))
-			$this->cardRechargeBonusName = $config['CARTE_BONUS_CHOICE'];
+			$this->cardrechargebonusName = $config['CARTE_BONUS_CHOICE'];
 
 		parent::__construct();
 
@@ -71,7 +71,7 @@ class CardRechargeBonus extends PaymentModule
                 
                 
                 
-                // add order state cardRechargeBonus
+                // add order state cardrechargebonus
                 $sql = 'SELECT COUNT(  `module_name` ) FROM `' . _DB_PREFIX_ . 'order_state` WHERE `module_name` = \''.$this->name.'\'';
                 if (!Db::getInstance()->getValue($sql)){
                     if($order_status->add($this->context->language->id))
@@ -96,7 +96,12 @@ class CardRechargeBonus extends PaymentModule
 
 	public function install()
 	{
-		if (!parent::install() || !$this->registerHook('displayHeader') || !$this->registerHook('payment') || !$this->registerHook('paymentReturn') || !Configuration::updateValue('PS_OS_CARD_RECHARGE_BONUS', $this->_ps_os_card_recharge_bonus))
+		if (!parent::install() ||
+                        !$this->registerHook('displayHeader') ||
+                        !$this->registerHook('payment') ||
+                        !$this->registerHook('paymentReturn') ||
+                        !$this->registerHook('displayOrderConfirmation') ||                        
+                        !Configuration::updateValue('PS_OS_CARD_RECHARGE_BONUS', $this->_ps_os_card_recharge_bonus))
 			return false;
 		return true;
 	}
@@ -110,23 +115,26 @@ class CardRechargeBonus extends PaymentModule
         
         public function hookDisplayHeader($params)
         {
-               $this->context->controller->addCSS($this->_path.'views/css/cardRechargeBonus.css', 'all');
+               $this->context->controller->addCSS($this->_path.'views/css/cardrechargebonus.css', 'all');
         }
 
 	public function hookPayment($params)
 	{
 		if (!$this->active)
 			return;
-		if (!$this->cardRechargeBonusCurrency($params['cart']))
+		if (!$this->cardrechargebonusCurrency($params['cart']))
 			return;
                 
                 $cardRechargeClass = new cardRechargeClass();
-                
+                $total_balance = $cardRechargeClass->getTotalBalance($params['cart']->id_customer);
+                $order_total = $this->context->cart->getOrderTotal();
 		$this->smarty->assign(array(
 			'this_path' => $this->_path,
 			'this_path_crb' => $this->_path,
 			'this_path_ssl' => Tools::getShopDomainSsl(true, true).__PS_BASE_URI__.'modules/'.$this->name.'/',
-                        'total_balance' => $cardRechargeClass->getTotalBalance($params['cart']->id_customer)
+                        'total_balance' => $cardRechargeClass->getTotalBalance($params['cart']->id_customer),
+                        'order_total' => $this->context->cart->getOrderTotal(),
+                        'can_use_crb' =>  ($total_balance > $order_total )
 		));
 		return $this->display(__FILE__, 'payment.tpl');
 	}
@@ -153,7 +161,7 @@ class CardRechargeBonus extends PaymentModule
 		return $this->display(__FILE__, 'payment_return.tpl');
 	}
 
-	public function cardRechargeBonusCurrency($cart)
+	public function cardrechargebonusCurrency($cart)
 	{
 		$currency_order = new Currency((int)($cart->id_currency));
 		$currencies_module = $this->getCurrency((int)$cart->id_currency);
@@ -164,4 +172,24 @@ class CardRechargeBonus extends PaymentModule
 					return true;
 		return false;
 	}
+        public function hookDisplayOrderConfirmation($params){
+            echo '<pre>';
+//            echo 'Order id : '.$params['objOrder']->id;
+//            echo '----cartProducts----';
+//            print_r($params['cartProducts']);
+//            echo '<br>'.'----total_to_pay----';
+//            print_r($params['total_to_pay']);
+//            echo '<br>'.'----currency----';
+//            print_r($params['currency']);
+//            echo '<br>'.'----objOrder----'.'<br>';
+//            print_r($params['objOrder']);
+//            echo '<br>'.'----currencyObj----'.'<br>';
+//            print_r($params['currencyObj']);
+            
+            foreach ($params['cartProducts'] as $product ){
+                echo '<br>'.$product['product_name'];
+            }
+            die('-------------');
+            
+        }
 }

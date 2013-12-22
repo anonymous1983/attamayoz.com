@@ -23,10 +23,10 @@
 *  International Registered Trademark & Property of PrestaShop SA
 *}
 
-{capture name=path}{l s='Check payment' mod='cardRechargeBonus'}{/capture}
+{capture name=path}{l s='Check payment' mod='cardrechargebonus'}{/capture}
 {include file="$tpl_dir./breadcrumb.tpl"}
 
-<h2>{l s='Order summary' mod='cardRechargeBonus'}</h2>
+<h2>{l s='Order summary' mod='cardrechargebonus'}</h2>
 
 {assign var='current_step' value='payment'}
 {include file="$tpl_dir./order-steps.tpl"}
@@ -35,45 +35,45 @@
 	<p class="warning">{l s='Your shopping cart is empty.'}</p>
 {else}
 
-<h3>{l s='Check payment' mod='cardRechargeBonus'}</h3>
-<form action="{$link->getModuleLink('cardRechargeBonus', 'validation', [], true)|escape:'html'}" method="post">
+<h3>{l s='Card recharge or bonus payment' mod='cardrechargebonus'}</h3>
+<form action="{$link->getModuleLink('cardrechargebonus', 'validation', [], true)|escape:'html'}" method="post">
 	<p>
-		<img src="{$this_path_crb}/img/carte_de_recharge.jpg" alt="{l s='Check' mod='cardRechargeBonus'}" width="86" height="49" style="float:left; margin: 0px 10px 5px 0px;" />
-		{l s='You have chosen to pay by card Recharge or Bonus.' mod='cardRechargeBonus'}
+		<img src="{$this_path_crb}/img/carte_de_recharge.jpg" alt="{l s='Check' mod='cardrechargebonus'}" width="86" height="49" style="float:left; margin: 0px 10px 5px 0px;" />
+		{l s='You have chosen to pay by card Recharge or Bonus' mod='cardrechargebonus'}.
 		<br/><br />
-		{l s='Here is a short summary of your order:' mod='cardRechargeBonus'}
+		{l s='Here is a short summary of your order' mod='cardrechargebonus'}:
 	</p>
 	<p style="margin-top:20px;">
-		- {l s='The total amount of your order comes to:' mod='cardRechargeBonus'}
+		- {l s='The total amount of your order comes to' mod='cardrechargebonus'}:
 		<span id="amount" class="price">{displayPrice price=$total}</span>
 		{if $use_taxes == 1}
-			{l s='(tax incl.)' mod='cardRechargeBonus'}
+			{l s='(tax incl.)' mod='cardrechargebonus'}
 		{/if}
 	</p>
 	<p>
 		-
 		{if isset($currencies) && $currencies|@count > 1}
-			{l s='We accept several currencies to receive payments by card Recharge or Bonus.' mod='cardRechargeBonus'}
+			{l s='We accept several currencies to receive payments by cards Recharge or Bonus' mod='cardrechargebonus'}.
 			<br /><br />
-			{l s='Choose one of the following:' mod='cardRechargeBonus'}
+			{l s='Choose one of the following' mod='cardrechargebonus'} :
 			<select id="currency_payement" name="currency_payement" onchange="setCurrency($('#currency_payement').val());">
 			{foreach from=$currencies item=currency}
 				<option value="{$currency.id_currency}" {if isset($currencies) && $currency.id_currency == $cust_currency}selected="selected"{/if}>{$currency.name}</option>
 			{/foreach}
 			</select>
 		{else}
-			{l s='We allow the following currencies to be sent by card Recharge or Bonus:' mod='cardRechargeBonus'}&nbsp;<b>{$currencies.0.name}</b>
+			{l s='We allow the following currencies to be sent by card Recharge or Bonus' mod='cardrechargebonus'} :&nbsp;<b>{$currencies.0.name}</b>
 			<input type="hidden" name="currency_payement" value="{$currencies.0.id_currency}" />
 		{/if}
 	</p>
 	<p>
-		{l s='Check owner and address information will be displayed on the next page.' mod='cardRechargeBonus'}
-		<br /><br />
-		<b>{l s='Please confirm your order by clicking \'I confirm my order\'' mod='cardRechargeBonus'}.</b>
+		
+		
+		<b>{l s='Please confirm your order by clicking \'I confirm my order\'' mod='cardrechargebonus'}.</b>
 	</p>
 	<p class="cart_navigation" id="cart_navigation">
-		<input type="submit" value="{l s='I confirm my order' mod='cardRechargeBonus'}" class="exclusive_large"/>
-		<a href="{$link->getPageLink('order', true, NULL, "step=3")|escape:'html'}" class="button_large">{l s='Other payment methods' mod='cardRechargeBonus'}</a>
+		<input type="submit" value="{l s='I confirm my order' mod='cardrechargebonus'}" class="exclusive_large"/>
+		<a href="{$link->getPageLink('order', true, NULL, "step=3")|escape:'html'}" class="button_large">{l s='Other payment methods' mod='cardrechargebonus'}</a>
 	</p>
 </form>
 {/if}

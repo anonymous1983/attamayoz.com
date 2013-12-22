@@ -23,15 +23,15 @@
 *  International Registered Trademark & Property of PrestaShop SA
 *}
 
-<p class="payment_module">
-        <img src="{$this_path_crb}/img/carte_de_recharge.jpg" alt="{l s='Pay by card Recharge or Bonus.' mod='cardRechargeBonus'}" width="86" height="49" />
-	<a href="{$link->getModuleLink('cardRechargeBonus', 'payment', [], true)|escape:'html'}" title="{l s='Pay by card Recharge or Bonus.' mod='cardRechargeBonus'}">
-		{l s='Pay by card Recharge or Bonus.' mod='cardRechargeBonus'}
-	</a>
-        {if (Module::isInstalled('attamayozcardmodule')) }
-            <a href="{$link->getModuleLink('attamayozcardmodule', 'account')|escape:'htmlall':'UTF-8'}" title="{l s='Recharge card' mod='attamayozcardmodule'}">
-                {l s='Recharge my account' mod='attamayozcardmodule'}
-            </a>
-            <span class="total_balance"> <span class="text_">{l s='Your Total Card recharge and Bonus ' mod='attamayozcardmodule'} : </span><span class="total_">{$total_balance} {$currency->suffix}</span></span>
-        {/if}
-</p>
+{if $status == 'ok'}
+	<p>{l s='Your order on %s is complete.' sprintf=$shop_name mod='cardrechargebonus'}
+		<br /><br />{l s='An email has been sent to you with this information.' mod='cardrechargebonus'}
+		<br /><br /><strong>{l s='Your order will be sent.' mod='cardrechargebonus'}</strong>
+		<br /><br />{l s='For any questions or for further information, please contact our' mod='cardrechargebonus'} <a href="{$link->getPageLink('contact', true)|escape:'html'}">{l s='customer service department.' mod='cardrechargebonus'}</a>.
+	</p>
+{else}
+	<p class="warning">
+		{l s='We have noticed that there is a problem with your order. If you think this is an error, you can contact our' mod='cardrechargebonus'} 
+		<a href="{$link->getPageLink('contact', true)|escape:'html'}">{l s='customer service department.' mod='cardrechargebonus'}</a>.
+	</p>
+{/if}

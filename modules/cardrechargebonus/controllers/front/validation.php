@@ -27,7 +27,7 @@
 /**
  * @since 1.5.0
  */
-class CardRechargeBonusValidationModuleFrontController extends ModuleFrontController
+class CardrechargebonusValidationModuleFrontController extends ModuleFrontController
 {
 	public function postProcess()
 	{
@@ -40,7 +40,7 @@ class CardRechargeBonusValidationModuleFrontController extends ModuleFrontContro
 		// Check that this payment option is still available in case the customer changed his address just before the end of the checkout process
 		$authorized = false;
 		foreach (Module::getPaymentModules() as $module)
-			if ($module['name'] == 'cardRechargeBonus')
+			if ($module['name'] == 'cardrechargebonus')
 			{
 				$authorized = true;
 				break;

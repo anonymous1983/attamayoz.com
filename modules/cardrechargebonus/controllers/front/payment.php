@@ -27,7 +27,7 @@
 /**
  * @since 1.5.0
  */
-class CardRechargeBonusPaymentModuleFrontController extends ModuleFrontController
+class CardrechargebonusPaymentModuleFrontController extends ModuleFrontController
 {
 	public $ssl = true;
 
@@ -40,7 +40,7 @@ class CardRechargeBonusPaymentModuleFrontController extends ModuleFrontControlle
 		parent::initContent();
 
 		$cart = $this->context->cart;
-		if (!$this->module->cardRechargeBonusCurrency($cart))
+		if (!$this->module->cardrechargebonusCurrency($cart))
 			Tools::redirect('index.php?controller=order');
 
 		$this->context->smarty->assign(array(

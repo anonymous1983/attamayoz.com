@@ -32,25 +32,25 @@ include(dirname(__FILE__).'/../../config/config.inc.php');
 Tools::displayFileAsDeprecated();
 
 include(dirname(__FILE__).'/../../header.php');
-include(dirname(__FILE__).'/cardRechargeBonus.php');
+include(dirname(__FILE__).'/cardrechargebonus.php');
 
 $context = Context::getContext();
 $cart = $context->cart;
-$cardRechargeBonus = new CardRechargeBonus();
+$cardrechargebonus = new Cardrechargebonus();
 
-if ($cart->id_customer == 0 OR $cart->id_address_delivery == 0 OR $cart->id_address_invoice == 0 OR !$cardRechargeBonus->active)
+if ($cart->id_customer == 0 OR $cart->id_address_delivery == 0 OR $cart->id_address_invoice == 0 OR !$cardrechargebonus->active)
 	Tools::redirect('index.php?controller=order&step=1');
 
-// CardRechargeBonus that this payment option is still available in case the customer changed his address just before the end of the cardRechargeBonusout process
+// Cardrechargebonus that this payment option is still available in case the customer changed his address just before the end of the cardrechargebonusout process
 $authorized = false;
 foreach (Module::getPaymentModules() as $module)
-	if ($module['name'] == 'cardRechargeBonus')
+	if ($module['name'] == 'cardrechargebonus')
 	{
 		$authorized = true;
 		break;
 	}
 if (!$authorized)
-	die($cardRechargeBonus->l('This payment method is not available.', 'validation'));
+	die($cardrechargebonus->l('This payment method is not available.', 'validation'));
 
 $customer = new Customer($cart->id_customer);
 
@@ -60,8 +60,8 @@ if (!Validate::isLoadedObject($customer))
 $currency = $context->currency;
 $total = (float)$cart->getOrderTotal(true, Cart::BOTH);
 
-$cardRechargeBonus->validateOrder((int)$cart->id, Configuration::get('PS_OS_CARD_RECHARGE_BONUS'), $total, $cardRechargeBonusName->displayName, NULL, array(), (int)$currency->id, false, $customer->secure_key);
+$cardrechargebonus->validateOrder((int)$cart->id, Configuration::get('PS_OS_CARD_RECHARGE_BONUS'), $total, $cardrechargebonusName->displayName, NULL, array(), (int)$currency->id, false, $customer->secure_key);
 
-Tools::redirect('index.php?controller=order-confirmation&id_cart='.(int)($cart->id).'&id_module='.(int)($cardRechargeBonus->id).'&id_order='.$cardRechargeBonusName->currentOrder.'&key='.$customer->secure_key);
+Tools::redirect('index.php?controller=order-confirmation&id_cart='.(int)($cart->id).'&id_module='.(int)($cardrechargebonus->id).'&id_order='.$cardrechargebonusName->currentOrder.'&key='.$customer->secure_key);
 
 
