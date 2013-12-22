@@ -146,7 +146,14 @@ class OrderState extends OrderStateCore
 	 	return !($this->unremovable);
 	}
         
-        public function add()
+        
+        /**
+	* Add new state
+	*
+	* @param integer $id_lang Language id for state name
+	* @return boolean availability
+	*/
+        public function add($id_lang)
 	{
                 $data = array(
                     'invoice' =>  $this->invoice,
@@ -154,8 +161,26 @@ class OrderState extends OrderStateCore
                     'color' =>  $this->color,
                     'paid' =>  $this->paid
                 );
-                return Db::getInstance(_PS_USE_SQL_SLAVE_)->insert($this->table,$data);
+                
+                if( !Db::getInstance(_PS_USE_SQL_SLAVE_)->insert($this->table,$data))
+                    return false;
+                
+                $id_order_state = $this->getIdOrderState($this->module_name);
+                
+                return $id_order_state;                
 	}
+        
+        /**
+	* Get id_order_state from module_name
+	*
+	* @param string $module_name name of module for state name
+	* @return integer id
+	*/
+        public function getIdOrderState($module_name)
+	{
+            $sql = 'SELECT `id_order_state` FROM `' . _DB_PREFIX_ . 'order_state` WHERE `module_name` = \''.$this->module_name.'\'';
+            return Db::getInstance()->getValue($sql);
+        }
 }
 
 

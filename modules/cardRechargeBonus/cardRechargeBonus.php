@@ -61,22 +61,24 @@ class CardRechargeBonus extends PaymentModule
                 
                 
                 $order_status = new OrderState();
-                $order_status->invoice= 1;
+                $order_status->invoice = 1;
+                $order_status->send_email = 1;
                 $order_status->module_name = $this->name;
                 $order_status->color = 'LimeGreen';
                 $order_status->paid = 1;
+                $order_status->name = $this->l('Card Recharge or Bonus');
+                $order_status->template = 'payment';
+                
+                
                 
                 // add order state cardRechargeBonus
                 $sql = 'SELECT COUNT(  `module_name` ) FROM `' . _DB_PREFIX_ . 'order_state` WHERE `module_name` = \''.$this->name.'\'';
-                if (!Db::getInstance()->getValue($sql))
-                        $order_status->add();
-                
-                $sql = 'SELECT `id_order_state` FROM `' . _DB_PREFIX_ . 'order_state` WHERE `module_name` = \''.$this->name.'\'';
-                $result = Db::getInstance()->getValue($sql);
-                if ($result)
-                    $this->_ps_os_card_recharge_bonus = $result;
-                        
-		
+                if (!Db::getInstance()->getValue($sql)){
+                    if($order_status->add($this->context->language->id))
+                        $this->_ps_os_card_recharge_bonus = $result;
+                }else{
+                    $this->_ps_os_card_recharge_bonus = $order_status->getIdOrderState($this->name);
+                }
 
 		/*if ((!isset($this->chequeName) || !isset($this->address) || empty($this->chequeName) || empty($this->address)))
 			$this->warning = $this->l('"To the order of" and "address" must be configured before using this module.');
@@ -94,7 +96,7 @@ class CardRechargeBonus extends PaymentModule
 
 	public function install()
 	{
-		if (!parent::install() || !$this->registerHook('payment') || !$this->registerHook('paymentReturn') || !Configuration::updateValue('PS_OS_CARD_RECHARGE_BONUS', $this->_ps_os_card_recharge_bonus))
+		if (!parent::install() || !$this->registerHook('displayHeader') || !$this->registerHook('payment') || !$this->registerHook('paymentReturn') || !Configuration::updateValue('PS_OS_CARD_RECHARGE_BONUS', $this->_ps_os_card_recharge_bonus))
 			return false;
 		return true;
 	}
@@ -105,6 +107,11 @@ class CardRechargeBonus extends PaymentModule
 			return false;
 		return true;
 	}
+        
+        public function hookDisplayHeader($params)
+        {
+               $this->context->controller->addCSS($this->_path.'views/css/cardRechargeBonus.css', 'all');
+        }
 
 	public function hookPayment($params)
 	{
@@ -121,13 +128,11 @@ class CardRechargeBonus extends PaymentModule
 			'this_path_ssl' => Tools::getShopDomainSsl(true, true).__PS_BASE_URI__.'modules/'.$this->name.'/',
                         'total_balance' => $cardRechargeClass->getTotalBalance($params['cart']->id_customer)
 		));
-                $this->context->controller->addCSS($this->_path.'views/css/cardRechargeBonus.css', 'all');
 		return $this->display(__FILE__, 'payment.tpl');
 	}
 
 	public function hookPaymentReturn($params)
 	{
-            die('x');
 		if (!$this->active)
 			return;
 
@@ -144,6 +149,7 @@ class CardRechargeBonus extends PaymentModule
 		}
 		else
 			$this->smarty->assign('status', 'failed');
+                
 		return $this->display(__FILE__, 'payment_return.tpl');
 	}
 
