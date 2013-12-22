@@ -32,8 +32,9 @@ class CardRechargeBonus extends PaymentModule
 {
 	private $_html = '';
 	private $_postErrors = array();
+        private $_ps_os_card_recharge_bonus = 1;
 
-	public $cardRechargeBonusName;
+        public $cardRechargeBonusName;
 	public $address;
 	public $extra_mail_vars;
 
@@ -65,11 +66,16 @@ class CardRechargeBonus extends PaymentModule
                 $order_status->color = 'LimeGreen';
                 $order_status->paid = 1;
                 
+                // add order state cardRechargeBonus
                 $sql = 'SELECT COUNT(  `module_name` ) FROM `' . _DB_PREFIX_ . 'order_state` WHERE `module_name` = \''.$this->name.'\'';
-                
                 if (!Db::getInstance()->getValue($sql))
                         $order_status->add();
                 
+                $sql = 'SELECT `id_order_state` FROM `' . _DB_PREFIX_ . 'order_state` WHERE `module_name` = \''.$this->name.'\'';
+                $result = Db::getInstance()->getValue($sql);
+                if ($result)
+                    $this->_ps_os_card_recharge_bonus = $result;
+                        
 		
 
 		/*if ((!isset($this->chequeName) || !isset($this->address) || empty($this->chequeName) || empty($this->address)))
@@ -88,7 +94,7 @@ class CardRechargeBonus extends PaymentModule
 
 	public function install()
 	{
-		if (!parent::install() || !$this->registerHook('payment') || !$this->registerHook('paymentReturn') || !Configuration::updateValue('PS_OS_CARD_RECHARGE_BONUS', 1))
+		if (!parent::install() || !$this->registerHook('payment') || !$this->registerHook('paymentReturn') || !Configuration::updateValue('PS_OS_CARD_RECHARGE_BONUS', $this->_ps_os_card_recharge_bonus))
 			return false;
 		return true;
 	}

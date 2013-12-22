@@ -73,9 +73,8 @@ class CardRechargeBonusValidationModuleFrontController extends ModuleFrontContro
 	* @param string $payment_method Payment method (eg. 'Credit card')
 	* @param string $message Message to attach to order
 	*/
-                die(Configuration::get('PS_OS_CARD_RECHARGE_BONUS'));
+                
                 $this->module->validateOrder((int)$cart->id, Configuration::get('PS_OS_CARD_RECHARGE_BONUS'), $total, $this->module->displayName, NULL, array(), (int)$currency->id, false, $customer->secure_key);
-                die('CardRechargeBonusValidationModuleFrontController');
 		Tools::redirect('index.php?controller=order-confirmation&id_cart='.(int)$cart->id.'&id_module='.(int)$this->module->id.'&id_order='.$this->module->currentOrder.'&key='.$customer->secure_key);
 	}
 }

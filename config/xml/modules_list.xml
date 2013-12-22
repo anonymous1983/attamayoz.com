@@ -39,6 +39,10 @@
 		<module name="cashondelivery"/>
 		<module name="cheque"/>
 		<module name="crossselling"/>
+		<module name="dashactivity"/>
+		<module name="dashtrends"/>
+		<module name="dashgoals"/>
+		<module name="dashproducts"/>
 		<module name="dateofdelivery"/>
 		<module name="editorial"/>
 		<module name="favoriteproducts"/>
