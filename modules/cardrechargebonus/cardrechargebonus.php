@@ -27,6 +27,9 @@
 if (!defined('_PS_VERSION_'))
 	exit;
 include_once _PS_OVERRIDE_DIR_ . 'order/OrderState.php';
+include_once _PS_MODULE_DIR_ . 'attamayozmodule/treeTypeClass.php';
+//include_once _PS_MODULE_DIR_ . 'attamayozcardmodule/cardRechargeClass.php';
+
 
 class Cardrechargebonus extends PaymentModule
 {
@@ -96,6 +99,8 @@ class Cardrechargebonus extends PaymentModule
 
 	public function install()
 	{
+            
+                
 		if (!parent::install() ||
                         !$this->registerHook('displayHeader') ||
                         !$this->registerHook('payment') ||
@@ -103,6 +108,47 @@ class Cardrechargebonus extends PaymentModule
                         !$this->registerHook('displayOrderConfirmation') ||                        
                         !Configuration::updateValue('PS_OS_CARD_RECHARGE_BONUS', $this->_ps_os_card_recharge_bonus))
 			return false;
+                
+                // Crreat Table Tree
+                $sql = 'CREATE TABLE IF NOT EXISTS ' . _DB_PREFIX_ . 'tree (
+                        `id_tree` int(11) NOT NULL AUTO_INCREMENT,
+                        `id_customer` int(11) NOT NULL,
+                        `id_product` int(11) NOT NULL,
+                        `id_order` int(11) NOT NULL,
+                        `id_order_detail` int(11) NOT NULL,
+                        `id_tree_type` int(11) NOT NULL,
+                        `cost` float NOT NULL,
+                        `tree_children` varchar(250) NOT NULL,
+                        `children` int(11) NOT NULL,
+                        `current_children` int(11) NOT NULL,  
+                        `active` tinyint(4) NOT NULL DEFAULT 1,
+                        `deleted` tinyint(4) NOT NULL DEFAULT 0,
+                        `archive` tinyint(4) NOT NULL DEFAULT 0,
+                        `date_add` datetime NOT NULL,
+                        `date_upd` datetime NOT NULL,
+                        PRIMARY KEY (`id_tree`))
+                        ENGINE=' . _MYSQL_ENGINE_ . ' default CHARSET=utf8';
+
+                if (!Db::getInstance()->execute($sql))
+                    return false;
+                
+//                $now = time();
+//                $object = new stdClass();
+//                $object->id_customer = 0;
+//                $object->id_order = 0;
+//                $object->id_order_detail = 0;
+//                $object->id_product = 0;
+//                $object->date = date('Y-m-d H:i:s', $now);
+//                
+//                $c = json_encode(array($object,$object,$object,$object));
+//                die($c);
+//                $d = array('tree_type' => $c);
+//                Db::getInstance()->insert('tree',$d);
+//                
+//                echo '<pre>';
+//                print_r(json_decode($c));
+//                die('x');
+                
 		return true;
 	}
 
@@ -173,7 +219,8 @@ class Cardrechargebonus extends PaymentModule
 		return false;
 	}
         public function hookDisplayOrderConfirmation($params){
-            echo '<pre>';
+//                echo '<pre>';
+//                print_r($params['objOrder']);
 //            echo 'Order id : '.$params['objOrder']->id;
 //            echo '----cartProducts----';
 //            print_r($params['cartProducts']);
@@ -182,14 +229,81 @@ class Cardrechargebonus extends PaymentModule
 //            echo '<br>'.'----currency----';
 //            print_r($params['currency']);
 //            echo '<br>'.'----objOrder----'.'<br>';
-//            print_r($params['objOrder']);
+           //print_r($params['objOrder']);
 //            echo '<br>'.'----currencyObj----'.'<br>';
 //            print_r($params['currencyObj']);
             
-            foreach ($params['cartProducts'] as $product ){
-                echo '<br>'.$product['product_name'];
-            }
-            die('-------------');
+            // Payment
+            $this->payer($params['objOrder']->id_customer,$params['objOrder']->total_paid_real);
+            // Bonus
+            $this->calculBonus($params);
             
+
+
         }
+        
+        
+        public function calculBonus ($params){
+           foreach ($params['cartProducts'] as $product ){
+                $now = time();
+                $treeTypeClass = new treeTypeClass($product['id_tree_type']);
+                
+                $data = array(
+                    'id_customer' => $params['objOrder']->id_customer,
+                    'id_product' => $product['product_id'],
+                    'id_order' => $product['id_order'],
+                    'id_order_detail' => $product['id_order_detail'],
+                    'id_tree_type' => $product['id_tree_type'],
+                    'children' => $treeTypeClass->children,
+                    'date_add' => date('Y-m-d H:i:s', $now)
+                );
+                if(!Db::getInstance()->insert('tree',$data))
+                    return false;
+                
+                $this->updateCustomerTotalBalanceWithBonus($treeTypeClass->cost, $params['objOrder']->id_customer);
+            } 
+        }
+
+
+        /**
+	* updateCustomerTotalBalanceWithBonus 
+	*
+	* @return object
+	*/
+        public function updateCustomerTotalBalanceWithBonus($bonus, $id_customer, $use=1) {
+            $total_balance = Db::getInstance()->getValue('SELECT `total_balance` FROM `' . _DB_PREFIX_ .'customer` WHERE `id_customer` = '.$id_customer);
+            $_bonnus = Db::getInstance()->getValue('SELECT `bonnus` FROM `' . _DB_PREFIX_ .'customer` WHERE `id_customer` = '.$id_customer);
+            $cost = $bonus;
+                $data = array(
+                    'bonnus' =>  ((float)$_bonnus + (float)$bonus),
+                    'total_balance' => ((float)$total_balance + (float)$cost)
+                    );
+                $where = 'id_customer = '.$id_customer;
+                if(!Db::getInstance()->update('customer', $data , $where))
+                    return FALSE;
+            
+            $object = new stdClass();
+            $object->total_balance = ((float)$total_balance + (float)$cost);
+            return $object;
+        }
+        
+        /**
+	* updateCustomerTotalBalanceWithBonus 
+	*
+	* @return object
+	*/
+        public function payer($id_customer, $total_paid_real) {
+            $total_balance = Db::getInstance()->getValue('SELECT `total_balance` FROM `' . _DB_PREFIX_ .'customer` WHERE `id_customer` = '.$id_customer);
+                $data = array(
+                    'total_balance' => ((float)$total_balance -(float)$total_paid_real)
+                    );
+                $where = 'id_customer = '.$id_customer;
+                if(!Db::getInstance()->update('customer', $data , $where))
+                    return FALSE;
+            
+            $object = new stdClass();
+            $object->total_balance = ((float)$total_balance + (float)$cost);
+            return $object;
+        }
+        
 }

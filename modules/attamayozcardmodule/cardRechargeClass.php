@@ -187,7 +187,7 @@ class cardRechargeClass extends ObjectModel
         
         
         /**
-	* set use
+	* updateCustomerTotalBalance
 	*
 	* @return object
 	*/
