@@ -112,13 +112,15 @@ class Cardrechargebonus extends PaymentModule
                 // Crreat Table Tree
                 $sql = 'CREATE TABLE IF NOT EXISTS ' . _DB_PREFIX_ . 'tree (
                         `id_tree` int(11) NOT NULL AUTO_INCREMENT,
+                        `id_tree_parent` int(11) NOT NULL DEFAULT 0,
                         `id_customer` int(11) NOT NULL,
                         `id_product` int(11) NOT NULL,
                         `id_order` int(11) NOT NULL,
                         `id_order_detail` int(11) NOT NULL,
                         `id_tree_type` int(11) NOT NULL,
+                        `position` int(11) NOT NULL,
                         `cost` float NOT NULL,
-                        `tree_children` varchar(250) NOT NULL,
+                        `tree_children` TEXT,
                         `children` int(11) NOT NULL,
                         `current_children` int(11) NOT NULL,  
                         `active` tinyint(4) NOT NULL DEFAULT 1,
@@ -236,32 +238,150 @@ class Cardrechargebonus extends PaymentModule
             // Payment
             $this->payer($params['objOrder']->id_customer,$params['objOrder']->total_paid_real);
             // Bonus
-            $this->calculBonus($params);
+            $this->setHistoryAndCalculBonus($params);
             
 
 
         }
         
         
-        public function calculBonus ($params){
-           foreach ($params['cartProducts'] as $product ){
-                $now = time();
+        public function setHistoryAndCalculBonus ($params){
+            foreach ($params['cartProducts'] as $product ){
+               
                 $treeTypeClass = new treeTypeClass($product['id_tree_type']);
+
+                $treeParent = $this->getParentTreeWhereCanAddBranch($params['objOrder']->id_customer, $treeTypeClass->id_tree_type);
+
+                if(count($treeParent) != 0)
+                    // add new parent tree
+                    $this->newChildrenTree($params, $product, $treeTypeClass, $treeParent);
+                else
+                    // add new parent tree
+                    $this->newParentTree($params, $product, $treeTypeClass);
                 
-                $data = array(
-                    'id_customer' => $params['objOrder']->id_customer,
-                    'id_product' => $product['product_id'],
-                    'id_order' => $product['id_order'],
-                    'id_order_detail' => $product['id_order_detail'],
-                    'id_tree_type' => $product['id_tree_type'],
-                    'children' => $treeTypeClass->children,
-                    'date_add' => date('Y-m-d H:i:s', $now)
-                );
-                if(!Db::getInstance()->insert('tree',$data))
-                    return false;
-                
-                $this->updateCustomerTotalBalanceWithBonus($treeTypeClass->cost, $params['objOrder']->id_customer);
+                //$this->updateCustomerTotalBalanceWithBonus($treeTypeClass->cost, $params['objOrder']->id_customer);
+                return TRUE;
             } 
+        }
+        
+        
+        /**
+	* newParentTree 
+	*
+        * Add new parent tree
+	* @return bool
+	*/
+        function newParentTree($params, $product, $treeTypeClass){
+            $now = time();
+             $data = array(
+                'id_customer' => $params['objOrder']->id_customer,
+                'id_product' => $product['product_id'],
+                'id_order' => $product['id_order'],
+                'id_order_detail' => $product['id_order_detail'],
+                'id_tree_type' => $product['id_tree_type'],
+                'children' => $treeTypeClass->children,
+                'date_add' => date('Y-m-d H:i:s', $now),
+            );
+            Db::getInstance()->insert('tree',$data);
+            
+            // Update Bonnus Cusomer
+            $sql = 'UPDATE `' . _DB_PREFIX_ .'customer` AS C  SET  C.bonnus= (C.bonnus + '.$treeTypeClass->cost.') , C.total_balance= (C.total_balance + '.$treeTypeClass->cost.') , C.date_upd = \''.date('Y-m-d H:i:s', $now).'\'  
+                    WHERE 
+                    C.id_customer = '.$params['objOrder']->id_customer;
+            Db::getInstance()->query($sql);
+            
+            return TRUE;
+        }
+        
+        
+        /**
+	* newChildrenTree 
+	*
+        * Add new children tree
+	* @return bool
+	*/
+        function newChildrenTree($params, $product, $treeTypeClass, $treeParent){
+            $now = time();
+            // Add Tree Children
+            $data = array(
+                'id_tree_parent' => $treeParent[0]['id_tree'],
+                'id_customer' => $params['objOrder']->id_customer,
+                'id_product' => $product['product_id'],
+                'id_order' => $product['id_order'],
+                'id_order_detail' => $product['id_order_detail'],
+                'id_tree_type' => $product['id_tree_type'],
+                'date_add' => date('Y-m-d H:i:s', $now),
+            );
+            Db::getInstance()->insert('tree',$data);
+            
+            // Update Tree Children
+            $sql = 'UPDATE `' . _DB_PREFIX_ .'tree` AS T  SET  T.current_children= (T.current_children + 1) , T.date_upd = \''.date('Y-m-d H:i:s', $now).'\'  WHERE T.id_tree = '.$treeParent[0]['id_tree'];
+            Db::getInstance()->query($sql);
+            
+            
+            // Update Bonnus Cusomer
+            $sql2 = 'UPDATE `' . _DB_PREFIX_ .'customer` AS C  SET  C.bonnus= (C.bonnus + '.$treeTypeClass->cost.') , C.total_balance= (C.total_balance + '.$treeTypeClass->cost.') , C.date_upd = \''.date('Y-m-d H:i:s', $now).'\'  
+                    WHERE 
+                    C.id_customer IN (
+                        SELECT  `id_customer` 
+                        FROM  `' . _DB_PREFIX_ .'tree` 
+                        WHERE  `id_tree` = '.$treeParent[0]['id_tree'].'
+                        OR  `id_tree_parent` = '.$treeParent[0]['id_tree'].'
+                    )
+                    ';
+            Db::getInstance()->query($sql2);
+            
+            return TRUE;
+        }
+        
+        /**
+	* getTreeCustomerParent 
+	*
+        * search tree of parent id_customer an id_tree_type
+	* @return Array
+	*/
+        function getTreeCustomerParent($id_customer, $id_tree_type){
+            $object = new stdClass();
+            $object->result_tab = Db::getInstance()->executeS('SELECT * FROM `' . _DB_PREFIX_ .'tree` WHERE `id_customer` = '.$id_customer.' AND `id_tree_type` = '.$id_tree_type.' AND `id_tree_parent` = 0');
+            $object->result_obj = Db::getInstance()->execute('SELECT * FROM `' . _DB_PREFIX_ .'tree` WHERE `id_customer` = '.$id_customer.' AND `id_tree_type` = '.$id_tree_type.' AND `id_tree_parent` = 0');
+            return $object;
+        }
+        
+        /**
+	* getAllParentTreeFromIdTreeType 
+	*
+        * search all tree prent form id_tree_type
+	* @return Array
+	*/
+        function getAllParentTreeFromIdTreeType($id_tree_type){
+            $object = new stdClass();
+            $object->result_tab = Db::getInstance()->executeS('SELECT * FROM `' . _DB_PREFIX_ .'tree` WHERE `id_tree_type` = '.$id_tree_type.' AND `id_tree_parent` = 0');
+            $object->result_obj = Db::getInstance()->execute('SELECT * FROM `' . _DB_PREFIX_ .'tree` WHERE `id_tree_type` = '.$id_tree_type.' AND `id_tree_parent` = 0');
+            return $object;
+        }
+        
+        /**
+	* getParentTreeWhereCanAddBranch 
+	*
+        * recherche first tree where i can add branche
+	* @return Array
+	*/
+        function getParentTreeWhereCanAddBranch($id_customer, $id_tree_type){
+            $sql = '
+                SELECT * 
+                FROM  `' . _DB_PREFIX_ .'tree` AS T
+                WHERE T.id_tree_parent =0
+                AND T.id_tree_type = '.$id_tree_type.'
+                AND T.`id_customer` != '.$id_customer.'
+                AND (
+                    SELECT COUNT( * ) AS CONT
+                    FROM  `' . _DB_PREFIX_ .'tree` AS TC
+                    WHERE TC.id_tree_parent = T.id_tree
+                ) NOT 
+                IN ( 0, T.children ) 
+                LIMIT 1
+                ';
+            return Db::getInstance()->executeS($sql);
         }
 
 
@@ -271,8 +391,10 @@ class Cardrechargebonus extends PaymentModule
 	* @return object
 	*/
         public function updateCustomerTotalBalanceWithBonus($bonus, $id_customer, $use=1) {
-            $total_balance = Db::getInstance()->getValue('SELECT `total_balance` FROM `' . _DB_PREFIX_ .'customer` WHERE `id_customer` = '.$id_customer);
-            $_bonnus = Db::getInstance()->getValue('SELECT `bonnus` FROM `' . _DB_PREFIX_ .'customer` WHERE `id_customer` = '.$id_customer);
+            
+            $customer = Db::getInstance()->getRow('SELECT * FROM `' . _DB_PREFIX_ .'customer` WHERE `id_customer` = '.$id_customer);
+            $total_balance = $customer['total_balance'];
+            $_bonnus = $customer['bonnus'];
             $cost = $bonus;
                 $data = array(
                     'bonnus' =>  ((float)$_bonnus + (float)$bonus),
@@ -293,15 +415,22 @@ class Cardrechargebonus extends PaymentModule
 	* @return object
 	*/
         public function payer($id_customer, $total_paid_real) {
-            $total_balance = Db::getInstance()->getValue('SELECT `total_balance` FROM `' . _DB_PREFIX_ .'customer` WHERE `id_customer` = '.$id_customer);
+            $customer = Db::getInstance()->getRow('SELECT * FROM `' . _DB_PREFIX_ .'customer` WHERE `id_customer` = '.$id_customer);
+            $total_balance = (float)$customer['total_balance'] -(float)$total_paid_real;
+            $total_recharge = (float)$customer['total_recharge'] - (float)$total_paid_real;
+            if($total_recharge < 0)
+                $total_recharge = 0;
+            
                 $data = array(
-                    'total_balance' => ((float)$total_balance -(float)$total_paid_real)
+                    'total_recharge' => $total_recharge,
+                    'total_balance' => $total_balance
                     );
                 $where = 'id_customer = '.$id_customer;
                 if(!Db::getInstance()->update('customer', $data , $where))
                     return FALSE;
             
             $object = new stdClass();
+            
             $object->total_balance = ((float)$total_balance + (float)$cost);
             return $object;
         }

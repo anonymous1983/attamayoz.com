@@ -29,6 +29,7 @@ class Tree extends ObjectModel
 	/** @var integer Object tree id*/
 	public $id_tree;
         
+        public $id_tree_parent;
 	public $id_customer;
 	public $id_product;
         public $id_order;
@@ -53,6 +54,7 @@ class Tree extends ObjectModel
 		'primary' => 'id_tree',
 		'multilang' => false,
 		'fields' => array(
+                        'id_tree_parent' =>	array('type' => self::TYPE_INT, 'validate' => 'isUnsignedId'),
 			'id_customer' =>	array('type' => self::TYPE_INT, 'validate' => 'isUnsignedId'),
                         'id_product' =>         array('type' => self::TYPE_INT, 'validate' => 'isUnsignedId'),
                         'id_order' =>           array('type' => self::TYPE_INT, 'validate' => 'isUnsignedId'),

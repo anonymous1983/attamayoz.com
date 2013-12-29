@@ -170,6 +170,26 @@ class cardRechargeClass extends ObjectModel
             return $customer->total_balance;
         }
         
+         /**
+	* get Total Recharge
+	*
+	* @return float
+	*/
+        public function getTotalRecharge($id_customer) {
+            $customer = $this->getCustomer($id_customer);
+            return $customer->total_recharge;
+        }
+        
+        /**
+	* get Total Bonnus
+	*
+	* @return float
+	*/
+        public function getTotalBonnus($id_customer) {
+            $customer = $this->getCustomer($id_customer);
+            return $customer->bonnus;
+        }
+        
         /**
 	* get Customer
 	*
@@ -180,7 +200,8 @@ class cardRechargeClass extends ObjectModel
             $customer = Db::getInstance()->getRow('SELECT * FROM `' . _DB_PREFIX_ .'customer` WHERE `id_customer` = '.$id_customer);
                 $object->points = $customer['points'];
                 $object->bonnus = $customer['bonnus'];
-                $object->total_balance = $customer['total_balance'];
+                $object->total_recharge = $customer['total_recharge'];
+                $object->total_balance = $customer['total_balance'];                
                 $object->customer = $customer;
             return $object;
         }
@@ -192,16 +213,21 @@ class cardRechargeClass extends ObjectModel
 	* @return object
 	*/
         public function updateCustomerTotalBalance($id_recharge_card, $id_customer, $use=1) {
-            $total_balance = Db::getInstance()->getValue('SELECT `total_balance` FROM `' . _DB_PREFIX_ .'customer` WHERE `id_customer` = '.$id_customer);
+            //$total_balance = Db::getInstance()->getValue('SELECT `total_balance` FROM `' . _DB_PREFIX_ .'customer` WHERE `id_customer` = '.$id_customer);
+            $cutomer = getCustomer($id_customer);
+            $total_recharge = $cutomer->total_recharge;
+            $total_balance = $cutomer->total_balance;
             $cost = Db::getInstance()->getValue('SELECT `cost` FROM `' . _DB_PREFIX_ . $this->table .'` WHERE `id_recharge_card` = '.$id_recharge_card);
-            
-                $data = array('total_balance' => ((float)$total_balance + (float)$cost));
+            $object = new stdClass();
+            $object->total_recharge = ((float)$total_recharge + (float)$cost);
+            $object->total_balance = ((float)$total_balance + (float)$cost);
+                $data = array(
+                    'total_recharge' => $object->total_recharge,
+                    'total_balance' => $object->total_balance
+                );
                 $where = 'id_customer = '.$id_customer;
                 if(!Db::getInstance()->update('customer', $data , $where))
                     return FALSE;
-            
-            $object = new stdClass();
-            $object->total_balance = ((float)$total_balance + (float)$cost);
             return $object;
         }
         

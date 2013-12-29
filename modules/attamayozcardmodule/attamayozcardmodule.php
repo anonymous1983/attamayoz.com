@@ -97,6 +97,17 @@ class AttamayozcardModule extends Module {
             }
         }
         
+        if (Db::getInstance()->execute('SHOW COLUMNS FROM `' . _DB_PREFIX_ . 'customer` LIKE \'total_recharge\'')){
+            if(Db::getInstance()->NumRows() == 0){
+                // Update Table Customer
+                // Add total_balance
+                $sql = 'ALTER TABLE  `' . _DB_PREFIX_ . 'customer` ADD  `total_recharge` FLOAT NOT NULL DEFAULT 0';
+
+                if (!Db::getInstance()->execute($sql))
+                        return false;
+            }
+        }
+        
         if (Db::getInstance()->execute('SHOW COLUMNS FROM `' . _DB_PREFIX_ . 'customer` LIKE \'total_balance\'')){
             if(Db::getInstance()->NumRows() == 0){
                 // Update Table Customer
@@ -107,6 +118,8 @@ class AttamayozcardModule extends Module {
                         return false;
             }
         }
+        
+        
         
         return true;
     }
@@ -324,7 +337,9 @@ class AttamayozcardModule extends Module {
         $this->context->smarty->assign(array(
                         'in_footer'     => false,
                         'id_customer'   => $id_customer,
-                        'total_balance' => $cardRechargeObject->getTotalBalance($id_customer)
+                        'total_balance' => $cardRechargeObject->getTotalBalance($id_customer),
+                        'total_recharge' => $cardRechargeObject->getTotalRecharge($id_customer),
+                        'bonnus' => $cardRechargeObject->getTotalBonnus($id_customer),
 		));
 	return $this->display(__FILE__, 'my-account.tpl');
     }
