@@ -214,16 +214,16 @@ class cardRechargeClass extends ObjectModel
 	*/
         public function updateCustomerTotalBalance($id_recharge_card, $id_customer, $use=1) {
             //$total_balance = Db::getInstance()->getValue('SELECT `total_balance` FROM `' . _DB_PREFIX_ .'customer` WHERE `id_customer` = '.$id_customer);
-            $cutomer = getCustomer($id_customer);
+            $cutomer = $this->getCustomer($id_customer);
             $total_recharge = $cutomer->total_recharge;
             $total_balance = $cutomer->total_balance;
             $cost = Db::getInstance()->getValue('SELECT `cost` FROM `' . _DB_PREFIX_ . $this->table .'` WHERE `id_recharge_card` = '.$id_recharge_card);
-            $object = new stdClass();
             $object->total_recharge = ((float)$total_recharge + (float)$cost);
-            $object->total_balance = ((float)$total_balance + (float)$cost);
+            $object->total_balance  = ((float)$total_balance + (float)$cost);
+            $object->cost           = (float)$cost;
                 $data = array(
                     'total_recharge' => $object->total_recharge,
-                    'total_balance' => $object->total_balance
+                    'total_balance' => $object->total_balance,
                 );
                 $where = 'id_customer = '.$id_customer;
                 if(!Db::getInstance()->update('customer', $data , $where))
