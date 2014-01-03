@@ -18,7 +18,8 @@
 * needs please refer to http://www.prestashop.com for more information.
 *
 *  @author PrestaShop SA <contact@prestashop.com>
-*  @copyright  2007-2013 PrestaShop SA
+*  @copyright  2007-2013 PrestaShop SA
+
 *  @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 *  International Registered Trademark & Property of PrestaShop SA
 *}
@@ -38,6 +39,7 @@
 				</a>
 				<p><a href="{$product.link|escape:'html'}" title="{$product.legend|escape:'htmlall':'UTF-8'}">
 					{$product.name|strip_tags:'UTF-8'|escape:'htmlall':'UTF-8'}<br />
+                                        {if $product.id_tree_type }<div class="bonnus"> Bonus : <span class="val"> {convertPrice price=$product.id_tree_type}</span></div>{/if}
 					<span class="price">{$product.price}</span>
 				</a></p>
 			</li>

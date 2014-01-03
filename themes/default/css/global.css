@@ -2117,3 +2117,8 @@ tr.subitem > td:first-child + td {
 .ie7 #featured-products_block_center .product_image span.new {top:110px;right:0;width:94%}
 .ie8 #featured-products_block_center .product_image span.new{top:110px;right:0;width:94%}
 .lt-ie6 #featured-products_block_center .product_image span.new {top:110px;right:0;width:94%}
+
+
+
+.bonnus{ color: #e74c3c; }
+.bonnus .val{ font-weight: bold;}

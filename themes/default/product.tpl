@@ -379,6 +379,7 @@ var fieldRequired = '{l s='Please fill in all the required fields before saving 
 		</div>
 
 		<div class="content_prices clearfix">
+                        
 			<!-- prices -->
 			{if $product->show_price AND !isset($restricted_country_mode) AND !$PS_CATALOG_MODE}
 
