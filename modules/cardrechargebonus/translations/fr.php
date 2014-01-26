@@ -12,6 +12,8 @@ $_MODULE['<{cardrechargebonus}prestashop>cardrechargebonus_e09484ba6c16bc20236b6
 //Card Recharge or Bonus
 $_MODULE['<{cardrechargebonus}prestashop>cardrechargebonus_b1016b15968d19cd431d4c7815d7e448'] = 'Carte de recharge ou Bonus';
 
+$_MODULE['<{cardrechargebonus}prestashop>history_bonus_0dbf68560aaa7f6bcd01c540136bca70'] = 'Historique des bonnus';
+
 
 //Pay by card Recharge or Bonus
 $_MODULE['<{cardrechargebonus}prestashop>payment_551a26700c3417a92d821531f40c1f39'] = 'Payer par carte de recharge ou bonus';
