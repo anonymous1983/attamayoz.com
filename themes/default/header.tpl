@@ -71,24 +71,26 @@
 			<p>{l s='You cannot place a new order from your country.'} <span class="bold">{$geolocation_country}</span></p>
 		</div>
 		{/if}
-		<div id="page" class="container_9 clearfix">
+		<div id="page" class="clearfix">
+                    <div class="page-inner">
+                        <div class="container container_wrap_global container_9 ">
+                                <div class="container-inner clearfix">
+                                    <!-- Header -->
+                                    <div id="header" class="grid_9 alpha omega">
+                                            <a id="header_logo" href="{$base_dir}" title="{$shop_name|escape:'htmlall':'UTF-8'}">
+                                                    <img class="logo" src="{$logo_url}" alt="{$shop_name|escape:'htmlall':'UTF-8'}" {if $logo_image_width}width="{$logo_image_width}"{/if} {if $logo_image_height}height="{$logo_image_height}" {/if}/>
+                                            </a>
+                                            <div id="header_right" class="grid_9 omega">
+                                                    {$HOOK_TOP}
+                                            </div>
+                                    </div>
 
-			<!-- Header -->
-			<div id="header" class="grid_9 alpha omega">
-				<a id="header_logo" href="{$base_dir}" title="{$shop_name|escape:'htmlall':'UTF-8'}">
-					<img class="logo" src="{$logo_url}" alt="{$shop_name|escape:'htmlall':'UTF-8'}" {if $logo_image_width}width="{$logo_image_width}"{/if} {if $logo_image_height}height="{$logo_image_height}" {/if}/>
-				</a>
-				<div id="header_right" class="grid_9 omega">
-					{$HOOK_TOP}
-				</div>
-			</div>
+                                    <div id="columns" class="grid_9 alpha omega clearfix">
+                                            <!-- Left -->
+                                            <div id="left_column" class="column grid_2 alpha">
+                                                    {$HOOK_LEFT_COLUMN}
+                                            </div>
 
-			<div id="columns" class="grid_9 alpha omega clearfix">
-				<!-- Left -->
-				<div id="left_column" class="column grid_2 alpha">
-					{$HOOK_LEFT_COLUMN}
-				</div>
-
-				<!-- Center -->
-				<div id="center_column" class=" grid_5">
-	{/if}
+                                            <!-- Center -->
+                                            <div id="center_column" class=" grid_5">
+                    {/if}

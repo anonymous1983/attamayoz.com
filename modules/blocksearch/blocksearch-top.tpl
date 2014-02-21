@@ -34,7 +34,7 @@
 </div>
 {else}
 <!-- Block search module TOP -->
-<div id="search_block_top">
+<div id="search_block_top" class="block-search-top">
 	<form method="get" action="{$link->getPageLink('search')|escape:'html'}" id="searchbox">
 		<p>
 			<label for="search_query_top"><!-- image on background --></label>
