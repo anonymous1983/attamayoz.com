@@ -44,7 +44,7 @@ class Cardrechargebonus extends PaymentModule {
     public $address;
     public $extra_mail_vars;
     
-    private $enable_payment = false;
+    private $enable_payment = true;
 
     public function __construct() {
         $this->name = 'cardrechargebonus';
@@ -293,11 +293,11 @@ class Cardrechargebonus extends PaymentModule {
                 // add new parent tree
                     $this->newParentTree($params, $product, $treeTypeClass);
                 
-                $cumul_bonnus += $treeTypeClass->cost;
+                $cumul_bonnus =  floatval($cumul_bonnus) + floatval($treeTypeClass->cost);
                 $product_quantity--;
             }
         }
-        $this->updateCustomerTotalBalanceWithBonus($cumul_bonnus, $id_customer);
+        //$this->updateCustomerTotalBalanceWithBonus($cumul_bonnus, $id_customer);
         //die('hookDisplayOrderConfirmation');
         return TRUE;
     }
@@ -378,6 +378,7 @@ class Cardrechargebonus extends PaymentModule {
                         OR  `id_tree_parent` = ' . $treeParent[0]['id_tree'] . '
                     )
                     ';
+        
         Db::getInstance()->query($sql2);
 
         return TRUE;
@@ -426,14 +427,21 @@ class Cardrechargebonus extends PaymentModule {
                     SELECT COUNT( * ) AS CONT
                     FROM  `' . _DB_PREFIX_ . 'tree` AS TC
                     WHERE TC.id_tree_parent = T.id_tree
-                ) <> T.children 
+                ) <> T.children
+                AND (
+                    SELECT COUNT( * ) AS CONT
+                    FROM  `' . _DB_PREFIX_ . 'tree` AS TC
+                    WHERE TC.id_tree_parent = T.id_tree
+                    AND TC.id_customer = ' . $id_customer . '
+                ) = 0
                 LIMIT 1
                 ';
         return Db::getInstance()->executeS($sql);
     }
 
     /**
-     * updateCustomerTotalBalanceWithBonus 
+     *  
+     * UpdateCustomerTotalBalanceWithBonus 
      *
      * @return object
      */
