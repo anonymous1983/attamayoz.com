@@ -1,0 +1,55 @@
+/* Block newsletter */
+#newsletter_block_left {
+	
+}
+#newsletter_block_left .block_content { padding: 0;}
+#newsletter_block_left .title_block,
+#newsletter_block_left h4  {
+	
+}
+#newsletter_block_left p {padding:0;}
+
+#newsletter_block_left p.success_inline {
+	color: #418B19;
+	text-align: center;
+	font-weight: bold;
+}
+#newsletter_block_left p.warning_inline {
+	color: #DA0F00;
+	text-align: center;
+	font-weight: bold;
+}
+#newsletter_block_left p.newletter-header {
+	font-size: 13px;
+	font-weight: normal;
+	padding: 10px 0;
+	color: #444444;
+}
+
+#newsletter_block_left input.inputNew {
+	width: 238px;
+	height: 28px;
+	border: 1px solid #dbdbdb;
+	color: #666;
+	margin: 0;
+	padding: 0px 0px 0px 5px;
+	line-height: 28px;
+	font-size: 13px;
+}
+*:first-child+html #newsletter_block_left input.inputNew {position:static;}/* hack ie 7 */
+
+#newsletter_block_left input.button_mini {
+	color: #fff;
+	font-size: 13px;
+	font-weight: normal;
+	text-transform: capitalize;
+	margin: 15px 0 0;
+	border: none;
+	background: #00bba6;
+	height:35px;
+	display: block;
+}
+#newsletter_block_left input.button_mini:hover { background: #018576;}
+
+*:first-child+html #newsletter_block_left input.button_mini {padding-left:24px !important;}/* hack ie 7 */
+

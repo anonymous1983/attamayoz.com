@@ -1,0 +1,683 @@
+
+/*******************************************************************/
+/*******************************************************************/
+/****************** CSS FOR LIST VIEW			  ******************/
+/*******************************************************************/
+/*******************************************************************/
+ul#product_list.grid_view {
+    width: 755px;
+    overflow: hidden;
+}
+ul#product_list.grid_view li {
+    display: block;
+    float: left;
+    width: 188px;
+    border: none; /*1px solid #EEEEEE;*/
+    border-radius: 0px; /*3px 3px 3px 3px;*/
+    margin-bottom: 10px; /*14px;*/
+    padding-left: 4px;
+    padding-right: 4px;
+    padding-top: 3px;
+    margin-bottom: 3px;
+    margin-right: auto;
+    margin-left: auto;
+    padding: 0px; /*12px 8px;*/
+    overflow: hidden;
+}
+ul#product_list.grid_view li div.grid_view_wrapper {
+    margin: 5px;
+    overflow: hidden;
+    display: block;
+    border-radius: 7px;
+    text-align: center;
+}
+ul#product_list.grid_view li div.grid_view_wrapper:hover {
+    box-shadow: 0 0 10px #AAAAAA;
+    transition: all 0.3s ease 0s;
+}
+ul#product_list.grid_view li div.product_title {
+    display: block;
+    float:left;
+    padding-top:10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 2px;
+}
+ul#product_list.grid_view li div.product_title h3 {}
+ul#product_list.grid_view li div.product_title h3 a {
+    display: block;
+    margin: auto;
+    text-align: center;
+}
+ul#product_list.grid_view li div.product_image {
+    display: block;
+    float:left;
+    overflow: hidden;
+    width: 100%;
+    color: #333333;
+    margin-bottom: 8px;
+    outline: medium none;
+    padding: 3px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+}
+ul#product_list.grid_view li div.product_image a.product_img_link {
+    border: 1px solid #CCCCCC;
+    display: block;
+    float: none;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: hidden;
+    position: relative;
+    width: 124px;
+}
+ul#product_list.grid_view li div.product_image a img {
+    display: block;
+    vertical-align: bottom;
+    -webkit-transition: all 0.5s ease-out;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+}
+ul#product_list.grid_view li div.product_image a img:hover {
+    -webkit-transform: scale(1.1,1.1);
+    -moz-transform: scale(1.1,1.1);
+    -o-transform: scale(1.1,1.1);
+    -ms-transform: scale(1.1,1.1);
+    transform: scale(1.1,1.1);
+}
+ul#product_list.grid_view li div.product_image a span {}
+ul#product_list.grid_view li div.product_image a span.new {
+    display: block;
+    position: absolute;
+    top: 15px;
+    right:-30px;
+    padding: 1px 4px;
+    width: 101px;
+    font-size:10px;
+    color: #fff;
+    text-align: center;
+    text-transform: uppercase;
+    -moz-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    -o-transform:rotate(45deg);
+    background-color: #990000;
+    transform: rotate(45deg); 
+    -ms-transform: rotate(45deg);
+}
+ul#product_list.grid_view li div.product_description {
+    display: block;
+    float:left;
+    width: 100%;
+    text-align: left;
+}
+ul#product_list.grid_view li div.product_description p {
+    display: block;
+    width: 90%;
+    margin: auto;
+}
+ul#product_list.grid_view li div.product_description p a {}
+
+
+ul#product_list.grid_view li div.product_availability {
+    display: block;
+    float: left;
+    overflow: hidden;
+    width: 100%;
+    margin-bottom: 10px;
+}
+ul#product_list.grid_view li div.product_availability span {}
+ul#product_list.grid_view li div.product_availability span.availability {
+    display: block;
+    margin: 0 auto;
+    overflow: hidden;
+    text-align: center;
+}
+ul#product_list.grid_view li div.product_availability span.online_only {}
+ul#product_list.grid_view li div.product_discount {
+    display: block;
+    float:left;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+ul#product_list.grid_view li div.product_discount span {
+    display: block;
+    float:left;
+}
+ul#product_list.grid_view li div.product_discount span.on_sale {
+    position: relative;
+    background: none repeat scroll 0 0 #9B0000;
+    color: #FFFFFF;
+    display: inline-block;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 1px 5px;
+    right: 0;
+    text-transform: uppercase;
+}
+ul#product_list.grid_view li div.product_discount span.discount {
+    position: relative;
+    background: none repeat scroll 0 0 #9B0000;
+    color: #FFFFFF;
+    display: inline-block;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 1px 5px;
+    right: 0;
+    text-transform: uppercase;
+}
+
+ul#product_list.grid_view li div.product_price {
+    display: block;
+    float:right;
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+ul#product_list.grid_view li div.product_price span {}
+ul#product_list.grid_view li div.product_price span.price {}
+ul#product_list.grid_view li div.clear_buttons {
+    width: 100%;
+    max-height: 1px;
+    min-height: 1px;
+    height: 1px;
+    clear:both;
+    min-width: 50%;
+}
+ul#product_list.grid_view li div.product_buttons {
+    display: inline-block;
+    margin-bottom: 7px;
+    margin-right: auto;
+    margin-left: auto;
+}
+ul#product_list.grid_view li div.product_buttons #grid_buttons_wrapper {}
+ul#product_list.grid_view li div.product_buttons a {}
+ul#product_list.grid_view li div.product_buttons a.button {}
+ul#product_list.grid_view li div.product_buttons a.ajax_add_to_cart_button {
+    background: url(../img/dualButton1.jpg) no-repeat scroll 0 0 transparent;
+    display: block;
+    float: left;
+    height: 23px;
+    line-height: 21px;
+    text-decoration: none;
+    width: 86px;
+    border-radius: 5px 0px 0px 5px !important; 
+    border-top: 1px solid #CCCCCC;
+    border-bottom: 1px solid #CCCCCC;
+    border-left: 1px solid #CCCCCC;
+    border-right: none;
+    padding: 0px;
+    text-align: center;
+}
+ul#product_list.grid_view li div.product_buttons a.ajax_add_to_cart_button:hover {
+    background-position: 0 -23px;
+    text-decoration: none;
+}
+ul#product_list.grid_view li div.product_buttons a.lnk_view {
+    background: url(../img/dualButton1.jpg) no-repeat scroll -86px 0 transparent;
+    display: block;
+    float: left;
+    height: 23px;
+    line-height: 21px;
+    text-decoration: none;
+    width: 83px;
+    border-top: 1px solid #CCCCCC;
+    border-bottom: 1px solid #CCCCCC;
+    border-left: none;
+    border-right: 1px solid #CCCCCC;
+    border-radius: 0px 5px 5px 0px !important;
+    padding: 0px;
+    font-weight: normal;
+    margin-top: 0px;
+    text-align: center;
+    color: black;
+    font-weight: bold;
+}
+ul#product_list.grid_view li div.product_buttons a.lnk_view:hover {
+    background-position: -86px -23px;
+    text-decoration: none;
+}
+ul#product_list.grid_view li div.product_buttons span {}
+ul#product_list.grid_view li div.product_buttons span.exclusive {}
+ul#product_list.grid_view li div.product_compare {
+    display: block;
+    float:left;
+    width: 100%;
+}
+ul#product_list.grid_view li div.product_compare p {}
+ul#product_list.grid_view li div.product_compare p.compare {
+    padding-bottom: 5px;
+    display: block;
+    margin: auto;
+    text-align: center;
+}
+ul#product_list.grid_view li div.product_compare p input {}
+ul#product_list.grid_view li div.product_compare p input.comparator{}
+ul#product_list.grid_view li div.product_compare p label {}
+
+
+/*******************************************************************/
+/*******************************************************************/
+/****************** CSS FOR LIST VIEW			  ******************/
+/*******************************************************************/
+/*******************************************************************/
+
+ul#product_list.list_view {
+    width: 755px;
+    overflow: hidden;
+}
+ul#product_list.list_view li {
+    display: block;
+    float: left;
+    border: none; /*1px solid #EEEEEE;*/
+    border-radius: 0px; /*3px 3px 3px 3px;*/
+    margin-bottom: 10px; /*14px;*/
+    padding-left: 4px;
+    padding-right: 4px;
+    padding-top: 3px;
+    margin-bottom: 3px;
+    margin-right: auto;
+    margin-left: auto;
+    padding: 0px; /*12px 8px;*/
+    overflow: hidden;
+}
+ul#product_list.list_view li div.list_view_wrapper {
+    margin: 5px;
+    overflow: hidden;
+    display: block;
+    border-radius: 7px;
+}
+ul#product_list.list_view li div.list_view_wrapper:hover {
+    box-shadow: 0 0 10px #AAAAAA;
+    transition: all 0.3s ease 0s;
+}
+ul#product_list.list_view li div.product_title {
+    display: block;
+    float:left;
+    padding-top:10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 0px;
+    width: 100%;
+}
+ul#product_list.list_view li div.product_title h3 {
+    overflow: hidden;
+    padding-bottom: 2px;
+}
+ul#product_list.list_view li div.product_title h3 a {
+    display: block;
+    margin: auto;
+    text-align: center;
+    float: left;
+    max-height: 13px !important;
+}
+ul#product_list.list_view li div.product_image {
+    display: block;
+    float:left;
+    overflow: hidden;
+    color: #333333;
+    margin-bottom: 8px;
+    outline: medium none;
+    padding: 3px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+}
+ul#product_list.list_view li div.product_image a.product_img_link {
+    border: 1px solid #CCCCCC;
+    display: block;
+    float: left;
+    margin-left: 2px;
+    margin-right: 15px;
+    overflow: hidden;
+    position: relative;
+    width: 124px;
+}
+ul#product_list.list_view li div.product_image a img {
+    display: block;
+    vertical-align: bottom;
+    -webkit-transition: all 0.5s ease-out;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+}
+ul#product_list.list_view li div.product_image a img:hover {
+    -webkit-transform: scale(1.1,1.1);
+    -moz-transform: scale(1.1,1.1);
+    -o-transform: scale(1.1,1.1);
+    -ms-transform: scale(1.1,1.1);
+    transform: scale(1.1,1.1);
+}
+ul#product_list.list_view li div.product_image a span {}
+ul#product_list.list_view li div.product_image a span.new {
+    display: block;
+    position: absolute;
+    top: 15px;
+    right:-30px;
+    padding: 1px 4px;
+    width: 101px;
+    font-size:10px;
+    color: #fff;
+    text-align: center;
+    text-transform: uppercase;
+    -moz-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    -o-transform:rotate(45deg);
+    background-color: #990000;
+    transform: rotate(45deg); 
+    -ms-transform: rotate(45deg);
+}
+ul#product_list.list_view li div.product_description {
+    display: block;
+    float:left;
+    text-align: left;
+    width: 60%;
+    padding-top: 15px;
+    padding-right: 15px;
+    max-height: 110px;
+}
+ul#product_list.list_view li div.product_description p {
+    display: block;
+    float: left;
+    margin: auto;
+}
+ul#product_list.list_view li div.product_description p a {}
+
+
+ul#product_list.list_view li div.product_availability {
+    display: block;
+    float: left;
+    overflow: hidden;
+    margin-bottom: 10px;
+    width:15%;
+}
+ul#product_list.list_view li div.product_availability span {}
+ul#product_list.list_view li div.product_availability span.availability {
+    display: block;
+    margin: 0 auto;
+    overflow: hidden;
+    text-align: center;
+}
+ul#product_list.list_view li div.product_availability span.online_only {}
+ul#product_list.list_view li div.product_discount {
+    display: block;
+    margin-bottom: 10px;
+    min-width: 15%;
+    overflow: hidden;
+}
+ul#product_list.list_view li div.product_discount span {
+    display: block;
+    float:left;
+}
+ul#product_list.list_view li div.product_discount span.on_sale {
+    position: relative;
+    background: none repeat scroll 0 0 #9B0000;
+    color: #FFFFFF;
+    display: block;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 1px 5px;
+    text-transform: uppercase;
+    text-align: center;
+    float: none;
+}
+ul#product_list.list_view li div.product_discount span.discount {
+    position: relative;
+    background: none repeat scroll 0 0 #9B0000;
+    color: #FFFFFF;
+    display: block;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 1px 5px;
+    right: 0;
+    text-transform: uppercase;
+    text-align: center;
+    float: none;
+    display: block;
+}
+ul#product_list.list_view li div.clear_price {
+    display: none;
+}
+ul#product_list.list_view li div.product_price {
+    display: block;
+    margin-bottom: 10px;
+    text-align: center;
+    overflow: hidden;
+    min-width: 15%;
+    padding-top: 3px;
+}
+ul#product_list.list_view li div.product_price span {}
+ul#product_list.list_view li div.product_price span.price {}
+ul#product_list.list_view li div.clear_buttons { display: none; }
+ul#product_list.list_view li div.product_buttons {
+    display: inline-block;
+    margin-bottom: 7px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: -20px;
+    float: left;
+}
+ul#product_list.list_view li div.product_buttons #grid_buttons_wrapper {}
+ul#product_list.list_view li div.product_buttons a {}
+ul#product_list.list_view li div.product_buttons a.button {}
+ul#product_list.list_view li div.product_buttons a.ajax_add_to_cart_button {
+    background: url(../img/dualButton1.jpg) no-repeat scroll 0 0 transparent;
+    display: block;
+    float: left;
+    height: 23px;
+    line-height: 21px;
+    text-decoration: none;
+    width: 86px;
+    border-radius: 5px 0px 0px 5px !important; 
+    border-top: 1px solid #CCCCCC;
+    border-bottom: 1px solid #CCCCCC;
+    border-left: 1px solid #CCCCCC;
+    border-right: none;
+    padding: 0px;
+    text-align: center;
+}
+ul#product_list.list_view li div.product_buttons a.ajax_add_to_cart_button:hover {
+    background-position: 0 -23px;
+    text-decoration: none;
+}
+ul#product_list.list_view li div.product_buttons a.lnk_view {
+    background: url(../img/dualButton1.jpg) no-repeat scroll -86px 0 transparent;
+    display: block;
+    float: left;
+    height: 23px;
+    line-height: 21px;
+    text-decoration: none;
+    width: 83px;
+    border-top: 1px solid #CCCCCC;
+    border-bottom: 1px solid #CCCCCC;
+    border-left: none;
+    border-right: 1px solid #CCCCCC;
+    border-radius: 0px 5px 5px 0px !important;
+    padding: 0px;
+    font-weight: normal;
+    margin-top: 0px;
+    text-align: center;
+    color: black;
+    font-weight: bold;
+}
+ul#product_list.list_view li div.product_buttons a.lnk_view:hover {
+    background-position: -86px -23px;
+    text-decoration: none;
+}
+ul#product_list.list_view li div.product_buttons span {}
+ul#product_list.list_view li div.product_buttons span.exclusive {}
+ul#product_list.list_view li div.product_compare {
+    display: block;
+    float:left;
+    width: 100%;
+    margin-top: -8px;
+}
+ul#product_list.list_view li div.product_compare p {}
+ul#product_list.list_view li div.product_compare p.compare {
+    padding-bottom: 5px;
+    display: block;
+    text-align: left;
+    padding-left: 15px;
+}
+ul#product_list.list_view li div.product_compare p input {}
+ul#product_list.list_view li div.product_compare p input.comparator{}
+ul#product_list.list_view li div.product_compare p label {}
+
+
+
+
+/*******************************************************************/
+/*******************************************************************/
+/******************   VIEW AS AND PAGINATION	  ******************/
+/*******************************************************************/
+/*******************************************************************/
+
+
+#view_as {				/* GRID-LIST VIEW AS: BUTTONS; */
+    width: 120px;
+    min-height: 23px;
+    background: none;
+    font-weight: bold;
+    font-style: normal;
+    font-family: serif;
+    float: right;
+    /*margin-top: 10px;*/
+    overflow: hidden;
+}
+#view_as .switch_mode:hover{
+    cursor: pointer;
+}
+
+#view_as .switch_mode{
+    float:left;
+    margin: 10px 5px 0px 0px;
+    border:1px solid #ccc;
+}
+#view_as .switch_mode.active{
+    border:2px solid red;
+}
+
+/*****************************************/
+/***    Products per page buttons      ***/
+#number_of_products_show {
+    /*max-height: 28px;*/
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+    float:left;
+    float: left;
+    /*margin-right: 5px;*/
+}
+#number_of_products_products {
+    /*max-height: 21px;*/
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+    float: left;
+    margin-left: 5px;
+}
+#number_of_products {
+    background: linear-gradient(to bottom, #FFFFFF 4%, #E8E8E8 96%, #E2E2E2 97%) repeat scroll 0 0 transparent;
+    border-radius: 3px; /*3px 3px 3px 5px;*/
+    border: 1px solid #CCCCCC;
+    cursor: pointer;
+    display: inline;
+    float: left;
+    /*padding: 3px; *//*4px 5px 4px 7px;*/
+    color: #333333;
+    max-height: 21px;
+    height: 21px;
+    line-height: 21px;
+    width: 21px;
+    padding-right: 3px;
+    padding-left: 3px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    margin-left: 4px;
+    text-align: center;
+}
+#number_of_products.selected {
+    background: white;
+    font-weight: bold;
+    color: green  !important;
+    cursor: default;
+}
+#number_of_products_all {
+    background: linear-gradient(to bottom, #FFFFFF 4%, #E8E8E8 96%, #E2E2E2 97%) repeat scroll 0 0 transparent;
+    border-radius: 3px; /*3px 3px 3px 5px;*/
+    border: 1px solid #CCCCCC;
+    cursor: pointer;
+    display: inline;
+    float: left;
+    /*padding: 3px; *//*4px 5px 4px 7px;*/
+    color: #333333;
+    max-height: 21px;
+    height: 21px;
+    line-height: 21px;
+    width: 21px;
+    padding-right: 3px;
+    padding-left: 3px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    margin-left: 4px;
+    text-align: center;
+}
+#number_of_products_all.selected {
+    background: white;
+    font-weight: bold;
+    color: green;
+}
+#number_of_products.selected:hover { background: #ffffff !important; }
+#number_of_products:hover { background: #ffffff !important; }
+#number_of_products_all:hover { background: #ffffff !important; }
+#number_of_products_all.selected:hover { background: #ffffff !important; }
+#number_of_products a.number_of_products {}
+#number_of_products_all a.number_of_products_all {}
+#number_of_products a.number_of_products input {
+    background: none !important;
+    border: none; /*1px solid red !important;*/
+    text-decoration:none !important;
+    font-family:helvetica !important;
+    color: inherit; /*red !important;*/
+    /*background: inherit; *//*url(../images/btn_hover.png) repeat-x !important;*/
+    cursor: pointer;
+}
+#number_of_products a.number_of_products input.selected {
+    cursor: default;
+}
+
+
+
+/******* ********* ********* ********* ********* ********* ********* ********/
+/******* ********* ********* ********* ********* ********* ********* ********/
+/******* ********* ********* ********* ********* ********* ********* ********/
+
+.content_sortPagiBar .sortPagiBar table.pagination_table {
+    width: 100%;
+}
+.content_sortPagiBar .sortPagiBar table.pagination_table tr.pagination_top_row {
+    background: none repeat scroll 0 0 #E5E4E2;
+}
+.content_sortPagiBar .sortPagiBar table.pagination_table tr.pagination_middle_row {
+    background: none repeat scroll 0 0 #D1D0CE;
+}
+.content_sortPagiBar .sortPagiBar table.pagination_table tr.pagination_bottom_row {
+    background: none repeat scroll 0 0 #B6B6B4;
+}
+
+.content_sortPagiBar .sortPagiBar #pagination.pagination .pagination #pagination_previous span {
+    background: url(../img/arrow-prev.png) no-repeat transparent;
+    height: 12px;
+    line-height: 12px;
+    vertical-align: middle;
+}
+.content_sortPagiBar .sortPagiBar #pagination.pagination .pagination #pagination_previous.disabled span {
+    background: none;
+}
+.content_sortPagiBar .sortPagiBar #pagination.pagination .pagination #pagination_next span {
+    background: url(../img/arrow-next.png) no-repeat transparent;
+    height: 12px;
+    line-height: 12px;
+    vertical-align: middle;
+}
+.content_sortPagiBar .sortPagiBar #pagination.pagination .pagination #pagination_next.disabled span {
+    background: none;
+}

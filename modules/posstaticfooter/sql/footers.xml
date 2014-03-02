@@ -1,0 +1,361 @@
+<pos_static_blocks>
+<!-- static block configuration -->
+	<block>
+		<id_posstaticblock>3</id_posstaticblock>
+		<title>Footer Static Col1</title>
+		<identify>footer-static-col1</identify>
+		<hook_position>blockFooter1</hook_position>
+		<name_module></name_module>
+		<hook_module></hook_module>
+		<description>
+			 <![CDATA[
+			 <div class="f-col f-col1 span3">
+<div class="footer-static-title title_block">
+<h4>About us</h4>
+</div>
+<div class="footer-static-content">
+<p class="info">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+<p class="addres">19 Interpro Road Madison, AL 35758, USA</p>
+<p class="phone">(012) 234 432 3568</p>
+<a class="email" href="#"> Contact@plazathemes.com </a></div>
+</div>
+		]]>
+		</description>
+		<posorder>0</posorder>
+		<insert_module>0</insert_module>
+		<active>0</active>
+		<showhook>1</showhook>
+		<is_default>1</is_default>
+	</block>
+	<block>
+		<id_posstaticblock>4</id_posstaticblock>
+		<title>Footer Static Col2</title>
+		<identify>footer-static-col2</identify>
+		<hook_position>blockFooter1</hook_position>
+		<name_module>blockmyaccountfooter</name_module>
+		<hook_module>displayFooter</hook_module>
+		<description>
+			 <![CDATA[
+			]]>
+		</description>
+		<posorder>0</posorder>
+		<insert_module>1</insert_module>
+		<active>0</active>
+		<showhook>1</showhook>
+		<is_default>1</is_default>
+	</block>
+	<block>
+		<id_posstaticblock>5</id_posstaticblock>
+		<title>Footer Static Col3</title>
+		<identify>footer-static-col3</identify>
+		<hook_position>blockFooter1</hook_position>
+		<name_module>blockcms</name_module>
+		<hook_module>displayFooter</hook_module>
+		<description>
+			 <![CDATA[
+			]]>
+		</description>
+		<posorder>0</posorder>
+		<insert_module>1</insert_module>
+		<active>0</active>
+		<showhook>1</showhook>
+		<is_default>1</is_default>
+	</block>
+	<block>
+		<id_posstaticblock>6</id_posstaticblock>
+		<title>Footer Static Col4</title>
+		<identify>footer-static-col4</identify>
+		<hook_position>blockFooter1</hook_position>
+		<name_module></name_module>
+		<hook_module></hook_module>
+		<description>
+			 <![CDATA[
+			 <div class="f-col f-col2 span3">
+<div class="footer-static-title title_block">
+<h4>extras</h4>
+</div>
+<div class="footer-static-content">
+<ul>
+<li><a href="#"> Brands </a></li>
+<li><a href="#"> Gift Vouchers </a></li>
+<li><a href="#"> Affiliates </a></li>
+<li><a href="#"> Specials </a></li>
+<li><a href="#"> Privacy policy </a></li>
+</ul>
+</div>
+</div>
+			]]>
+		</description>
+		<posorder>0</posorder>
+		<insert_module>0</insert_module>
+		<active>0</active>
+		<showhook>1</showhook>
+		<is_default>1</is_default>
+	</block>
+	<block>
+		<id_posstaticblock>7</id_posstaticblock>
+		<title>Footer Address</title>
+		<identify>fooer-address</identify>
+		<hook_position>blockFooter2</hook_position>
+		<name_module></name_module>
+		<hook_module></hook_module>
+		<description>
+			 <![CDATA[
+			 <div class="footer-address span6">
+<ul>
+<li><a href="#"> about us </a></li>
+<li><a href="#"> Customer Service </a></li>
+<li><a href="#"> Privacy Policy </a></li>
+</ul>
+<p>Copyright © 2014 <a href="http://posthemes.com/">Posthemes.com</a>. All rights reserved.</p>
+</div>]]>
+		</description>
+		<posorder>0</posorder>
+		<insert_module>0</insert_module>
+		<active>0</active>
+		<showhook>1</showhook>
+		<is_default>1</is_default>
+	</block>
+	<block>
+		<id_posstaticblock>8</id_posstaticblock>
+		<title>Payment</title>
+		<identify>payment</identify>
+		<hook_position>blockFooter2</hook_position>
+		<name_module></name_module>
+		<hook_module></hook_module>
+		<description>
+			 <![CDATA[
+			 <div class="payment span6">
+<ul>
+<li><a href="#"><img src="/pos_coron/img/cms/social_01.png" alt="" /></a></li>
+<li><a href="#"><img src="/pos_coron/img/cms/social_02.png" alt="" /></a></li>
+<li><a href="#"><img src="/pos_coron/img/cms/social_03.png" alt="" /></a></li>
+<li><a href="#"><img src="/pos_coron/img/cms/social_04.png" alt="" /></a></li>
+<li><a href="#"><img src="/pos_coron/img/cms/social_05.png" alt="" /></a></li>
+<li><a href="#"><img src="/pos_coron/img/cms/social_6.png" alt="" /></a></li>
+</ul>
+</div>]]>
+		</description>
+		<posorder>0</posorder>
+		<insert_module>0</insert_module>
+		<active>0</active>
+		<showhook>1</showhook>
+		<is_default>1</is_default>
+	</block>
+<!-- block language configuration -->	
+	<block_language>
+		<id_posstaticblock>3</id_posstaticblock>
+		<id_lang>1</id_lang>
+		<title>Footer Static Col1</title>
+		<description>
+			 <![CDATA[
+			<div class="f-col f-col1 span3">
+<div class="footer-static-title title_block">
+<h4>About us</h4>
+</div>
+<div class="footer-static-content">
+<p class="info">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+<p class="addres">19 Interpro Road Madison, AL 35758, USA</p>
+<p class="phone">(012) 234 432 3568</p>
+<a class="email" href="#"> Contact@plazathemes.com </a></div>
+</div>
+		]]>
+		</description>
+	</block_language>
+	<block_language>
+		<id_posstaticblock>4</id_posstaticblock>
+		<id_lang>1</id_lang>
+		<title>Footer Static Col2</title>
+		<description>
+			 <![CDATA[
+			]]>
+		</description>
+	</block_language>
+	<block_language>
+		<id_posstaticblock>5</id_posstaticblock>
+		<id_lang>1</id_lang>
+		<title>Footer Static Col3</title>
+		<description>
+			 <![CDATA[
+			]]>
+		</description>
+	</block_language>
+	<block_language>
+		<id_posstaticblock>6</id_posstaticblock>
+		<id_lang>1</id_lang>
+		<title>Footer Static Col4</title>
+		<description>
+			 <![CDATA[
+			 <div class="f-col f-col2 span3">
+<div class="footer-static-title title_block">
+<h4>extras</h4>
+</div>
+<div class="footer-static-content">
+<ul>
+<li><a href="#"> Brands </a></li>
+<li><a href="#"> Gift Vouchers </a></li>
+<li><a href="#"> Affiliates </a></li>
+<li><a href="#"> Specials </a></li>
+<li><a href="#"> Privacy policy </a></li>
+</ul>
+</div>
+</div>
+			]]>
+		</description>
+	</block_language>
+	<block_language>
+		<id_posstaticblock>7</id_posstaticblock>
+		<id_lang>1</id_lang>
+		<title>Footer Address</title>
+		<description>
+			 <![CDATA[
+			 <div class="footer-address span6">
+<ul>
+<li><a href="#"> about us </a></li>
+<li><a href="#"> Customer Service </a></li>
+<li><a href="#"> Privacy Policy </a></li>
+</ul>
+<p>Copyright © 2014 <a href="http://posthemes.com/">Posthemes.com</a>. All rights reserved.</p>
+</div>]]>
+		</description>
+	</block_language>
+	<block_language>
+		<id_posstaticblock>8</id_posstaticblock>
+		<id_lang>1</id_lang>
+		<title>Payment</title>
+		<description>
+			 <![CDATA[
+			 <div class="payment span6">
+<ul>
+<li><a href="#"><img src="/pos_coron/img/cms/social_01.png" alt="" /></a></li>
+<li><a href="#"><img src="/pos_coron/img/cms/social_02.png" alt="" /></a></li>
+<li><a href="#"><img src="/pos_coron/img/cms/social_03.png" alt="" /></a></li>
+<li><a href="#"><img src="/pos_coron/img/cms/social_04.png" alt="" /></a></li>
+<li><a href="#"><img src="/pos_coron/img/cms/social_05.png" alt="" /></a></li>
+<li><a href="#"><img src="/pos_coron/img/cms/social_6.png" alt="" /></a></li>
+</ul>
+</div>]]>
+		</description>
+	</block_language>
+	
+	
+	<block_language>
+		<id_posstaticblock>3</id_posstaticblock>
+		<id_lang>2</id_lang>
+		<title>Footer Static Col1</title>
+		<description>
+			 <![CDATA[
+			<div class="f-col f-col1 span3">
+<div class="footer-static-title title_block">
+<h4>About us</h4>
+</div>
+<div class="footer-static-content">
+<p class="info">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+<p class="addres">19 Interpro Road Madison, AL 35758, USA</p>
+<p class="phone">(012) 234 432 3568</p>
+<a class="email" href="#"> Contact@plazathemes.com </a></div>
+</div>
+		]]>
+		</description>
+	</block_language>
+	<block_language>
+		<id_posstaticblock>4</id_posstaticblock>
+		<id_lang>2</id_lang>
+		<title>Footer Static Col2</title>
+		<description>
+			 <![CDATA[
+			]]>
+		</description>
+	</block_language>
+	<block_language>
+		<id_posstaticblock>5</id_posstaticblock>
+		<id_lang>2</id_lang>
+		<title>Footer Static Col3</title>
+		<description>
+			 <![CDATA[
+			]]>
+		</description>
+	</block_language>
+	<block_language>
+		<id_posstaticblock>6</id_posstaticblock>
+		<id_lang>2</id_lang>
+		<title>Footer Static Col4</title>
+		<description>
+			 <![CDATA[
+			 <div class="f-col f-col2 span3">
+<div class="footer-static-title title_block">
+<h4>extras</h4>
+</div>
+<div class="footer-static-content">
+<ul>
+<li><a href="#"> Brands </a></li>
+<li><a href="#"> Gift Vouchers </a></li>
+<li><a href="#"> Affiliates </a></li>
+<li><a href="#"> Specials </a></li>
+<li><a href="#"> Privacy policy </a></li>
+</ul>
+</div>
+</div>
+			]]>
+		</description>
+	</block_language>
+	<block_language>
+		<id_posstaticblock>7</id_posstaticblock>
+		<id_lang>2</id_lang>
+		<title>Footer Address</title>
+		<description>
+			 <![CDATA[
+			 <div class="footer-address span6">
+<ul>
+<li><a href="#"> about us </a></li>
+<li><a href="#"> Customer Service </a></li>
+<li><a href="#"> Privacy Policy </a></li>
+</ul>
+<p>Copyright © 2014 <a href="http://posthemes.com/">Posthemes.com</a>. All rights reserved.</p>
+</div>]]>
+		</description>
+	</block_language>
+	<block_language>
+		<id_posstaticblock>8</id_posstaticblock>
+		<id_lang>2</id_lang>
+		<title>Payment</title>
+		<description>
+			 <![CDATA[
+			  <div class="payment span6">
+<ul>
+<li><a href="#"><img src="/pos_coron/img/cms/social_01.png" alt="" /></a></li>
+<li><a href="#"><img src="/pos_coron/img/cms/social_02.png" alt="" /></a></li>
+<li><a href="#"><img src="/pos_coron/img/cms/social_03.png" alt="" /></a></li>
+<li><a href="#"><img src="/pos_coron/img/cms/social_04.png" alt="" /></a></li>
+<li><a href="#"><img src="/pos_coron/img/cms/social_05.png" alt="" /></a></li>
+<li><a href="#"><img src="/pos_coron/img/cms/social_6.png" alt="" /></a></li>
+</ul>
+</div>]]>
+		</description>
+	</block_language>
+<!-- block shop configuration -->
+	<block_shop>
+		<id_posstaticblock>3</id_posstaticblock>
+		<id_shop>1</id_shop>
+	</block_shop>
+	<block_shop>
+		<id_posstaticblock>4</id_posstaticblock>
+		<id_shop>1</id_shop>
+	</block_shop>
+	<block_shop>
+		<id_posstaticblock>5</id_posstaticblock>
+		<id_shop>1</id_shop>
+	</block_shop>
+	<block_shop>
+		<id_posstaticblock>6</id_posstaticblock>
+		<id_shop>1</id_shop>
+	</block_shop>
+	<block_shop>
+		<id_posstaticblock>7</id_posstaticblock>
+		<id_shop>1</id_shop>
+	</block_shop>
+	<block_shop>
+		<id_posstaticblock>8</id_posstaticblock>
+		<id_shop>1</id_shop>
+	</block_shop>
+</pos_static_blocks>

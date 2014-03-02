@@ -1,0 +1,136 @@
+/* theme color pink
+color: #1FB5DA
+*/
+button.button span, .pager .sort-by .select-sort-by:before, 
+.pager .sort-by select, .pager .limiter .select-limiter:before, 
+.pager .limiter select, .toolbar, .top-cart-title .title, 
+.ui-widget-header, #search_price, 
+.block-subscribe .actions button.button span, 
+.opc .active .step-title .number, 
+.product-tabs a:hover, .product-tabs li.active a:hover, 
+#back-top, .ma-featuredproductslider-container, 
+.ma-featuredproductslider-container .flexslider .flex-next:hover, 
+.ma-featuredproductslider-container .flexslider .flex-prev:hover,  
+.ma-newproductslider-container, 
+.ma-newproductslider-container .flexslider .flex-next:hover, 
+.ma-newproductslider-container .flexslider .flex-prev:hover, 
+.ma-brand-slider-contain .flexslider .flex-next:hover, 
+.ma-brand-slider-contain .flexslider .flex-prev:hover, 
+.ma-relatedslider-container .flexslider .flex-next:hover, 
+.ma-relatedslider-container .flexslider .flex-prev:hover, 
+.ma-upsellslider-container .flexslider .flex-next:hover, 
+.ma-upsellslider-container .flexslider .flex-prev:hover, 
+.ma-thumbnail-container .flexslider .flex-next:hover, 
+.ma-thumbnail-container .flexslider .flex-prev:hover, 
+.product-tabs li.active a, .product-tabs li.active a:hover, 
+.ma-banner7-container .flex-control-paging li a:hover,
+.ma-banner7-container .flex-control-paging li a.flex-active,
+.nivo-controlNav a:hover,
+.nivo-controlNav a.active { 
+    background-color: #1FB5DA; 
+}
+
+.ui-widget-header { background-color:#1FB5DA !important; }    
+
+/*a, button.btn-cart:hover span, 
+.fieldset .legend, .breadcrumbs li a:hover, 
+.breadcrumbs li strong, .link-wishlist:hover, .link-compare:hover, 
+.ma-header-container .toplink .links a:hover, 
+.header-static span, .block-account .block-content li a:hover, 
+.block-account .block-content li.current, .regular-price .price, 
+.special-price .price, .email-friend a:hover, .product-name a:hover, 
+.opc .active .step-title h2, .footer-static li a:hover, 
+.parentMenu .block-title:hover, #pt_menu_link ul li a.act, 
+#pt_menu_link ul li a:hover, div.pt_menu.act a, 
+div.pt_menu.active .parentMenu a, 
+div.pt_menu.active .parentMenu .block-title, 
+div.pt_menu a:hover, .pt_custommenu div.popup a:hover, 
+.checkout-progress li.active, .multiple-checkout h3, 
+.multiple-checkout h4, .multiple-checkout .box h2, 
+.multiple-checkout .place-order .grand-total .price, 
+.top-cart-contain .price,
+#shopping_cart a,
+.navbar .nav > li > a,
+.nav-item a, .nav-item a.login, .nav-item span{ color:#1FB5DA; }*/
+
+.nav-item a, .nav-item a.login, .nav-item span{ color:#1FB5DA; }       
+.fieldset .legend, .page-title, .pager .pages a, 
+.block .block-title, .block-layered-nav dt, 
+.opc .active .step-title .number, .box-account .box-head , 
+.itemMenu a.level1 span, 
+.ma-featuredproductslider-container .featuredproductslider-item, 
+.ma-newproductslider-container .newproductslider-item, 
+.ma-relatedslider-container .related-product-title, 
+.checkout-progress li.active { border-color: #1FB5DA; }
+
+
+.nav-item a:hover,
+#languages_block_top span:hover,
+a:hover, a:focus{color: #1FB5DA;}
+.p-item .product-container:hover {
+    box-shadow: 0 0 0 3px #1FB5DA inset;}
+
+img.logo {display: none;}
+
+#header_logo {
+    background: url(../images/logo.png);
+    height: 108px;    display: block;
+    width: 227px;
+}
+
+#shopping_cart a{background-image: url(../images/icon-cart.png);color: #1FB5DA}
+/*#topnavigation{background-image: url(../images/bg-menu.jpg);}*/
+#topnavigation{background-color: #1FB5DA}
+.dropdown-menu a:hover .menu-title{background-color: #1FB5DA;}
+.banner-welcome-wrap:after{content: url("../images/bgcustom-right.png");}
+.banner-welcome-wrap:before{content: url("../images/bgcustom-left.png");}
+.banner-welcome-wrap{background-color: #e8564f;}
+.banner-welcome-wrap .buytheme a{color: #5B5A5A;}
+#index .leo-customhtml-ptop img {background: none repeat scroll 0 0 #9cc4ff;}
+
+.title_block span.tcolor {
+    color: #1FB5DA;
+} 
+.green .title_block span.tcolor {
+    color: #9cc4ff;
+}
+.blue .title_block span.tcolor {
+    color: #1FB5DA;
+}
+.red .title_block span.tcolor {
+    color: #e8564f;
+}
+
+.content_prices #add_to_cart:before, .ajax_add_to_cart_button:before {
+    background: none repeat scroll 0 0 #1FB5DA;}
+.content_prices #add_to_cart:hover:before, .ajax_add_to_cart_button:hover:before{
+	background: none repeat scroll 0 0 #e8564f;}
+.content_prices #add_to_cart:hover, .ajax_add_to_cart_button:hover {
+    color: #1FB5DA !important;}
+
+.leo-customhtml-cbottom h2 {
+    color: #0b926a;}
+.leo-customhtml-cbottom .findout{background-image: url(../images/bg-findout.png);}
+
+.social a:hover {
+    background-color: #1FB5DA;}
+.carousel-control:hover, .carousel-control:focus{background-image: url(../images/bt-next-prev-hover.png);}
+#footer-bottom a {
+    color: #1FB5DA;
+}
+.banner-welcome-wrap h5, .banner-welcome-wrap p{text-shadow: 0 0 1px #e8564f;}
+/*button*/
+#add_to_cart, input.button_mini, input.button_small, input.button, input.button_large, input.button_mini_disabled, input.button_small_disabled, input.button_disabled, input.button_large_disabled, input.exclusive_mini, input.exclusive_small, input.exclusive, input.exclusive_large, input.exclusive_mini_disabled, input.exclusive_small_disabled, input.exclusive_disabled, input.exclusive_large_disabled, a.button_mini, a.button_small, a.button, a.button_large, a.exclusive_mini, a.exclusive_small, a.exclusive, a.exclusive_large, span.button_mini, span.button_small, span.button, span.button_large, span.exclusive_mini, span.exclusive_small, span.exclusive, span.exclusive_large, span.exclusive_large_disabled{
+	background-color: #1FB5DA;}
+input.button_mini:hover, input.button_small:hover, input.button:hover, input.button_large:hover, input.exclusive_mini:hover, input.exclusive_small:hover, input.exclusive:hover, input.exclusive_large:hover, a.button_mini:hover, a.button_small:hover, a.button:hover, a.button_large:hover, a.exclusive_mini:hover, a.exclusive_small:hover, a.exclusive:hover, a.exclusive_large:hover{
+	background-color: #e8564f;}
+
+/*responsive*/
+@media (max-width: 767px) {
+	.block-search-top{background: none repeat scroll 0 0 #1FB5DA!important;}
+	#header .header .container:before{background-color: #1FB5DA!important;}
+}
+@media (max-width: 320px) {
+	.block-search-top{background: none!important;}
+	#header_logo{margin: 0 auto;}
+}

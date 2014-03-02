@@ -1,0 +1,63 @@
+/* block top languages */
+#header_right #languages_block_top {
+	float: left;
+	margin: 0;
+	position: relative;
+}
+#header_right #languages_block_top p {
+	display: block;
+	color: #333333;
+	font-weight: normal;
+	padding:0;
+	background: url(img/arrow.png) 77px no-repeat;
+	width:92px;
+	height:35px;
+	line-height:35px;
+	text-align:left;
+}
+
+#languages_block_top ul#first-languages li {
+
+}
+#languages_block_top ul#first-languages li.selected_language {
+
+}
+/*languages with jquery*/
+#countries {
+	
+}
+#countries p {
+	position: relative;
+	top: 0;
+	padding: 0;
+}
+#countries p img {
+	padding-left: 8px;
+}
+#countries .countries_ul{
+	display:none;
+	z-index: 10000;
+	padding:10px;
+	list-style-type:none;
+}
+#countries .countries_ul_hover{
+	display:block;
+	z-index: 5000;
+	position:absolute;
+	left: 0px;
+	top: 35px;
+	padding: 0;
+	height:auto;
+}
+#countries .countries_ul_hover li {
+	border-top: 2px solid #fff;
+	background: #ececec;
+	padding: 7px 0;
+	width: 92px;
+	text-align: center;
+	display: block;
+	color: #333;
+	font-weight: normal;
+}
+
+#countries .countries_ul_hover li a { color: #333;  width: 92px; display: block; }

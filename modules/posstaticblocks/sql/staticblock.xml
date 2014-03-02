@@ -1,0 +1,220 @@
+<pos_static_blocks>
+<!-- static block configuration -->
+	<block>
+		<id_posstaticblock>3</id_posstaticblock>
+		<identify>pt_menu_idcat_5_right</identify>
+		<hook_position>top</hook_position>
+		<name_module></name_module>
+		<hook_module></hook_module>
+		<posorder>0</posorder>
+		<insert_module>0</insert_module>
+		<active>0</active>
+		<showhook>0</showhook>
+	</block>
+	<block>
+		<id_posstaticblock>4</id_posstaticblock>
+		<identify>pt_menu_idcat_3</identify>
+		<hook_position>top</hook_position>
+		<name_module></name_module>
+		<hook_module></hook_module>
+		<posorder>0</posorder>
+		<insert_module>0</insert_module>
+		<active>0</active>
+		<showhook>0</showhook>
+	</block>
+	<block>
+		<id_posstaticblock>5</id_posstaticblock>
+		<identify>pt_item_menu_custom_menu</identify>
+		<hook_position>top</hook_position>
+		<name_module></name_module>
+		<hook_module></hook_module>
+		<posorder>0</posorder>
+		<insert_module>0</insert_module>
+		<active>0</active>
+		<showhook>0</showhook>
+	</block>
+	<block>
+		<id_posstaticblock>6</id_posstaticblock>
+		<identify>home-banner</identify>
+		<hook_position>top</hook_position>
+		<name_module>posslideshow</name_module>
+		<hook_module>displayTop</hook_module>
+		<posorder>1</posorder>
+		<insert_module>1</insert_module>
+		<active>0</active>
+		<showhook>1</showhook>
+	</block>
+
+<block>
+		<id_posstaticblock>7</id_posstaticblock>
+		<identify>home-banner-content</identify>
+		<hook_position>home</hook_position>
+		<name_module></name_module>
+		<hook_module></hook_module>
+		<posorder>0</posorder>
+		<insert_module>0</insert_module>
+		<active>0</active>
+		<showhook>1</showhook>
+	</block>
+<!-- block lang configuration -->
+	<block_lang>
+		<id_posstaticblock>3</id_posstaticblock>
+		<id_lang>1</id_lang>
+		<title>Static Sub Menu Col Right</title>
+		<description>
+			 <![CDATA[<div class="sub-menu-col4"><a href="#"><img src="/pos_coron/img/cms/custom_menu1.jpg" alt="" /></a></div>
+		]]>
+		</description>
+	</block_lang>
+	<block_lang>
+		<id_posstaticblock>4</id_posstaticblock>
+		<id_lang>1</id_lang>
+		<title>Static Sub Menu Bottom</title>
+		<description>
+			 <![CDATA[
+			<div class="custom-menu-bottom">
+<div class="row-fluid">
+<div class="menu-img1 span6"><img src="/pos_coron/img/cms/custom_menu_bottom1.jpg" alt="" /></div>
+<div class="menu-img2 span6"><img src="/pos_coron/img/cms/custom_menu_bottom2.jpg" alt="" /></div>
+</div>
+</div>
+			]]>
+		</description>
+	</block_lang>
+	<block_lang>
+		<id_posstaticblock>5</id_posstaticblock>
+		<id_lang>1</id_lang>
+		<title>Custom Menu</title>
+		<description>
+			 <![CDATA[
+			<div class="static_block_custom_menu">
+<h4>promotion</h4>
+<img src="/pos_coron/img/cms/menu1.jpg" alt="" />
+<p>Lorem Ipsum is simply dummy text of the printing and typesetting</p>
+</div>
+			]]>
+		</description>
+	</block_lang>
+	<block_lang>
+		<id_posstaticblock>6</id_posstaticblock>
+		<id_lang>1</id_lang>
+		<title>Home Banner</title>
+		<description>
+			 <![CDATA[
+			<div class="static-banner7 span3"><a class="first" href="#"><img src="/pos_coron/img/cms/adver2.jpg" alt="" /></a> <a href="#"><img src="/pos_coron/img/cms/adver1.jpg" alt="" /></a></div>
+			]]>
+		</description>
+	</block_lang>
+	
+	
+	<block_lang>
+		<id_posstaticblock>7</id_posstaticblock>
+		<id_lang>1</id_lang>
+		<title>Home Banner Content</title>
+		<description>
+			 <![CDATA[
+			<div class="img1 span6"><a href="#"><img src="/pos_coron/img/cms/advan1.jpg" alt="" /></a>
+<div class="title1 title">
+<p>Up to <span> 40%</span> off</p>
+</div>
+</div>
+<div class="img2 span6"><a href="#"><img src="/pos_coron/img/cms/advan2.jpg" alt="" /></a>
+<div class="title2 title">
+<p>sale off <span> 30% </span></p>
+</div>
+</div>
+			]]>
+		</description>
+	</block_lang>
+	
+	<block_lang>
+		<id_posstaticblock>3</id_posstaticblock>
+		<id_lang>2</id_lang>
+		<title>Static Sub Menu Col Right</title>
+		<description>
+			 <![CDATA[<div class="sub-menu-col4"><a href="#"><img src="/pos_coron/img/cms/custom_menu1.jpg" alt="" /></a></div>
+		]]>
+		</description>
+	</block_lang>
+	<block_lang>
+		<id_posstaticblock>4</id_posstaticblock>
+		<id_lang>2</id_lang>
+		<title>Static Sub Menu Bottom</title>
+		<description>
+			 <![CDATA[
+			<div class="custom-menu-bottom">
+<div class="row-fluid">
+<div class="menu-img1 span6"><img src="/pos_coron/img/cms/custom_menu_bottom1.jpg" alt="" /></div>
+<div class="menu-img2 span6"><img src="/pos_coron/img/cms/custom_menu_bottom2.jpg" alt="" /></div>
+</div>
+</div>
+			]]>
+		</description>
+	</block_lang>
+	<block_lang>
+		<id_posstaticblock>5</id_posstaticblock>
+		<id_lang>2</id_lang>
+		<title>Custom Menu</title>
+		<description>
+			 <![CDATA[
+			<div class="static_block_custom_menu">
+<h4>promotion</h4>
+<img src="/pos_coron/img/cms/menu1.jpg" alt="" />
+<p>Lorem Ipsum is simply dummy text of the printing and typesetting</p>
+</div>
+			]]>
+		</description>
+	</block_lang>
+	<block_lang>
+		<id_posstaticblock>6</id_posstaticblock>
+		<id_lang>2</id_lang>
+		<title>Home Banner</title>
+		<description>
+			 <![CDATA[
+			<div class="static-banner7 span3"><a class="first" href="#"><img src="/pos_coron/img/cms/adver2.jpg" alt="" /></a> <a href="#"><img src="/pos_coron/img/cms/adver1.jpg" alt="" /></a></div>
+			]]>
+		</description>
+	</block_lang>
+	
+	
+	<block_lang>
+		<id_posstaticblock>7</id_posstaticblock>
+		<id_lang>2</id_lang>
+		<title>Home Banner Content</title>
+		<description>
+			 <![CDATA[
+			<div class="img1 span6"><a href="#"><img src="/pos_coron/img/cms/advan1.jpg" alt="" /></a>
+<div class="title1 title">
+<p>Up to <span> 40%</span> off</p>
+</div>
+</div>
+<div class="img2 span6"><a href="#"><img src="/pos_coron/img/cms/advan2.jpg" alt="" /></a>
+<div class="title2 title">
+<p>sale off <span> 30% </span></p>
+</div>
+</div>
+			]]>
+		</description>
+	</block_lang>
+<!-- block shop configuration -->
+	<block_shop>
+		<id_posstaticblock>3</id_posstaticblock>
+		<id_shop>1</id_shop>
+	</block_shop>
+	<block_shop>
+		<id_posstaticblock>4</id_posstaticblock>
+		<id_shop>1</id_shop>
+	</block_shop>
+	<block_shop>
+		<id_posstaticblock>5</id_posstaticblock>
+		<id_shop>1</id_shop>
+	</block_shop>
+	<block_shop>
+		<id_posstaticblock>6</id_posstaticblock>
+		<id_shop>1</id_shop>
+	</block_shop>
+	<block_shop>
+		<id_posstaticblock>7</id_posstaticblock>
+		<id_shop>1</id_shop>
+	</block_shop>
+</pos_static_blocks>

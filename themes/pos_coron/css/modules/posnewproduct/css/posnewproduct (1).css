@@ -1,0 +1,93 @@
+/*
+ * jQuery FlexSlider v2.0
+ * http://www.woothemes.com/flexslider/
+ *
+ * Copyright 2012 WooThemes
+ * Free to use under the GPLv2 license.
+ * http://www.gnu.org/licenses/gpl-2.0.html
+ *
+ * Contributing author: Tyler Smith (@mbmufffin)
+ */
+
+ 
+/* Browser Resets */
+.pos-new-product .flex-container a:active,
+.pos-new-product .flexslider a:active,
+.pos-new-product .flex-container a:focus,
+.pos-new-product .flexslider a:focus  {outline: none;}
+.pos-new-product .slides,
+.pos-new-product .flex-control-nav,
+.pos-new-product .flex-direction-nav {margin: 0; padding: 0; list-style: none;} 
+
+/* FlexSlider Necessary Styles
+*********************************/ 
+.pos-new-product .flexslider {margin: 0; padding: 0;}
+.pos-new-product .flexslider .slides > li {display: none; -webkit-backface-visibility: hidden;} /* Hide the slides before the JS is loaded. Avoids image jumping */
+.pos-new-product .flexslider .slides img { display: inline-block; width: 100%;}
+.pos-new-product li.newproductslider-item .actions { display: block; opacity: 0;}
+.pos-new-product li.newproductslider-item:hover .actions {
+  -moz-opacity: 1;
+    -webkit-opacity: 1;
+    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";/*IE8*/
+    opacity: 1;
+}
+.pos-new-product .flex-pauseplay span {text-transform: capitalize;}
+
+/* Clearfix for the .slides element */
+.pos-new-product .slides:after {content: "."; display: block; clear: both; visibility: hidden; line-height: 0; height: 0;} 
+html[xmlns] .pos-new-product .slides {display: block;} 
+* html .pos-new-product .slides {height: 1%;}
+
+/* No JavaScript Fallback */
+/* If you are not using another script, such as Modernizr, make sure you
+ * include js that eliminates this class on page load */
+.no-js .pos-new-product .slides > li:first-child {display: block;}
+
+
+/* FlexSlider Default Theme
+*********************************/
+.pos-new-product .flexslider {margin: 0 0 20px; position: relative; zoom: 1; z-index: 10;}
+.pos-new-product .flex-viewport {max-height: 2000px; -webkit-transition: all 1s ease; -moz-transition: all 1s ease; transition: all 1s ease; padding:0 0 65px 10px; margin-left:-11px; margin-right:-10px;}
+.pos-new-product .loading .flex-viewport {max-height: 300px;}
+.pos-new-product .flexslider .slides {zoom: 1;}
+
+.pos-new-product .carousel li.newproductslider-item {margin-right: 7px; text-align: center;  padding:10px; border:1px solid #fff; border-bottom: 0; }
+.pos-new-product .newproductslider-item { position: relative; }
+.pos-new-product .carousel li.first_item {margin-left:-10px; }
+.pos-new-product .carousel li.newproductslider-item:hover {border-color:#00bba6;}
+
+/* Direction Nav */
+.pos-new-product .flex-direction-nav {*height: 0;}
+.pos-new-product .flexslider:hover .flex-next:hover, .pos-new-product .flexslider:hover .flex-prev:hover {opacity: 1;}
+.pos-new-product .flex-direction-nav .flex-disabled {opacity: .3!important; filter:alpha(opacity=30); cursor: default;}
+
+/* Control Nav */
+.pos-new-product .flex-control-nav {width: 100%; position: absolute; top: -16px; text-align: center;}
+.pos-new-product .flex-control-nav li { margin: 0 6px; display: inline-block; zoom: 1; *display: inline;}
+.pos-new-product .flex-control-paging li a {width: 11px; height: 11px; display: block; background: #aaa; cursor: pointer; text-indent: -9999px; -webkit-border-radius: 20px; -moz-border-radius: 20px; -o-border-radius: 20px; border-radius: 20px; box-shadow: inset 0 0 3px rgba(0,0,0,0.3);}
+.pos-new-product .flex-control-paging li a:hover { background: #fff; }
+.pos-new-product .flex-control-paging li a.flex-active { background: #fff; cursor: default; }
+
+.pos-new-product .flex-control-thumbs {margin: 5px 0 0; position: static; overflow: hidden;}
+.pos-new-product .flex-control-thumbs li {width: 25%; float: left; margin: 0;}
+.pos-new-product .flex-control-thumbs img {width: 100%; display: block; opacity: .7; cursor: pointer;}
+.pos-new-product .flex-control-thumbs img:hover {opacity: 1;}
+.pos-new-product .flex-control-thumbs .flex-active {opacity: 1; cursor: default;}
+
+.pos-new-product .ma-loading {
+	width: 16px;
+	height: 16px;
+	position: absolute;
+	z-index: 99;
+	background: url(../images/loader.gif) no-repeat ;
+	top: 50%;
+	left: 50%;
+	margin: -8px 0 0 -8px;
+}
+
+
+/*NewProduct Slider*/
+
+/*===========================================================================================================*/
+
+

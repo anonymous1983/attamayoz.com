@@ -1,0 +1,259 @@
+/**
+ * BxSlider v4.0 - Fully loaded, responsive content slider
+ * http://bxslider.com
+ *
+ * Written by: Steven Wanderski, 2012
+ * http://stevenwanderski.com
+ * (while drinking Belgian ales and listening to jazz)
+ *
+ * CEO and founder of bxCreative, LTD
+ * http://bxcreative.com
+ */
+
+
+/** RESET AND LAYOUT
+===================================*/
+
+.pos-new-product  .bx-wrapper {
+	position: relative;
+	margin: 0 auto 60px;
+	padding: 0;
+	*zoom: 1;
+}
+
+.pos-new-product  .bx-wrapper img {
+	max-width: 100%;
+	display: block;
+}
+
+/** THEME
+===================================*/
+
+.pos-new-product  .bx-wrapper .bx-viewport {
+	/*-moz-box-shadow: 0 0 5px #ccc;
+	-webkit-box-shadow: 0 0 5px #ccc;
+	box-shadow: 0 0 5px #ccc;
+	border: solid #fff 5px;
+	left: -5px;
+	background: #fff;*/
+	padding: 0 11px 0px;
+	margin-left:-11px;
+	
+}
+
+.pos-new-product  .bx-wrapper .bx-pager,
+.pos-new-product  .bx-wrapper .bx-controls-auto {
+	position: absolute;
+	bottom: -30px;
+	width: 100%;
+}
+
+/* LOADER */
+
+.pos-new-product  .bx-wrapper .bx-loading {
+	min-height: 50px;
+	background: url(images/bx_loader.gif) center center no-repeat #fff;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 0;
+}
+
+/* PAGER */
+
+.pos-new-product  .bx-wrapper .bx-pager {
+	text-align: center;
+	font-size: .85em;
+	font-family: Arial;
+	font-weight: bold;
+	color: #666;
+	padding-top: 20px;
+}
+
+.pos-new-product  .bx-wrapper .bx-pager .bx-pager-item,
+.pos-new-product  .bx-wrapper .bx-controls-auto .bx-controls-auto-item {
+	display: inline-block;
+	*zoom: 1;
+	*display: inline;
+}
+
+.pos-new-product  .bx-wrapper .bx-pager.bx-default-pager a {
+	background: #666;
+	text-indent: -9999px;
+	display: block;
+	width: 10px;
+	height: 10px;
+	margin: 0 5px;
+	outline: 0;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+}
+
+.pos-new-product  .bx-wrapper .bx-pager.bx-default-pager a:hover,
+.pos-new-product  .bx-wrapper .bx-pager.bx-default-pager a.active {
+	background: #000;
+}
+
+.pos-new-product  .bx-wrapper  .bxslider {float:left;}
+/* DIRECTION CONTROLS (NEXT / PREV) */
+
+.pos-new-product  .bx-wrapper .bx-prev {
+	/*left: 10px;
+	background: url(images/controls.png) no-repeat 0 -32px;*/
+}
+
+.pos-new-product  .bx-wrapper .bx-next {
+	/*right: 10px;
+	background: url(images/controls.png) no-repeat -43px -32px;*/
+}
+
+.pos-new-product  .bx-wrapper .bx-prev:hover {
+	
+}
+
+.pos-new-product  .bx-wrapper .bx-next:hover {
+	
+}
+
+.pos-new-product  .bx-wrapper .bx-controls-direction a {
+	/*position: absolute;
+	top: 50%;
+	margin-top: -16px;
+	outline: 0;
+	width: 32px;
+	height: 32px;
+	text-indent: -9999px;
+	z-index: 9999;*/
+}
+
+.pos-new-product  .bx-wrapper .bx-controls-direction a.disabled {
+	display: none;
+}
+
+/* AUTO CONTROLS (START / STOP) */
+
+.pos-new-product  .bx-wrapper .bx-controls-auto {
+	text-align: center;
+}
+
+.pos-new-product  .bx-wrapper .bx-controls-auto .bx-start {
+	display: block;
+	text-indent: -9999px;
+	width: 10px;
+	height: 11px;
+	outline: 0;
+	background: url(images/controls.png) -86px -11px no-repeat;
+	margin: 0 3px;
+}
+
+.pos-new-product  .bx-wrapper .bx-controls-auto .bx-start:hover,
+.pos-new-product  .bx-wrapper .bx-controls-auto .bx-start.active {
+	background-position: -86px 0;
+}
+
+.pos-new-product  .bx-wrapper .bx-controls-auto .bx-stop {
+	display: block;
+	text-indent: -9999px;
+	width: 9px;
+	height: 11px;
+	outline: 0;
+	background: url(images/controls.png) -86px -44px no-repeat;
+	margin: 0 3px;
+}
+
+.pos-new-product  .bx-wrapper .bx-controls-auto .bx-stop:hover,
+.pos-new-product  .bx-wrapper .bx-controls-auto .bx-stop.active {
+	background-position: -86px -33px;
+}
+
+/* PAGER WITH AUTO-CONTROLS HYBRID LAYOUT */
+
+.pos-new-product  .bx-wrapper .bx-controls.bx-has-controls-auto.bx-has-pager .bx-pager {
+	text-align: left;
+	width: 80%;
+}
+
+.pos-new-product  .bx-wrapper .bx-controls.bx-has-controls-auto.bx-has-pager .bx-controls-auto {
+	right: 0;
+	width: 35px;
+}
+
+/* IMAGE CAPTIONS */
+
+.pos-new-product  .bx-wrapper .bx-caption {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	background: #666\9;
+	background: rgba(80, 80, 80, 0.75);
+	width: 100%;
+}
+
+.pos-new-product  .bx-wrapper .bx-caption span {
+	color: #fff;
+	font-family: Arial;
+	display: block;
+	font-size: .85em;
+	padding: 10px;
+}
+
+.pos-new-product  .bx-wrapper li {
+
+}
+
+.pos-new-product .ma-loading {
+	width: 16px;
+	height: 16px;
+	position: absolute;
+	z-index: 99;
+	background: url(../images/loader.gif) no-repeat ;
+	top: 50%;
+	left: 50%;
+	margin: -8px 0 0 -8px;
+}
+
+.pos-new-product .ma-loading {
+	width: 16px;
+	height: 16px;
+	position: absolute;
+	z-index: 99;
+	background: url(../images/loader.gif) no-repeat ;
+	top: 50%;
+	left: 50%;
+	margin: -8px 0 0 -8px;
+}
+
+
+/* FlexSlider Necessary Styles
+*********************************/ 
+.pos-new-product .flexslider {margin: 0; padding: 0;}
+.pos-new-product .flexslider .slides > li {display: none; -webkit-backface-visibility: hidden;} /* Hide the slides before the JS is loaded. Avoids image jumping */
+.pos-new-product .flexslider .slides img { display: inline-block; width: 100%;}
+.pos-new-product li.newproductslider-item .actions { display: block; opacity: 0;}
+.pos-new-product li.newproductslider-item:hover .actions {
+  -moz-opacity: 1;
+    -webkit-opacity: 1;
+    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";/*IE8*/
+    opacity: 1;
+}
+.pos-new-product .flex-pauseplay span {text-transform: capitalize;}
+
+/* Clearfix for the .slides element */
+.pos-new-product .slides:after {content: "."; display: block; clear: both; visibility: hidden; line-height: 0; height: 0;} 
+html[xmlns] .pos-new-product .slides {display: block;} 
+* html .pos-new-product .slides {height: 1%;}
+
+/* No JavaScript Fallback */
+/* If you are not using another script, such as Modernizr, make sure you
+ * include js that eliminates this class on page load */
+.no-js .pos-new-product .slides > li:first-child {display: block;}
+
+
+/* FlexSlider Default Theme
+*********************************/
+
+.pos-new-product .newproductslider-item {   padding-bottom:50px; cursor: pointer;}
+
+
+
