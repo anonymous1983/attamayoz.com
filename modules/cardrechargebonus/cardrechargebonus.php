@@ -43,6 +43,8 @@ class Cardrechargebonus extends PaymentModule {
     public $cardrechargebonusName;
     public $address;
     public $extra_mail_vars;
+    
+    private $enable_payment = false;
 
     public function __construct() {
         $this->name = 'cardrechargebonus';
@@ -167,6 +169,9 @@ class Cardrechargebonus extends PaymentModule {
     }
 
     public function hookPayment($params) {
+        
+        //die('hookPayment');
+        
         if (!$this->active)
             return;
         if (!$this->cardrechargebonusCurrency($params['cart']))
@@ -187,6 +192,7 @@ class Cardrechargebonus extends PaymentModule {
     }
 
     public function hookPaymentReturn($params) {
+        //die('hookPaymentReturn');
         if (!$this->active)
             return;
 
@@ -218,6 +224,7 @@ class Cardrechargebonus extends PaymentModule {
     }
 
     public function hookDisplayOrderConfirmation($params) {
+        
 //        echo '<pre>';
 //        print_r($params['objOrder']);
 //        echo 'Order id : ' . $params['objOrder']->id;
@@ -232,9 +239,9 @@ class Cardrechargebonus extends PaymentModule {
 //        echo '<br>' . '----currencyObj----' . '<br>';
 //        print_r($params['currencyObj']);
 
-        
+        if($this->enable_payment)
         $this->payer($params['objOrder']->id_customer, $params['objOrder']->total_paid_real);
-//         Bonus
+//      Bonus
         $this->setHistoryAndCalculBonus($params);
     }
 
@@ -261,22 +268,38 @@ class Cardrechargebonus extends PaymentModule {
     }
 
     public function setHistoryAndCalculBonus($params) {
+        
+         
+        $cumul_bonnus = 0;
+        $id_customer = $params['objOrder']->id_customer;
         foreach ($params['cartProducts'] as $product) {
-
+            //echo '<pre>';
             $treeTypeClass = new treeTypeClass($product['id_tree_type']);
-
-            $treeParent = $this->getParentTreeWhereCanAddBranch($params['objOrder']->id_customer, $treeTypeClass->id_tree_type);
-
-            if (count($treeParent) != 0)
-            // add new parent tree
-                $this->newChildrenTree($params, $product, $treeTypeClass, $treeParent);
-            else
-            // add new parent tree
-                $this->newParentTree($params, $product, $treeTypeClass);
-
-            //$this->updateCustomerTotalBalanceWithBonus($treeTypeClass->cost, $params['objOrder']->id_customer);
-            return TRUE;
+            $product_quantity = $product['product_quantity'];
+            //echo '===== Nouveau Product ======'.'<br> >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> <br>';
+            while ($product_quantity > 0 ){
+                //echo '===== product_quantity ======'.'<br>==============================<br>';
+                //echo $product['product_quantity'];
+                //echo '===== product_id ======'.'<br>==============================<br>';
+                //echo $product['product_id'];
+                //echo '===== id_tree_type======'.'<br>==============================<br>';
+                $treeParent = $this->getParentTreeWhereCanAddBranch($id_customer, $treeTypeClass->id_tree_type);
+                //echo '===== End Le meme Product '.$product_quantity.' ======'.' >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> <br>';
+                
+                if (count($treeParent) != 0)
+                // add new parent tree
+                    $this->newChildrenTree($params, $product, $treeTypeClass, $treeParent);
+                else
+                // add new parent tree
+                    $this->newParentTree($params, $product, $treeTypeClass);
+                
+                $cumul_bonnus += $treeTypeClass->cost;
+                $product_quantity--;
+            }
         }
+        $this->updateCustomerTotalBalanceWithBonus($cumul_bonnus, $id_customer);
+        //die('hookDisplayOrderConfirmation');
+        return TRUE;
     }
     
     function getTotalBonusFromCustomer($id_customer){
@@ -403,8 +426,7 @@ class Cardrechargebonus extends PaymentModule {
                     SELECT COUNT( * ) AS CONT
                     FROM  `' . _DB_PREFIX_ . 'tree` AS TC
                     WHERE TC.id_tree_parent = T.id_tree
-                ) NOT 
-                IN ( 0, T.children ) 
+                ) <> T.children 
                 LIMIT 1
                 ';
         return Db::getInstance()->executeS($sql);
