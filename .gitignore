@@ -3,4 +3,4 @@
 /img/tmp/*
 /log/
 /log/*
-/log/config/settings.inc.php
+/config/settings.inc.php
