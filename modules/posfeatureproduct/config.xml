@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
         <module>
             <name>posfeatureproduct</name>
-            <displayName><![CDATA[Featured products with slider on the homepage.]]></displayName>
+            <displayName><![CDATA[Treee with slider on the homepage.]]></displayName>
             <version><![CDATA[1.1]]></version>
-            <description><![CDATA[Displays featured products in any where of your homepage.]]></description>
+            <description><![CDATA[Displays trees in any where of your homepage.]]></description>
             <author><![CDATA[Posthemes]]></author>
             <tab><![CDATA[front_office_features]]></tab>
             <is_configurable>1</is_configurable>

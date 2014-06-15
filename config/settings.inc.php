@@ -1,6 +1,6 @@
 <?php
 define('_DB_SERVER_', 'localhost');
-define('_DB_NAME_', 'attamayoz_db');
+define('_DB_NAME_', 'attamayoz_db_v20140601');
 define('_DB_USER_', 'root');
 define('_DB_PASSWD_', '');
 define('_DB_PREFIX_', 'att_db_');
