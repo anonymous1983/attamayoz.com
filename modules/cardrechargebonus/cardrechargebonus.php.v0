@@ -115,7 +115,6 @@ class Cardrechargebonus extends PaymentModule {
         $sql = 'CREATE TABLE IF NOT EXISTS ' . _DB_PREFIX_ . 'tree (
                         `id_tree` int(11) NOT NULL AUTO_INCREMENT,
                         `id_tree_parent` int(11) NOT NULL DEFAULT 0,
-                        `id_parent` int(11) NOT NULL DEFAULT 0,
                         `id_customer` int(11) NOT NULL,
                         `id_product` int(11) NOT NULL,
                         `id_order` int(11) NOT NULL,
@@ -311,18 +310,15 @@ class Cardrechargebonus extends PaymentModule {
     }
 
     /**
-     * newTree
+     * newParentTree 
      *
-     * Add new tree
+     * Add new parent tree
      * @return bool
      */
-    function newTree($params, $product, $treeTypeClass, $idTreeParent, $idParent, $now) {
+    function newParentTree($params, $product, $treeTypeClass) {
         $now = time();
-        // Add Tree Children
-        //$treeTypeClass = new treeTypeClass($product['id_tree_type']);
+        $treeTypeClass = new treeTypeClass($product['id_tree_type']);
         $data = array(
-            'id_tree_parent' => $idTreeParent,
-            'id_parent' => $idParent,
             'id_customer' => $params['objOrder']->id_customer,
             'id_product' => $product['product_id'],
             'id_order' => $product['id_order'],
@@ -334,18 +330,6 @@ class Cardrechargebonus extends PaymentModule {
             'date_add' => date('Y-m-d H:i:s', $now),
         );
         Db::getInstance()->insert('tree', $data);
-        return (int)Db::getInstance()->Insert_ID();
-    }
-
-    /**
-     * newParentTree 
-     *
-     * Add new parent tree
-     * @return bool
-     */
-    function newParentTree($params, $product, $treeTypeClass) {
-        $now = time();
-        $this->newTree($params, $product, $treeTypeClass, '0', '0', $now);
 
         // Update Bonnus Cusomer
         $sql = 'UPDATE `' . _DB_PREFIX_ . 'customer` AS C  SET  C.bonnus= (C.bonnus + ' . $treeTypeClass->cost . ') , C.total_balance= (C.total_balance + ' . $treeTypeClass->cost . ') , C.date_upd = \'' . date('Y-m-d H:i:s', $now) . '\'  
@@ -364,25 +348,25 @@ class Cardrechargebonus extends PaymentModule {
      */
     function newChildrenTree($params, $product, $treeTypeClass, $treeParent) {
         $now = time();
-        $idParentWhereCanAddBranch = $this->getIdParentWhereCanAddBranch($treeParent[0]['id_tree'], $treeTypeClass->x_axis);
-        //echo '<pre>';
-        //echo count($idParentWhereCanAddBranch);
-        //echo '<br>';
-        //print_r($idParentWhereCanAddBranch);
-        //echo '<br>';
-        //die($treeParent[0]['id_tree']."   ----  ".$treeTypeClass->x_axis);
         // Add Tree Children
-        $idParentWhereCanAddBranch_id_tree = '0';
-        if(count($idParentWhereCanAddBranch) != 0)
-            $idParentWhereCanAddBranch_id_tree = $idParentWhereCanAddBranch[0]['id_tree'];
+        $treeTypeClass = new treeTypeClass($product['id_tree_type']);
+        $data = array(
+            'id_tree_parent' => $treeParent[0]['id_tree'],
+            'id_customer' => $params['objOrder']->id_customer,
+            'id_product' => $product['product_id'],
+            'id_order' => $product['id_order'],
+            'id_order_detail' => $product['id_order_detail'],
+            'id_tree_type' => $product['id_tree_type'],
+            'cost' => $treeTypeClass->cost,
+            'tree_children' => '0',
+            'date_add' => date('Y-m-d H:i:s', $now),
+        );
+        Db::getInstance()->insert('tree', $data);
         
-        $id_child_tree = $this->newTree($params, $product, $treeTypeClass, $treeParent[0]['id_tree'] , $idParentWhereCanAddBranch_id_tree, $now);
         
-        /*$res_tree_parent = Db::getInstance()->getRow('SELECT * FROM  `' . _DB_PREFIX_ . 'tree` WHERE id_tree = ' . $treeParent[0]['id_tree']);
+        $res_tree_parent = Db::getInstance()->getRow('SELECT * FROM  `' . _DB_PREFIX_ . 'tree` WHERE id_tree = ' . $treeParent[0]['id_tree']);
         $res_treeTypeClass = new treeTypeClass($res_tree_parent['id_tree_type']);
-        if($res_tree_parent['tree_children'] < $res_treeTypeClass['x_axis']){
-
-        }*/
+        if($res_tree_parent['tree_children'] < $res_treeTypeClass['x_axis'])
         
         
         // Update Tree Children
@@ -391,43 +375,16 @@ class Cardrechargebonus extends PaymentModule {
 
 
         // Update Bonnus Cusomer
-        /*$sql2 = 'UPDATE `' . _DB_PREFIX_ . 'customer` AS C  SET  C.bonnus= (C.bonnus + ' . $treeTypeClass->cost . ') , C.total_balance= (C.total_balance + ' . $treeTypeClass->cost . ') , C.date_upd = \'' . date('Y-m-d H:i:s', $now) . '\'  
+        $sql2 = 'UPDATE `' . _DB_PREFIX_ . 'customer` AS C  SET  C.bonnus= (C.bonnus + ' . $treeTypeClass->cost . ') , C.total_balance= (C.total_balance + ' . $treeTypeClass->cost . ') , C.date_upd = \'' . date('Y-m-d H:i:s', $now) . '\'  
                     WHERE 
                     C.id_customer IN (
                         SELECT  `id_customer` 
                         FROM  `' . _DB_PREFIX_ . 'tree` 
                         WHERE  `id_tree` = ' . $treeParent[0]['id_tree'] . '
                         OR  `id_tree_parent` = ' . $treeParent[0]['id_tree'] . '
-                    )';*/
-        
-        $recursive = '
-                        SELECT `id_customer`, @pv:=id_parent as `id_parent` FROM `' . _DB_PREFIX_ . 'tree` AS T
-                        join
-                            (select @pv:=' . $id_child_tree . ')tmp
-                        WHERE T.id_tree=@pv
-                        ORDER BY T.id_tree DESC
+                    )
                     ';
-        $recursive_status = Db::getInstance()->executeS($recursive);
-        foreach($recursive_status as $status_a) {
-            $status_sql[] = '\''.$status_a['id_customer'].'\'';
-        }
-        $recursive = '
-                        SELECT `id_customer` FROM `' . _DB_PREFIX_ . 'tree` TT 
-                        WHERE 
-                            TT.id_tree = ' . $treeParent[0]['id_tree'] . '
-                            AND TT.id_tree_parent = 0
-                            AND TT.id_parent = 0
-                        LIMIT 1
-                    ';
-        $status = Db::getInstance()->executeS($recursive);
-        $status_sql[] = $status[0]['id_customer'];
-        $array_customer = implode(',',$status_sql);
-        
-        $sql2 = 'UPDATE `' . _DB_PREFIX_ . 'customer` AS C  SET  C.bonnus= (C.bonnus + ' . $treeTypeClass->cost . ') , C.total_balance= (C.total_balance + ' . $treeTypeClass->cost . ') , C.date_upd = \'' . date('Y-m-d H:i:s', $now) . '\'  
-                    WHERE 
-                    C.id_customer IN ( ' . $array_customer . ')
-                ';
-        
+
         Db::getInstance()->query($sql2);
 
         return TRUE;
@@ -476,7 +433,7 @@ class Cardrechargebonus extends PaymentModule {
                     SELECT COUNT( * ) AS CONT
                     FROM  `' . _DB_PREFIX_ . 'tree` AS TC
                     WHERE TC.id_tree_parent = T.id_tree
-                ) < T.children
+                ) <> T.children
                 AND (
                     SELECT COUNT( * ) AS CONT
                     FROM  `' . _DB_PREFIX_ . 'tree` AS TC
@@ -486,43 +443,6 @@ class Cardrechargebonus extends PaymentModule {
                 LIMIT 1
                 ';
         return Db::getInstance()->executeS($sql);
-    }
-
-
-    /**
-     * getIdParentWhereCanAddBranch 
-     *
-     * recherche first tree where i can add sub branche
-     * @return Array
-     */
-    function getIdParentWhereCanAddBranch($id_tree_parent, $x_axis) {
-        
-        
-        $sql = '
-                SELECT COUNT( * ) AS CONT
-                    FROM  `' . _DB_PREFIX_ . 'tree` AS T
-                    WHERE 
-                            T.id_tree_parent = ' . $id_tree_parent . '
-                            AND T.id_parent = 0
-                    LIMIT 1
-                    ';
-        
-        $count = Db::getInstance()->executeS($sql);
-        if(intval($count[0]['CONT']) >= $x_axis){
-            $sql = '
-                    SELECT * 
-                    FROM  `' . _DB_PREFIX_ . 'tree` AS T
-                    WHERE T.id_tree_parent = ' . $id_tree_parent . '
-                    AND (
-                        SELECT COUNT( * ) AS CONT
-                        FROM att_db_tree AS TT
-                        WHERE TT.id_parent = T.id_tree
-                        AND TT.id_tree_parent = ' . $id_tree_parent . '
-                    ) < ' . $x_axis . '
-                    LIMIT 1';
-            return Db::getInstance()->executeS($sql);
-        }
-        return null;
     }
 
     /**

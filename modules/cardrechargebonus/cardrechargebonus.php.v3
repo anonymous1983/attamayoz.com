@@ -334,7 +334,6 @@ class Cardrechargebonus extends PaymentModule {
             'date_add' => date('Y-m-d H:i:s', $now),
         );
         Db::getInstance()->insert('tree', $data);
-        return (int)Db::getInstance()->Insert_ID();
     }
 
     /**
@@ -376,7 +375,7 @@ class Cardrechargebonus extends PaymentModule {
         if(count($idParentWhereCanAddBranch) != 0)
             $idParentWhereCanAddBranch_id_tree = $idParentWhereCanAddBranch[0]['id_tree'];
         
-        $id_child_tree = $this->newTree($params, $product, $treeTypeClass, $treeParent[0]['id_tree'] , $idParentWhereCanAddBranch_id_tree, $now);
+        $this->newTree($params, $product, $treeTypeClass, $treeParent[0]['id_tree'] , $idParentWhereCanAddBranch_id_tree, $now);
         
         /*$res_tree_parent = Db::getInstance()->getRow('SELECT * FROM  `' . _DB_PREFIX_ . 'tree` WHERE id_tree = ' . $treeParent[0]['id_tree']);
         $res_treeTypeClass = new treeTypeClass($res_tree_parent['id_tree_type']);
@@ -391,43 +390,14 @@ class Cardrechargebonus extends PaymentModule {
 
 
         // Update Bonnus Cusomer
-        /*$sql2 = 'UPDATE `' . _DB_PREFIX_ . 'customer` AS C  SET  C.bonnus= (C.bonnus + ' . $treeTypeClass->cost . ') , C.total_balance= (C.total_balance + ' . $treeTypeClass->cost . ') , C.date_upd = \'' . date('Y-m-d H:i:s', $now) . '\'  
+        $sql2 = 'UPDATE `' . _DB_PREFIX_ . 'customer` AS C  SET  C.bonnus= (C.bonnus + ' . $treeTypeClass->cost . ') , C.total_balance= (C.total_balance + ' . $treeTypeClass->cost . ') , C.date_upd = \'' . date('Y-m-d H:i:s', $now) . '\'  
                     WHERE 
                     C.id_customer IN (
                         SELECT  `id_customer` 
                         FROM  `' . _DB_PREFIX_ . 'tree` 
                         WHERE  `id_tree` = ' . $treeParent[0]['id_tree'] . '
                         OR  `id_tree_parent` = ' . $treeParent[0]['id_tree'] . '
-                    )';*/
-        
-        $recursive = '
-                        SELECT `id_customer`, @pv:=id_parent as `id_parent` FROM `' . _DB_PREFIX_ . 'tree` AS T
-                        join
-                            (select @pv:=' . $id_child_tree . ')tmp
-                        WHERE T.id_tree=@pv
-                        ORDER BY T.id_tree DESC
-                    ';
-        $recursive_status = Db::getInstance()->executeS($recursive);
-        foreach($recursive_status as $status_a) {
-            $status_sql[] = '\''.$status_a['id_customer'].'\'';
-        }
-        $recursive = '
-                        SELECT `id_customer` FROM `' . _DB_PREFIX_ . 'tree` TT 
-                        WHERE 
-                            TT.id_tree = ' . $treeParent[0]['id_tree'] . '
-                            AND TT.id_tree_parent = 0
-                            AND TT.id_parent = 0
-                        LIMIT 1
-                    ';
-        $status = Db::getInstance()->executeS($recursive);
-        $status_sql[] = $status[0]['id_customer'];
-        $array_customer = implode(',',$status_sql);
-        
-        $sql2 = 'UPDATE `' . _DB_PREFIX_ . 'customer` AS C  SET  C.bonnus= (C.bonnus + ' . $treeTypeClass->cost . ') , C.total_balance= (C.total_balance + ' . $treeTypeClass->cost . ') , C.date_upd = \'' . date('Y-m-d H:i:s', $now) . '\'  
-                    WHERE 
-                    C.id_customer IN ( ' . $array_customer . ')
-                ';
-        
+                    )';
         Db::getInstance()->query($sql2);
 
         return TRUE;
@@ -476,7 +446,7 @@ class Cardrechargebonus extends PaymentModule {
                     SELECT COUNT( * ) AS CONT
                     FROM  `' . _DB_PREFIX_ . 'tree` AS TC
                     WHERE TC.id_tree_parent = T.id_tree
-                ) < T.children
+                ) <> T.children
                 AND (
                     SELECT COUNT( * ) AS CONT
                     FROM  `' . _DB_PREFIX_ . 'tree` AS TC
@@ -522,7 +492,18 @@ class Cardrechargebonus extends PaymentModule {
                     LIMIT 1';
             return Db::getInstance()->executeS($sql);
         }
+        /*echo '<pre>';
+        echo $sql;
+        echo '<br>';
+        $tab = Db::getInstance()->executeS($sql);
+        print_r($tab);
+        echo '<br>';
+        echo count($tab);
+        die('x');*/
+        
         return null;
+        //return Db::getInstance()->getRow($sql);
+        
     }
 
     /**
