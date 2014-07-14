@@ -4,8 +4,8 @@
 		<ul class="bxslider">
 			{foreach from=$trees_type item=tree_type name=posCategoryProducts}
 				<li class=" feature-productslider-item ajax_block_product">
-                                    <a class="item-inner" href="#">
-						{$tree_type.title}
+                                    <a class="item-inner" href="{$link->getPageLink('treeproduct', true, NULL, "tree={$tree_type.id_tree_type}")|escape:'html'}">
+                                      <span>{$tree_type.cost}</span> <sup>{$suffix}</sup>
 					</a> <!--end item-inner-->
 				</li>
 			{/foreach}

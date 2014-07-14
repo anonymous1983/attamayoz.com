@@ -232,6 +232,7 @@ class Poscategoryproducts extends Module {
             
             if(!$products) return ;
             $this->smarty->assign(array(
+                'suffix' => $this->context->currency->suffix,
                 'trees_type' => $trees_type,
                 'products' => $products,
                 'add_prod_display' => Configuration::get('PS_ATTRIBUTE_CATEGORY_DISPLAY'),
