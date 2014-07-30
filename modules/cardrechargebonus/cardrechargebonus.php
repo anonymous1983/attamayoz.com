@@ -476,6 +476,7 @@ class Cardrechargebonus extends PaymentModule {
                     SELECT COUNT( * ) AS CONT
                     FROM  `' . _DB_PREFIX_ . 'tree` AS TC
                     WHERE TC.id_tree_parent = T.id_tree
+                        OR ( TC.id_tree = T.id_tree AND TC.id_tree_parent = 0 )
                 ) < T.children
                 AND (
                     SELECT COUNT( * ) AS CONT
