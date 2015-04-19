@@ -31,6 +31,7 @@
  * @deprecated 1.5.0
  */
 
+
 require(dirname(__FILE__).'/config/config.inc.php');
 Tools::displayFileAsDeprecated();
 
